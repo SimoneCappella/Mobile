@@ -1,5 +1,6 @@
 package com.example.progetto;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        getWindow().getDecorView().setBackgroundColor(Color.parseColor("#999999"));
+        getWindow().getDecorView().setBackgroundColor(Color.parseColor("#777777"));
 
         ButtonHandler bh = new ButtonHandler();
         findViewById(R.id.clock).setOnClickListener(bh);
@@ -26,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private AlphaAnimation buttonClick = new AlphaAnimation(1F, 0.8F);
+    private AlphaAnimation buttonClick = new AlphaAnimation(1.2F, 0.6F);
 
     private class ButtonHandler implements View.OnClickListener
     {
@@ -54,10 +55,34 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+    /*public void launchOrario(View v)
+    {
+        Intent i = new Intent(this, Orario.class);
+        startActivity(i);
+    }
+
+    public void launchImieiAppunti(View v)
+    {
+        Intent i = new Intent(this, ImieiAppunti.class);
+        startActivity(i);
+    }
+
+    public void launchAppuntiCondivisi(View v)
+    {
+        Intent i = new Intent(this, AppuntiCondivisi.class);
+        startActivity(i);
+    }
+
+    public void launchSettings(View v)
+    {
+        Intent i = new Intent(this, Settings.class);
+        startActivity(i);
+    }*/
+
 
     void show(String message)
     {
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show();  //Da sostituire con gli Intent
         Log.i(getClass().getName(), message);
     }
 }
