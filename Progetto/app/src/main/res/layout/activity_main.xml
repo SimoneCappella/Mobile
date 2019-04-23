@@ -10,9 +10,8 @@
     <TextView
         android:id="@+id/benvenuto"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="22dp"
         android:layout_marginTop="16dp"
-        android:text="Benvenuto utente!"
         android:textSize="18sp"
         android:textStyle="italic"
         app:layout_constraintEnd_toEndOf="parent"
@@ -27,6 +26,7 @@
         android:layout_marginEnd="47dp"
         android:layout_marginBottom="14dp"
         android:background="#0000"
+        android:onClick="launchOrario"
         android:scaleType="fitCenter"
         android:src="@drawable/clock"
         app:layout_constraintBottom_toTopOf="@+id/textView6"
@@ -82,7 +82,7 @@
         android:layout_marginStart="25dp"
         android:layout_marginTop="14dp"
         android:text="Orario"
-        android:textColor="#8FC9FF"
+        android:textColor="#0080ff"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/clock"
         app:layout_constraintTop_toBottomOf="@+id/clock" />
@@ -93,7 +93,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="231dp"
         android:text="I miei appunti"
-        android:textColor="#8FC9FF"
+        android:textColor="#0080ff"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/book"
         app:layout_constraintTop_toTopOf="parent" />
@@ -105,7 +105,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="36dp"
         android:text="Appunti condivisi"
-        android:textColor="#8FC9FF"
+        android:textColor="#0080ff"
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/settings"
         app:layout_constraintTop_toBottomOf="@+id/www" />
@@ -116,7 +116,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="Impostazioni"
-        android:textColor="#8FC9FF"
+        android:textColor="#0080ff"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/settings"
         app:layout_constraintTop_toBottomOf="@+id/settings" />
