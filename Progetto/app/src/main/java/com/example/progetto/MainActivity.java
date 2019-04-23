@@ -10,8 +10,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
-import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,10 +20,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         getWindow().getDecorView().setBackgroundColor(Color.parseColor("#cccccc"));
-        SharedPreferences sp = getPreferences(Context.MODE_PRIVATE);
-        String name = sp.getString("nome", "Errore");
         TextView tv = findViewById(R.id.benvenuto);
-        String w = "Benvenuto "+ getName("nome", this);
+        String w = "Benvenuto "+ getName("nome", this) + "!";
         tv.setText(w);
 
         ButtonHandler bh = new ButtonHandler();
@@ -37,12 +33,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private AlphaAnimation buttonClick = new AlphaAnimation(1.2F, 0.6F);
-    public static String welcome;
     public static void setName(String key, String value, Context context)
     {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = preferences.edit();
-        welcome = value;
         editor.putString(key, value);
         editor.commit();
     }
@@ -52,7 +46,6 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         return preferences.getString(key, null);
     }
-
 
     private class ButtonHandler implements View.OnClickListener
     {
@@ -105,6 +98,11 @@ public class MainActivity extends AppCompatActivity {
     }*/
 
 
+    public void launchFirstActivity()
+    {
+        Intent i = new Intent(this, FirstActivity.class);
+        startActivity(i);
+    }
     void show(String message)
     {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();  //Da sostituire con gli Intent
