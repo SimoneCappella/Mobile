@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case R.id.settings:
                     view.startAnimation(buttonClick);
-                    show("Si aprono le impostazioni");
+                    launchSettings(view);
                     break;
             }
         }
@@ -89,13 +89,13 @@ public class MainActivity extends AppCompatActivity {
     {
         Intent i = new Intent(this, AppuntiCondivisi.class);
         startActivity(i);
-    }
+    }*/
 
     public void launchSettings(View v)
     {
         Intent i = new Intent(this, Settings.class);
         startActivity(i);
-    }*/
+    }
 
 
     public void launchFirstActivity()
