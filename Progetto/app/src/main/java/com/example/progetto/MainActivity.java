@@ -56,15 +56,15 @@ public class MainActivity extends AppCompatActivity {
             {
                 case R.id.clock:
                     view.startAnimation(buttonClick);
-                    show("Si apre l'orario");
+                    launchClock(view);
                     break;
                 case R.id.book:
                     view.startAnimation(buttonClick);
-                    show("Si aprono i miei appunti");
+                    launchMyNotes(view);
                     break;
                 case R.id.www:
                     view.startAnimation(buttonClick);
-                    show("Si aprono gli appunti condivisi");
+                    launchShNotes(view);
                     break;
                 case R.id.settings:
                     view.startAnimation(buttonClick);
@@ -94,6 +94,24 @@ public class MainActivity extends AppCompatActivity {
     public void launchSettings(View v)
     {
         Intent i = new Intent(this, Settings.class);
+        startActivity(i);
+    }
+
+    public void launchClock(View v)
+    {
+        Intent i = new Intent (this, Clock.class);
+        startActivity(i);
+    }
+
+    public void launchMyNotes(View v)
+    {
+        Intent i = new Intent (this, MyNotes.class);
+        startActivity(i);
+    }
+
+    public void launchShNotes(View v)
+    {
+        Intent i = new Intent (this, ShNotes.class);
         startActivity(i);
     }
 
