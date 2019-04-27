@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/lun"
+        android:title="Lun"
+        android:icon="@drawable/lun" />
+
+    <item
+        android:id="@+id/mar"
+        android:title="Mar"
+        android:icon="@drawable/mar" />
+
+    <item
+        android:id="@+id/mer"
+        android:title="Mer"
+        android:icon="@drawable/mer"/>
+
+    <item
+        android:id="@+id/gio"
+        android:title="Gio"
+        android:icon="@drawable/gio"/>
+
+    <item
+        android:id="@+id/ven"
+        android:title="Ven"
+        android:icon="@drawable/ven"/>
+
+
+
+</menu>
