@@ -1,5 +1,6 @@
 package com.example.progetto;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,7 +16,9 @@ public class MyNotes extends AppCompatActivity {
 
         getWindow().getDecorView().setBackgroundColor(Color.parseColor("#cccccc"));
         MyNotes.ButtonHandler bh = new MyNotes.ButtonHandler();
+
         findViewById(R.id.back).setOnClickListener(bh);
+        findViewById(R.id.btnAgg).setOnClickListener(bh);
     }
 
     private AlphaAnimation buttonClick = new AlphaAnimation(1F, 0.7F);
@@ -25,8 +28,22 @@ public class MyNotes extends AppCompatActivity {
         @Override
         public void onClick(View v)
         {
-            v.startAnimation(buttonClick);
-            finish();
+            switch (v.getId()){
+                case R.id.back:
+                    v.startAnimation(buttonClick);
+                    finish();
+                    break;
+                case R.id.btnAgg:
+                    v.startAnimation(buttonClick);
+                    launchAgg(v);
+                    break;
+            }
+
         }
+    }
+
+    public void launchAgg(View v){
+        Intent i = new Intent(this, AggMaterie.class);
+        startActivity(i);
     }
 }
