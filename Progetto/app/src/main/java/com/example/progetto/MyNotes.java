@@ -6,45 +6,48 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
+import android.widget.Button;
+import android.widget.ImageButton;
 
-public class MyNotes extends AppCompatActivity {
+public class MyNotes extends AppCompatActivity implements View.OnClickListener{
+
+    ImageButton back;
+    Button agg;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_notes);
 
         getWindow().getDecorView().setBackgroundColor(Color.parseColor("#cccccc"));
-        MyNotes.ButtonHandler bh = new MyNotes.ButtonHandler();
 
-        findViewById(R.id.back).setOnClickListener(bh);
-        findViewById(R.id.btnAgg).setOnClickListener(bh);
+        agg = (Button) findViewById(R.id.btnAgg);
+        back = (ImageButton) findViewById(R.id.back);
+        back.setOnClickListener(this);
+        agg.setOnClickListener(this);
     }
 
     private AlphaAnimation buttonClick = new AlphaAnimation(1F, 0.7F);
 
-    private class ButtonHandler implements View.OnClickListener
+    @Override
+    public void onClick(View v)
     {
-        @Override
-        public void onClick(View v)
-        {
-            switch (v.getId())
-            {
-                case R.id.back:
-                    v.startAnimation(buttonClick);
-                    finish();
-                    break;
-                case R.id.btnAgg:
-                    v.startAnimation(buttonClick);
-                    launchAgg(v);
-                    break;
-            }
-
+        switch (v.getId()){
+            case R.id.back:
+                v.startAnimation(buttonClick);
+                finish();
+                break;
+            case R.id.btnAgg:
+                v.startAnimation(buttonClick);
+                launchAggMaterie(v);
+                break;
         }
+
     }
 
-    public void launchAgg(View v){
-        Intent i = new Intent(this, AggMaterie.class);
+    public void launchAggMaterie(View v)
+    {
+        Intent i = new Intent (this, AggMaterie.class);
         startActivity(i);
     }
 }

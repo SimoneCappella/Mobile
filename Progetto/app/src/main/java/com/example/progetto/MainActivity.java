@@ -10,25 +10,35 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+
+    ImageButton clock;
+    ImageButton book;
+    ImageButton www;
+    ImageButton settings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         getWindow().getDecorView().setBackgroundColor(Color.parseColor("#cccccc"));
-        TextView tv = findViewById(R.id.benvenuto);
+        TextView tv = findViewById(R.id.textBenvenuto);
         String w = "Benvenuto "+ getName("nome", this) + "!";
         tv.setText(w);
 
-        ButtonHandler bh = new ButtonHandler();
-        findViewById(R.id.clock).setOnClickListener(bh);
-        findViewById(R.id.book).setOnClickListener(bh);
-        findViewById(R.id.www).setOnClickListener(bh);
-        findViewById(R.id.settings).setOnClickListener(bh);
+        clock = (ImageButton) findViewById(R.id.btnClock);
+        book = (ImageButton) findViewById(R.id.btnBook);
+        www = (ImageButton) findViewById(R.id.btnAppCondivisi);
+        settings = (ImageButton) findViewById(R.id.btnSettings);
+
+        clock.setOnClickListener(this);
+        book.setOnClickListener(this);
+        www.setOnClickListener(this);
+        settings.setOnClickListener(this);
 
     }
 
@@ -48,50 +58,29 @@ public class MainActivity extends AppCompatActivity {
         return preferences.getString(key, null);
     }
 
-    private class ButtonHandler implements View.OnClickListener
+    @Override
+    public void onClick(View view)
     {
-        @Override
-        public void onClick(View view)
+        switch(view.getId())
         {
-            switch(view.getId())
-            {
-                case R.id.clock:
-                    view.startAnimation(buttonClick);
-                    launchClock(view);
-                    break;
-                case R.id.book:
-                    view.startAnimation(buttonClick);
-                    launchMyNotes(view);
-                    break;
-                case R.id.www:
-                    view.startAnimation(buttonClick);
-                    launchShNotes(view);
-                    break;
-                case R.id.settings:
-                    view.startAnimation(buttonClick);
-                    launchSettings(view);
-                    break;
-            }
+            case R.id.btnClock:
+                view.startAnimation(buttonClick);
+                launchClock(view);
+                break;
+            case R.id.btnBook:
+                view.startAnimation(buttonClick);
+                launchMyNotes(view);
+                break;
+            case R.id.btnAppCondivisi:
+                view.startAnimation(buttonClick);
+                launchShNotes(view);
+                break;
+            case R.id.btnSettings:
+                view.startAnimation(buttonClick);
+                launchSettings(view);
+                break;
         }
     }
-    /*
-    public void launchOrario(View v)
-    {
-        Intent i = new Intent(this, Orario.class);
-        startActivity(i);
-    }
-
-    public void launchImieiAppunti(View v)
-    {
-        Intent i = new Intent(this, ImieiAppunti.class);
-        startActivity(i);
-    }
-
-    public void launchAppuntiCondivisi(View v)
-    {
-        Intent i = new Intent(this, AppuntiCondivisi.class);
-        startActivity(i);
-    }*/
 
     public void launchSettings(View v)
     {
