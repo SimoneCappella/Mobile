@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private AlphaAnimation buttonClick = new AlphaAnimation(1.2F, 0.6F);
+
     public static void setName(String key, String value, Context context)
     {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
@@ -73,7 +74,8 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
-    /*public void launchOrario(View v)
+    /*
+    public void launchOrario(View v)
     {
         Intent i = new Intent(this, Orario.class);
         startActivity(i);
