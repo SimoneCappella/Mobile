@@ -59,7 +59,7 @@
         app:layout_constraintTop_toBottomOf="@+id/editMateria" />
 
     <Button
-        android:id="@+id/btnSalva"
+        android:id="@+id/btnInsert"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -69,7 +69,7 @@
         app:layout_constraintTop_toBottomOf="@+id/editOrario" />
 
     <EditText
-        android:id="@+id/editCerca"
+        android:id="@+id/editSearch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -79,11 +79,11 @@
         android:hint="Cerca Materia"
         android:inputType="textPersonName"
         android:textStyle="italic"
-        app:layout_constraintBottom_toTopOf="@+id/editCancella"
+        app:layout_constraintBottom_toTopOf="@+id/editDelete"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/btnAll"
+        android:id="@+id/btnSelect"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="40dp"
@@ -93,7 +93,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
-        android:id="@+id/editCancella"
+        android:id="@+id/editDelete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -103,27 +103,27 @@
         android:hint="Cancella Materia"
         android:inputType="textPersonName"
         android:textStyle="italic"
-        app:layout_constraintBottom_toTopOf="@+id/btnAll"
+        app:layout_constraintBottom_toTopOf="@+id/btnSelect"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/btnCerca"
+        android:id="@+id/btnSearch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
         android:text="cerca"
-        app:layout_constraintBottom_toBottomOf="@+id/editCerca"
-        app:layout_constraintStart_toEndOf="@+id/editCerca"
-        app:layout_constraintTop_toTopOf="@+id/editCerca" />
+        app:layout_constraintBottom_toBottomOf="@+id/editSearch"
+        app:layout_constraintStart_toEndOf="@+id/editSearch"
+        app:layout_constraintTop_toTopOf="@+id/editSearch" />
 
     <Button
-        android:id="@+id/btnCancella"
+        android:id="@+id/btnDelete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
         android:text="cancella"
-        app:layout_constraintBottom_toBottomOf="@+id/editCancella"
-        app:layout_constraintStart_toEndOf="@+id/editCancella"
-        app:layout_constraintTop_toTopOf="@+id/editCancella" />
+        app:layout_constraintBottom_toBottomOf="@+id/editDelete"
+        app:layout_constraintStart_toEndOf="@+id/editDelete"
+        app:layout_constraintTop_toTopOf="@+id/editDelete" />
 
 </android.support.constraint.ConstraintLayout>
