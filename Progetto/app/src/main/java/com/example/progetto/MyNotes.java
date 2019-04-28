@@ -28,7 +28,8 @@ public class MyNotes extends AppCompatActivity {
         @Override
         public void onClick(View v)
         {
-            switch (v.getId()){
+            switch (v.getId())
+            {
                 case R.id.back:
                     v.startAnimation(buttonClick);
                     finish();
