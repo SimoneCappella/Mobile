@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AggMaterie">
+
+    <TextView
+        android:id="@+id/textAggMaterie"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Aggiungi materie"
+        android:textSize="18sp"
+        android:textStyle="italic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/btnBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:background="#0000"
+        android:src="@drawable/back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/editMateria"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="60dp"
+        android:ems="10"
+        android:gravity="center"
+        android:hint="Nome materia"
+        android:inputType="textPersonName"
+        android:textStyle="italic"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textAggMaterie" />
+
+    <EditText
+        android:id="@+id/editOrario"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:ems="10"
+        android:gravity="center"
+        android:hint="Orario"
+        android:inputType="textPersonName"
+        android:textStyle="italic"
+        app:layout_constraintBottom_toBottomOf="@+id/editMateria"
+        app:layout_constraintStart_toEndOf="@+id/editMateria"
+        app:layout_constraintTop_toTopOf="@+id/editMateria" />
+
+    <Button
+        android:id="@+id/btnInsert"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:text="salva"
+        app:layout_constraintBottom_toBottomOf="@+id/editOrario"
+        app:layout_constraintStart_toEndOf="@+id/editOrario"
+        app:layout_constraintTop_toTopOf="@+id/editOrario" />
+
+    <EditText
+        android:id="@+id/editSearch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:ems="10"
+        android:gravity="center"
+        android:hint="Cerca Materia"
+        android:inputType="textPersonName"
+        android:textStyle="italic"
+        app:layout_constraintEnd_toEndOf="@+id/editMateria"
+        app:layout_constraintStart_toStartOf="@+id/editMateria"
+        app:layout_constraintTop_toBottomOf="@+id/editMateria" />
+
+    <Button
+        android:id="@+id/btnSelect"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="550dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="28dp"
+        android:text="Visualizza db"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnDelete" />
+
+    <EditText
+        android:id="@+id/editDelete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:ems="10"
+        android:gravity="center"
+        android:hint="Cancella Materia"
+        android:inputType="textPersonName"
+        android:textStyle="italic"
+        app:layout_constraintEnd_toEndOf="@+id/editSearch"
+        app:layout_constraintStart_toStartOf="@+id/editSearch"
+        app:layout_constraintTop_toBottomOf="@+id/editSearch" />
+
+    <Button
+        android:id="@+id/btnSearch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="60dp"
+        android:text="cerca"
+        app:layout_constraintBottom_toBottomOf="@+id/editSearch"
+        app:layout_constraintStart_toEndOf="@+id/editSearch"
+        app:layout_constraintTop_toTopOf="@+id/editSearch" />
+
+    <Button
+        android:id="@+id/btnDelete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="60dp"
+        android:text="cancella"
+        app:layout_constraintBottom_toBottomOf="@+id/editDelete"
+        app:layout_constraintStart_toEndOf="@+id/editDelete"
+        app:layout_constraintTop_toTopOf="@+id/editDelete" />
+
+</android.support.constraint.ConstraintLayout>

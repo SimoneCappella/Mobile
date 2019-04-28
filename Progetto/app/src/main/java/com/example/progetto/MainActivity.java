@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.media.Image;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -27,14 +26,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         getWindow().getDecorView().setBackgroundColor(Color.parseColor("#cccccc"));
-        TextView tv = findViewById(R.id.benvenuto);
+        TextView tv = findViewById(R.id.textBenvenuto);
         String w = "Benvenuto "+ getName("nome", this) + "!";
         tv.setText(w);
 
-        clock = (ImageButton) findViewById(R.id.clock);
-        book = (ImageButton) findViewById(R.id.book);
-        www = (ImageButton) findViewById(R.id.www);
-        settings = (ImageButton) findViewById(R.id.settings);
+        clock = (ImageButton) findViewById(R.id.btnClock);
+        book = (ImageButton) findViewById(R.id.btnBook);
+        www = (ImageButton) findViewById(R.id.btnAppCondivisi);
+        settings = (ImageButton) findViewById(R.id.btnSettings);
 
         clock.setOnClickListener(this);
         book.setOnClickListener(this);
@@ -64,19 +63,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     {
         switch(view.getId())
         {
-            case R.id.clock:
+            case R.id.btnClock:
                 view.startAnimation(buttonClick);
                 launchClock(view);
                 break;
-            case R.id.book:
+            case R.id.btnBook:
                 view.startAnimation(buttonClick);
                 launchMyNotes(view);
                 break;
-            case R.id.www:
+            case R.id.btnAppCondivisi:
                 view.startAnimation(buttonClick);
                 launchShNotes(view);
                 break;
-            case R.id.settings:
+            case R.id.btnSettings:
                 view.startAnimation(buttonClick);
                 launchSettings(view);
                 break;
