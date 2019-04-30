@@ -112,7 +112,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Intent i = new Intent(this, FirstActivity.class);
         startActivity(i);
     }
-    void show(String message)
+    public void show(String message)
     {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();  //Da sostituire con gli Intent
         Log.i(getClass().getName(), message);
