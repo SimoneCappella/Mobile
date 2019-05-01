@@ -29,11 +29,11 @@ public class FirstActivity extends AppCompatActivity implements View.OnClickList
         editNome = (EditText) findViewById(R.id.editNome);
         btnProsegui.setOnClickListener(this);
 
-        if(MainActivity.getName("nome", this)!= null )
+      /*  if(MainActivity.getName("nome", this)!= null )
         {
             launchMainActivity();
             finish();
-        }
+        }*/
     }
 
     public void onClick(View v)

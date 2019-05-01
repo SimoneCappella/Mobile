@@ -11,13 +11,13 @@
         android:theme="@style/AppTheme.NoActionBar">
         <activity
             android:name=".ui.login.LoginActivity"
-            android:label="@string/title_activity_login"></activity>
+            android:label="@string/title_activity_login" />
         <activity android:name=".AggMaterie" />
         <activity android:name=".ShNotes" />
         <activity android:name=".MyNotes" />
         <activity android:name=".Clock" />
         <activity android:name=".Settings" />
-        <activity android:name=".FirstActivity">
+        <activity android:name=".LoginActivityFirst">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
