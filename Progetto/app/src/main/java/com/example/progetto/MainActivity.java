@@ -106,12 +106,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         startActivity(i);
     }
 
-
-    public void launchFirstActivity()
-    {
-        Intent i = new Intent(this, FirstActivity.class);
-        startActivity(i);
-    }
     public void show(String message)
     {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();  //Da sostituire con gli Intent

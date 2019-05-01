@@ -19,7 +19,7 @@ public class LoginActivityFirst extends AppCompatActivity implements View.OnClic
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        editNome = (EditText) findViewById(R.id.username);
+        editNome = findViewById(R.id.username);
         signin = findViewById(R.id.login);
 
         signin.setOnClickListener(this);
