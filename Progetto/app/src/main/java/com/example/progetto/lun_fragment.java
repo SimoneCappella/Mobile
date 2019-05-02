@@ -1,7 +1,13 @@
 package com.example.progetto;
 
+import android.app.Activity;
 import android.app.Fragment;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,22 +19,85 @@ import android.widget.TextView;
 
 public class lun_fragment extends Fragment implements View.OnClickListener {
 
+    private DataManager dm;
+
+    public static final int REQUEST_CODE = 0000;
+
+    TextView txtMat1, txtMat2, txtMat3, txtMat4, txtMat5, txtMat6, txtMat7, txtMat8, txtMat9, txtMat10, txtMat11;
+    TextView txtOra1, txtOra2, txtOra3, txtOra4, txtOra5, txtOra6, txtOra7, txtOra8, txtOra9, txtOra10, txtOra11;
+    TextView txtAula1, txtAula2, txtAula3, txtAula4, txtAula5, txtAula6, txtAula7, txtAula8, txtAula9, txtAula10, txtAula11;
+
+    String ora, materia, aula, i;
+
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
     {
         View v = inflater.inflate(R.layout.lun, container, false);
 
-        TextView txtMat1 = v.findViewById(R.id.materia1);
-        txtMat1.setText("Vedi");
-        TextView txtMat2 = v.findViewById(R.id.materia2);
-        TextView txtMat3 = v.findViewById(R.id.materia3);
-        TextView txtMat4 = v.findViewById(R.id.materia4);
-        TextView txtMat5 = v.findViewById(R.id.materia5);
-        TextView txtMat6 = v.findViewById(R.id.materia6);
-        TextView txtMat7 = v.findViewById(R.id.materia7);
-        TextView txtMat8 = v.findViewById(R.id.materia8);
-        TextView txtMat9 = v.findViewById(R.id.materia9);
-        TextView txtMat10 = v.findViewById(R.id.materia10);
-        TextView txtMat11 = v.findViewById(R.id.materia11);
+        txtMat1 = v.findViewById(R.id.materia1);
+        txtMat1.setText(getMateria("lun_1", getActivity()));
+        txtAula1 = v.findViewById(R.id.aula1);
+        txtAula1.setText(getAula("lun_1", getActivity()));
+        txtOra1 = v.findViewById(R.id.ora1);
+
+        txtMat2 = v.findViewById(R.id.materia2);
+        txtMat2.setText(getMateria("lun_2", getActivity()));
+        txtAula2 = v.findViewById(R.id.aula2);
+        txtAula2.setText(getAula("lun_2", getActivity()));
+        txtOra2 = v.findViewById(R.id.ora2);
+
+        txtMat3 = v.findViewById(R.id.materia3);
+        txtMat3.setText(getMateria("lun_3", getActivity()));
+        txtAula3 = v.findViewById(R.id.aula3);
+        txtAula3.setText(getAula("lun_3", getActivity()));
+        txtOra3 = v.findViewById(R.id.ora3);
+
+        txtMat4 = v.findViewById(R.id.materia4);
+        txtMat4.setText(getMateria("lun_4", getActivity()));
+        txtAula4 = v.findViewById(R.id.aula4);
+        txtAula4.setText(getAula("lun_4", getActivity()));
+        txtOra4 = v.findViewById(R.id.ora4);
+
+        txtMat5 = v.findViewById(R.id.materia5);
+        txtMat5.setText(getMateria("lun_5", getActivity()));
+        txtAula5 = v.findViewById(R.id.aula5);
+        txtAula5.setText(getAula("lun_5", getActivity()));
+        txtOra5 = v.findViewById(R.id.ora5);
+
+        txtMat6 = v.findViewById(R.id.materia6);
+        txtMat6.setText(getMateria("lun_6", getActivity()));
+        txtAula6 = v.findViewById(R.id.aula6);
+        txtAula6.setText(getAula("lun_6", getActivity()));
+        txtOra6 = v.findViewById(R.id.ora6);
+
+        txtMat7 = v.findViewById(R.id.materia7);
+        txtMat7.setText(getMateria("lun_7", getActivity()));
+        txtAula7 = v.findViewById(R.id.aula7);
+        txtAula7.setText(getAula("lun_7", getActivity()));
+        txtOra7 = v.findViewById(R.id.ora7);
+
+        txtMat8 = v.findViewById(R.id.materia8);
+        txtMat8.setText(getMateria("lun_8", getActivity()));
+        txtAula8 = v.findViewById(R.id.aula8);
+        txtAula8.setText(getAula("lun_8", getActivity()));
+        txtOra8 = v.findViewById(R.id.ora8);
+
+        txtMat9 = v.findViewById(R.id.materia9);
+        txtMat9.setText(getMateria("lun_9", getActivity()));
+        txtAula9 = v.findViewById(R.id.aula9);
+        txtAula9.setText(getAula("lun_9", getActivity()));
+        txtOra9 = v.findViewById(R.id.ora9);
+
+        txtMat10 = v.findViewById(R.id.materia10);
+        txtMat10.setText(getMateria("lun_10", getActivity()));
+        txtAula10 = v.findViewById(R.id.aula10);
+        txtAula10.setText(getAula("lun_10", getActivity()));
+        txtOra10 = v.findViewById(R.id.ora10);
+
+        txtMat11 = v.findViewById(R.id.materia11);
+        txtMat11.setText(getMateria("lun_11", getActivity()));
+        txtAula11 = v.findViewById(R.id.aula11);
+        txtAula11.setText(getAula("lun_11", getActivity()));
+        txtOra11 = v.findViewById(R.id.ora11);
 
         ImageView btnEdit1 = v.findViewById(R.id.edit1);
         btnEdit1.setOnClickListener(this);
@@ -53,6 +122,8 @@ public class lun_fragment extends Fragment implements View.OnClickListener {
         ImageView btnEdit11 = v.findViewById(R.id.edit11);
         btnEdit11.setOnClickListener(this);
 
+        dm = new DataManager(getActivity());
+
         return v;
     }
 
@@ -63,38 +134,172 @@ public class lun_fragment extends Fragment implements View.OnClickListener {
         switch (v.getId())
         {
             case R.id.edit1:
+                i = "lun_1";
+                ora = txtOra1.getText().toString();
                 v.startAnimation(buttonClick);
+                launchList();
                 break;
             case R.id.edit2:
+                i = "lun_2";
+                ora = txtOra2.getText().toString();
                 v.startAnimation(buttonClick);
+                launchList();
                 break;
             case R.id.edit3:
+                i = "lun_3";
+                ora = txtOra3.getText().toString();
                 v.startAnimation(buttonClick);
+                launchList();
                 break;
             case R.id.edit4:
+                i = "lun_4";
+                ora = txtOra4.getText().toString();
                 v.startAnimation(buttonClick);
+                launchList();
                 break;
             case R.id.edit5:
+                i = "lun_5";
+                ora = txtOra5.getText().toString();
                 v.startAnimation(buttonClick);
+                launchList();
                 break;
             case R.id.edit6:
+                i = "lun_6";
+                ora = txtOra6.getText().toString();
                 v.startAnimation(buttonClick);
+                launchList();
                 break;
             case R.id.edit7:
+                i = "lun_7";
+                ora = txtOra7.getText().toString();
                 v.startAnimation(buttonClick);
+                launchList();
                 break;
             case R.id.edit8:
+                i = "lun_8";
+                ora = txtOra8.getText().toString();
                 v.startAnimation(buttonClick);
+                launchList();
                 break;
             case R.id.edit9:
+                i = "lun_9";
+                ora = txtOra9.getText().toString();
                 v.startAnimation(buttonClick);
+                launchList();
                 break;
             case R.id.edit10:
+                i = "lun_10";
+                ora = txtOra10.getText().toString();
                 v.startAnimation(buttonClick);
+                launchList();
                 break;
             case R.id.edit11:
+                i = "lun_11";
+                ora = txtOra11.getText().toString();
                 v.startAnimation(buttonClick);
+                launchList();
                 break;
         }
+    }
+
+    public void launchList(){
+        Intent intent1 = new Intent (getActivity(), List.class);
+        startActivityForResult(intent1, REQUEST_CODE);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data){
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if ((requestCode == REQUEST_CODE) && (resultCode == Activity.RESULT_OK)) {
+            String[] res = data.getStringArrayExtra("mat");
+            materia = res[0];
+            aula = res[1];
+        }
+        salvaOrario(i, materia, aula);
+    }
+
+    public void salvaOrario (String key, String materia, String aula){
+        if (dm.searchM(materia)!=null){
+            dm.delete(materia);
+        }
+        dm.insert(materia, ora, aula, key); //salva la materia nel db
+        setMateria(key, materia, getActivity());
+        setAula(key, aula, getActivity());
+
+        switch (i){
+            case "lun_1":
+                txtMat1.setText(getMateria("lun_1", getActivity()));
+                txtAula1.setText(getAula("lun_1", getActivity()));
+                break;
+            case "lun_2": //salva la materia selezionata nelle preferences
+                txtMat2.setText(getMateria("lun_2", getActivity()));
+                txtAula2.setText(getAula("lun_2", getActivity()));
+                break;
+            case "lun_3":
+                txtMat3.setText(getMateria("lun_3", getActivity()));
+                txtAula3.setText(getAula("lun_3", getActivity()));
+                break;
+            case "lun_4":
+                txtMat4.setText(getMateria("lun_4", getActivity()));
+                txtAula4.setText(getAula("lun_5", getActivity()));
+                break;
+            case "lun_5":
+                txtMat5.setText(getMateria("lun_5", getActivity()));
+                txtAula5.setText(getAula("lun_5", getActivity()));
+                break;
+            case "lun_6":
+                txtMat6.setText(getMateria("lun_6", getActivity()));
+                txtAula6.setText(getAula("lun_6", getActivity()));
+                break;
+            case "lun_7":
+                txtMat7.setText(getMateria("lun_7", getActivity()));
+                txtAula7.setText(getAula("lun_7", getActivity()));
+                break;
+            case "lun_8":
+                txtMat8.setText(getMateria("lun_8", getActivity()));
+                txtAula8.setText(getAula("lun_8", getActivity()));
+                break;
+            case "lun_9":
+                txtMat9.setText(getMateria("lun_9", getActivity()));
+                txtAula9.setText(getAula("lun_9", getActivity()));
+                break;
+            case "lun_10":
+                txtMat10.setText(getMateria("lun_10", getActivity()));
+                txtAula10.setText(getAula("lun_10", getActivity()));
+                break;
+            case "lun_11":
+                txtMat11.setText(getMateria("lun_11", getActivity()));
+                txtAula11.setText(getAula("lun_11", getActivity()));
+                break;
+        }
+    }
+
+    public static void setMateria(String key, String value,  Context context)
+    {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(key, value);
+        editor.commit();
+    }
+
+    public static String getMateria(String key, Context context)
+    {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        return preferences.getString(key, null);
+    }
+
+    public static void setAula(String key, String value,  Context context)
+    {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(key+"_A", value);
+        editor.commit();
+    }
+
+    public static String getAula(String key, Context context)
+    {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        return preferences.getString(key+ "_A", null);
     }
 }

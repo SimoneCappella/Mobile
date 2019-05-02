@@ -57,7 +57,10 @@ public class AggMaterie extends AppCompatActivity implements View.OnClickListene
 
     public void showData (Cursor c){
         while(c.moveToNext()){
-            Log.i(c.getString(1), c.getString(2));
+            String query = " / code: " + c.getString(1) + " / materia: " + c.getString(2) + "/ ora: " + c.getString(3) + "/ aula: " + c.getString(4);
+            Log.i("Data ---->", query);
+            /*String queryC = "c:" + c.getString(2);
+            Log.i("data", queryC);*/
         }
     }
 
@@ -70,7 +73,7 @@ public class AggMaterie extends AppCompatActivity implements View.OnClickListene
                 break;
             case R.id.btnInsert:
                 v.startAnimation(buttonClick);
-                dm.insert(editMateria.getText().toString(), editOrario.getText().toString());
+                dm.insert(editMateria.getText().toString(), editOrario.getText().toString(), "aula", "cdoe");
                 break;
             case R.id.btnSelect:
                 v.startAnimation(buttonClick);
@@ -78,7 +81,7 @@ public class AggMaterie extends AppCompatActivity implements View.OnClickListene
                 break;
             case R.id.btnSearch:
                 v.startAnimation(buttonClick);
-                showData(dm.searchM(editSearch.getText().toString()));
+                showData(dm.searchByCode(editSearch.getText().toString()));
                 break;
             case R.id.btnDelete:
                 v.startAnimation(buttonClick);

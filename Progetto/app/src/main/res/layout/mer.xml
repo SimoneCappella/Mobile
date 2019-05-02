@@ -17,11 +17,11 @@
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="51dp">
+            android:layout_height="match_parent">
 
             <TextView
                 android:id="@+id/ora1"
-                android:layout_width="87dp"
+                android:layout_width="60dp"
                 android:layout_height="35dp"
                 android:gravity="center"
                 android:text="8.30"
@@ -31,10 +31,20 @@
 
             <TextView
                 android:id="@+id/materia1"
-                android:layout_width="247dp"
+                android:layout_width="220dp"
                 android:layout_height="35dp"
                 android:gravity="center"
                 android:text="materia"
+                android:textColor="#404040"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/aula1"
+                android:layout_width="80dp"
+                android:layout_height="35dp"
+                android:gravity="center"
+                android:text="aula"
                 android:textColor="#404040"
                 android:textSize="16sp"
                 android:textStyle="bold" />
@@ -70,6 +80,17 @@
                 android:text="materia"
                 android:textSize="16sp"
                 android:textStyle="bold|italic" />
+
+            <TextView
+                android:id="@+id/aula2"
+                android:layout_width="80dp"
+                android:layout_height="35dp"
+                android:gravity="center"
+                android:text="aula"
+                android:textColor="#404040"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
             <ImageButton
                 android:id="@+id/edit2"
                 android:layout_width="36dp"
@@ -102,6 +123,17 @@
                 android:textColor="#404040"
                 android:textSize="16sp"
                 android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/aula3"
+                android:layout_width="80dp"
+                android:layout_height="35dp"
+                android:gravity="center"
+                android:text="aula"
+                android:textColor="#404040"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
             <ImageButton
                 android:id="@+id/edit3"
                 android:layout_width="36dp"
@@ -132,6 +164,17 @@
                 android:text="materia"
                 android:textSize="16sp"
                 android:textStyle="bold|italic" />
+
+            <TextView
+                android:id="@+id/aula4"
+                android:layout_width="80dp"
+                android:layout_height="35dp"
+                android:gravity="center"
+                android:text="aula"
+                android:textColor="#404040"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
             <ImageButton
                 android:id="@+id/edit4"
                 android:layout_width="36dp"
@@ -164,6 +207,17 @@
                 android:textColor="#404040"
                 android:textSize="16sp"
                 android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/aula5"
+                android:layout_width="80dp"
+                android:layout_height="35dp"
+                android:gravity="center"
+                android:text="aula"
+                android:textColor="#404040"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
             <ImageButton
                 android:id="@+id/edit5"
                 android:layout_width="36dp"
@@ -194,6 +248,17 @@
                 android:text="materia"
                 android:textSize="16sp"
                 android:textStyle="bold|italic" />
+
+            <TextView
+                android:id="@+id/aula6"
+                android:layout_width="80dp"
+                android:layout_height="35dp"
+                android:gravity="center"
+                android:text="aula"
+                android:textColor="#404040"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
             <ImageButton
                 android:id="@+id/edit6"
                 android:layout_width="36dp"
@@ -226,6 +291,17 @@
                 android:textColor="#404040"
                 android:textSize="16sp"
                 android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/aula7"
+                android:layout_width="80dp"
+                android:layout_height="35dp"
+                android:gravity="center"
+                android:text="aula"
+                android:textColor="#404040"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
             <ImageButton
                 android:id="@+id/edit7"
                 android:layout_width="36dp"
@@ -256,6 +332,17 @@
                 android:text="materia"
                 android:textSize="16sp"
                 android:textStyle="bold|italic" />
+
+            <TextView
+                android:id="@+id/aula8"
+                android:layout_width="80dp"
+                android:layout_height="35dp"
+                android:gravity="center"
+                android:text="aula"
+                android:textColor="#404040"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
             <ImageButton
                 android:id="@+id/edit8"
                 android:layout_width="36dp"
@@ -288,6 +375,17 @@
                 android:textColor="#404040"
                 android:textSize="16sp"
                 android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/aula9"
+                android:layout_width="80dp"
+                android:layout_height="35dp"
+                android:gravity="center"
+                android:text="aula"
+                android:textColor="#404040"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
             <ImageButton
                 android:id="@+id/edit9"
                 android:layout_width="36dp"
@@ -318,6 +416,17 @@
                 android:text="materia"
                 android:textSize="16sp"
                 android:textStyle="bold|italic" />
+
+            <TextView
+                android:id="@+id/aula10"
+                android:layout_width="80dp"
+                android:layout_height="35dp"
+                android:gravity="center"
+                android:text="aula"
+                android:textColor="#404040"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
             <ImageButton
                 android:id="@+id/edit10"
                 android:layout_width="36dp"
@@ -350,6 +459,17 @@
                 android:textColor="#404040"
                 android:textSize="16sp"
                 android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/aula11"
+                android:layout_width="80dp"
+                android:layout_height="35dp"
+                android:gravity="center"
+                android:text="aula"
+                android:textColor="#404040"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
             <ImageButton
                 android:id="@+id/edit11"
                 android:layout_width="36dp"
