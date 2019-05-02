@@ -15,7 +15,7 @@
         <activity android:name=".MyNotes" />
         <activity android:name=".Clock" />
         <activity android:name=".Settings" />
-        <activity android:name=".FirstActivity">
+        <activity android:name=".LoginActivityFirst">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

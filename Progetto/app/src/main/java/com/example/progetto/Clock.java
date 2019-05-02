@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
-import android.widget.AdapterView;
 
 public class Clock extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
