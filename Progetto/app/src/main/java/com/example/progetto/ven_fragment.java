@@ -242,7 +242,7 @@ public class ven_fragment extends Fragment implements View.OnClickListener {
                 break;
             case "ven_4":
                 txtMat4.setText(getMateria("ven_4", getActivity()));
-                txtAula4.setText(getAula("ven_5", getActivity()));
+                txtAula4.setText(getAula("ven_4", getActivity()));
                 break;
             case "ven_5":
                 txtMat5.setText(getMateria("ven_5", getActivity()));

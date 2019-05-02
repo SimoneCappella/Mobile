@@ -242,7 +242,7 @@ public class gio_fragment extends Fragment implements View.OnClickListener {
                 break;
             case "gio_4":
                 txtMat4.setText(getMateria("gio_4", getActivity()));
-                txtAula4.setText(getAula("gio_5", getActivity()));
+                txtAula4.setText(getAula("gio_4", getActivity()));
                 break;
             case "gio_5":
                 txtMat5.setText(getMateria("gio_5", getActivity()));

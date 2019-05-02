@@ -242,7 +242,7 @@ public class lun_fragment extends Fragment implements View.OnClickListener {
                 break;
             case "lun_4":
                 txtMat4.setText(getMateria("lun_4", getActivity()));
-                txtAula4.setText(getAula("lun_5", getActivity()));
+                txtAula4.setText(getAula("lun_4", getActivity()));
                 break;
             case "lun_5":
                 txtMat5.setText(getMateria("lun_5", getActivity()));

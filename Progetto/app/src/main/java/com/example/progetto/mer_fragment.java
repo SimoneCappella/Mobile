@@ -242,7 +242,7 @@ public class mer_fragment extends Fragment implements View.OnClickListener {
                 break;
             case "mer_4":
                 txtMat4.setText(getMateria("mer_4", getActivity()));
-                txtAula4.setText(getAula("mer_5", getActivity()));
+                txtAula4.setText(getAula("mer_4", getActivity()));
                 break;
             case "mer_5":
                 txtMat5.setText(getMateria("mer_5", getActivity()));

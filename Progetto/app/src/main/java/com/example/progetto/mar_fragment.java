@@ -242,7 +242,7 @@ public class mar_fragment extends Fragment implements View.OnClickListener {
                 break;
             case "mar_4":
                 txtMat4.setText(getMateria("mar_4", getActivity()));
-                txtAula4.setText(getAula("mar_5", getActivity()));
+                txtAula4.setText(getAula("mar_4", getActivity()));
                 break;
             case "mar_5":
                 txtMat5.setText(getMateria("mar_5", getActivity()));
