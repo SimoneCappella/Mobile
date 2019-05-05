@@ -12,7 +12,7 @@
 
     <EditText
         android:id="@+id/lgnusername"
-        android:layout_width="315dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
 
         android:layout_marginBottom="16dp"
@@ -20,14 +20,15 @@
         android:inputType="textEmailAddress"
         android:selectAllOnFocus="true"
         app:layout_constraintBottom_toTopOf="@+id/lgnpassword"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/lgnpassword"
+        app:layout_constraintStart_toStartOf="@+id/lgnpassword"
         app:layout_constraintTop_toBottomOf="@+id/txtBenvenuto" />
 
     <EditText
         android:id="@+id/lgnpassword"
-        android:layout_width="315dp"
+        android:layout_width="295dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="42dp"
         android:layout_marginBottom="16dp"
         android:hint="Password"
         android:imeActionLabel="@string/action_sign_in_short"
@@ -36,7 +37,6 @@
         android:selectAllOnFocus="true"
         app:layout_constraintBottom_toTopOf="@+id/btnLogin"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/lgnusername" />
 
     <Button
@@ -44,13 +44,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="start"
-        android:layout_marginBottom="102dp"
+        android:layout_marginBottom="74dp"
         android:enabled="true"
         android:text="Login"
-        app:layout_constraintBottom_toTopOf="@+id/loading"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/txtBenvenuto2"
+        app:layout_constraintEnd_toEndOf="@+id/lgnpassword"
+        app:layout_constraintStart_toStartOf="@+id/lgnpassword"
         app:layout_constraintTop_toBottomOf="@+id/lgnpassword" />
 
     <ProgressBar
@@ -58,55 +57,50 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginEnd="84dp"
-        android:layout_marginBottom="53dp"
         android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@+id/btnRegistrami"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/txtBenvenuto2"
-        app:layout_constraintTop_toBottomOf="@+id/btnLogin" />
+        app:layout_constraintStart_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/txtBenvenuto2" />
 
     <TextView
         android:id="@+id/txtBenvenuto"
-        android:layout_width="331dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="53dp"
-        android:layout_marginBottom="48dp"
+        android:layout_width="303dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="121dp"
+        android:layout_marginEnd="2dp"
+        android:layout_marginBottom="19dp"
         android:gravity="center"
         android:text="Hai già un account? Effettua il login!"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/lgnusername"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/lgnusername"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/txtBenvenuto2"
-        android:layout_width="0dp"
-        android:layout_height="44dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="37dp"
+        android:layout_width="248dp"
+        android:layout_height="67dp"
+        android:layout_marginBottom="24dp"
         android:gravity="center"
         android:text="Altrimenti registrati!"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/btnRegistrami"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/loading"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnLogin" />
 
     <Button
         android:id="@+id/btnRegistrami"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="213dp"
+        android:layout_marginBottom="133dp"
         android:text="Voglio registrarmi"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/loading" />
+        app:layout_constraintTop_toBottomOf="@+id/txtBenvenuto2" />
 </android.support.constraint.ConstraintLayout>

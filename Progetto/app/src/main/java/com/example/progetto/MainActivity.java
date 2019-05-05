@@ -31,10 +31,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         String w = "Benvenuto "+ username + "!";
         tv.setText(w);
 
-        clock = (ImageButton) findViewById(R.id.btnClock);
-        book = (ImageButton) findViewById(R.id.btnBook);
-        www = (ImageButton) findViewById(R.id.btnAppCondivisi);
-        settings = (ImageButton) findViewById(R.id.btnSettings);
+        clock = findViewById(R.id.btnClock);
+        book = findViewById(R.id.btnBook);
+        www = findViewById(R.id.btnAppCondivisi);
+        settings = findViewById(R.id.btnSettings);
 
         clock.setOnClickListener(this);
         book.setOnClickListener(this);

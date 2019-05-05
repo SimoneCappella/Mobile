@@ -41,7 +41,7 @@ public class FirstActivity extends AppCompatActivity implements View.OnClickList
                 userLogin(view);
                 break;
             case R.id.btnRegistrami:
-                launchReg();
+                launchReg(view);
                 break;
         }
     }
@@ -51,9 +51,9 @@ public class FirstActivity extends AppCompatActivity implements View.OnClickList
         Intent i = new Intent(this, MainActivity.class);
         startActivity(i);
     }
-    public void launchReg()
+    public void launchReg(View view)
     {
-        Intent i = new Intent(this, Register.class);
+        Intent i = new Intent(this , Register.class);
         startActivity(i);
     }
     public void userLogin(View view) {

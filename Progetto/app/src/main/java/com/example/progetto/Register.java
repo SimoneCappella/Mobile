@@ -2,7 +2,6 @@ package com.example.progetto;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -16,6 +15,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
 
     EditText username, password;
     String register_name, register_pass;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
