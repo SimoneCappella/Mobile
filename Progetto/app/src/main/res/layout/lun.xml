@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -17,11 +18,11 @@
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="51dp">
+            android:layout_height="match_parent">
 
             <TextView
                 android:id="@+id/ora1"
-                android:layout_width="87dp"
+                android:layout_width="60dp"
                 android:layout_height="35dp"
                 android:gravity="center"
                 android:text="8.30"
@@ -31,10 +32,20 @@
 
             <TextView
                 android:id="@+id/materia1"
-                android:layout_width="247dp"
+                android:layout_width="220dp"
                 android:layout_height="35dp"
                 android:gravity="center"
                 android:text="materia"
+                android:textColor="#404040"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/aula1"
+                android:layout_width="80dp"
+                android:layout_height="35dp"
+                android:gravity="center"
+                android:text="aula"
                 android:textColor="#404040"
                 android:textSize="16sp"
                 android:textStyle="bold" />
@@ -70,6 +81,17 @@
                 android:text="materia"
                 android:textSize="16sp"
                 android:textStyle="bold|italic" />
+
+            <TextView
+                android:id="@+id/aula2"
+                android:layout_width="80dp"
+                android:layout_height="35dp"
+                android:gravity="center"
+                android:text="aula"
+                android:textColor="#404040"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
             <ImageButton
                 android:id="@+id/edit2"
                 android:layout_width="36dp"
@@ -102,6 +124,17 @@
                 android:textColor="#404040"
                 android:textSize="16sp"
                 android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/aula3"
+                android:layout_width="80dp"
+                android:layout_height="35dp"
+                android:gravity="center"
+                android:text="aula"
+                android:textColor="#404040"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
             <ImageButton
                 android:id="@+id/edit3"
                 android:layout_width="36dp"
@@ -132,6 +165,17 @@
                 android:text="materia"
                 android:textSize="16sp"
                 android:textStyle="bold|italic" />
+
+            <TextView
+                android:id="@+id/aula4"
+                android:layout_width="80dp"
+                android:layout_height="35dp"
+                android:gravity="center"
+                android:text="aula"
+                android:textColor="#404040"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
             <ImageButton
                 android:id="@+id/edit4"
                 android:layout_width="36dp"
@@ -164,6 +208,17 @@
                 android:textColor="#404040"
                 android:textSize="16sp"
                 android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/aula5"
+                android:layout_width="80dp"
+                android:layout_height="35dp"
+                android:gravity="center"
+                android:text="aula"
+                android:textColor="#404040"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
             <ImageButton
                 android:id="@+id/edit5"
                 android:layout_width="36dp"
@@ -194,6 +249,17 @@
                 android:text="materia"
                 android:textSize="16sp"
                 android:textStyle="bold|italic" />
+
+            <TextView
+                android:id="@+id/aula6"
+                android:layout_width="80dp"
+                android:layout_height="35dp"
+                android:gravity="center"
+                android:text="aula"
+                android:textColor="#404040"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
             <ImageButton
                 android:id="@+id/edit6"
                 android:layout_width="36dp"
@@ -226,6 +292,17 @@
                 android:textColor="#404040"
                 android:textSize="16sp"
                 android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/aula7"
+                android:layout_width="80dp"
+                android:layout_height="35dp"
+                android:gravity="center"
+                android:text="aula"
+                android:textColor="#404040"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
             <ImageButton
                 android:id="@+id/edit7"
                 android:layout_width="36dp"
@@ -256,6 +333,17 @@
                 android:text="materia"
                 android:textSize="16sp"
                 android:textStyle="bold|italic" />
+
+            <TextView
+                android:id="@+id/aula8"
+                android:layout_width="80dp"
+                android:layout_height="35dp"
+                android:gravity="center"
+                android:text="aula"
+                android:textColor="#404040"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
             <ImageButton
                 android:id="@+id/edit8"
                 android:layout_width="36dp"
@@ -288,6 +376,17 @@
                 android:textColor="#404040"
                 android:textSize="16sp"
                 android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/aula9"
+                android:layout_width="80dp"
+                android:layout_height="35dp"
+                android:gravity="center"
+                android:text="aula"
+                android:textColor="#404040"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
             <ImageButton
                 android:id="@+id/edit9"
                 android:layout_width="36dp"
@@ -318,6 +417,17 @@
                 android:text="materia"
                 android:textSize="16sp"
                 android:textStyle="bold|italic" />
+
+            <TextView
+                android:id="@+id/aula10"
+                android:layout_width="80dp"
+                android:layout_height="35dp"
+                android:gravity="center"
+                android:text="aula"
+                android:textColor="#404040"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
             <ImageButton
                 android:id="@+id/edit10"
                 android:layout_width="36dp"
@@ -350,6 +460,17 @@
                 android:textColor="#404040"
                 android:textSize="16sp"
                 android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/aula11"
+                android:layout_width="80dp"
+                android:layout_height="35dp"
+                android:gravity="center"
+                android:text="aula"
+                android:textColor="#404040"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
             <ImageButton
                 android:id="@+id/edit11"
                 android:layout_width="36dp"
@@ -361,5 +482,50 @@
 
 
     </TableLayout>
+
+    <TextView
+        android:id="@+id/textDay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="Lunedi"
+        app:layout_constraintBottom_toTopOf="@+id/textMateria0"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textMateria0"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="104dp"
+        android:layout_marginBottom="16dp"
+        android:text="materia"
+        app:layout_constraintBottom_toTopOf="@+id/tableLayout"
+        app:layout_constraintEnd_toStartOf="@+id/textAula0" />
+
+    <TextView
+        android:id="@+id/textOra0"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="ora"
+        app:layout_constraintBottom_toBottomOf="@+id/textMateria0"
+        app:layout_constraintEnd_toStartOf="@+id/textMateria0"
+        app:layout_constraintHorizontal_bias="0.062"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textMateria0"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/textAula0"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="68dp"
+        android:text="aula"
+        app:layout_constraintBottom_toBottomOf="@+id/textMateria0"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textMateria0"
+        app:layout_constraintVertical_bias="0.0" />
 
 </android.support.constraint.ConstraintLayout>
