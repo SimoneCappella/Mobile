@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     ImageButton book;
     ImageButton www;
     ImageButton settings;
+    public static String username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +28,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         getWindow().getDecorView().setBackgroundColor(Color.parseColor("#cccccc"));
         TextView tv = findViewById(R.id.textBenvenuto);
-        String w = "Benvenuto "+ getName("nome", this) + "!";
+        String w = "Benvenuto "+ username + "!";
         tv.setText(w);
 
         clock = (ImageButton) findViewById(R.id.btnClock);
