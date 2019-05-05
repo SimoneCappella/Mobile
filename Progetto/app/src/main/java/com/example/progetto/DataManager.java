@@ -3,6 +3,7 @@ package com.example.progetto;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
@@ -85,6 +86,24 @@ public class DataManager extends SQLiteOpenHelper {
         @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion){
 
+        }
+    }
+
+
+
+
+    public void cancellaLuogo(Context context, String nome) {
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        try {
+
+            String[] args = new String[]{nome};
+            db.delete(DataManager.TABLE_ROW_A, DataManager.TABLE_ROW_ID + "=?", args);
+
+            db.close();
+        } catch (SQLiteException e) {
+            db.close();
+            e.printStackTrace();
         }
     }
 }
