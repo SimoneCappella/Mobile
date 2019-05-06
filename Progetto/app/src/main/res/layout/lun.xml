@@ -88,9 +88,8 @@
                 android:layout_height="35dp"
                 android:gravity="center"
                 android:text="aula"
-                android:textColor="#404040"
                 android:textSize="16sp"
-                android:textStyle="bold" />
+                android:textStyle="bold|italic" />
 
             <ImageButton
                 android:id="@+id/edit2"
@@ -172,9 +171,8 @@
                 android:layout_height="35dp"
                 android:gravity="center"
                 android:text="aula"
-                android:textColor="#404040"
                 android:textSize="16sp"
-                android:textStyle="bold" />
+                android:textStyle="bold|italic" />
 
             <ImageButton
                 android:id="@+id/edit4"
@@ -256,9 +254,8 @@
                 android:layout_height="35dp"
                 android:gravity="center"
                 android:text="aula"
-                android:textColor="#404040"
                 android:textSize="16sp"
-                android:textStyle="bold" />
+                android:textStyle="bold|italic" />
 
             <ImageButton
                 android:id="@+id/edit6"
@@ -340,9 +337,8 @@
                 android:layout_height="35dp"
                 android:gravity="center"
                 android:text="aula"
-                android:textColor="#404040"
                 android:textSize="16sp"
-                android:textStyle="bold" />
+                android:textStyle="bold|italic" />
 
             <ImageButton
                 android:id="@+id/edit8"
@@ -424,9 +420,8 @@
                 android:layout_height="35dp"
                 android:gravity="center"
                 android:text="aula"
-                android:textColor="#404040"
                 android:textSize="16sp"
-                android:textStyle="bold" />
+                android:textStyle="bold|italic" />
 
             <ImageButton
                 android:id="@+id/edit10"
@@ -482,50 +477,5 @@
 
 
     </TableLayout>
-
-    <TextView
-        android:id="@+id/textDay"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:text="Lunedi"
-        app:layout_constraintBottom_toTopOf="@+id/textMateria0"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-        android:id="@+id/textMateria0"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="104dp"
-        android:layout_marginBottom="16dp"
-        android:text="materia"
-        app:layout_constraintBottom_toTopOf="@+id/tableLayout"
-        app:layout_constraintEnd_toStartOf="@+id/textAula0" />
-
-    <TextView
-        android:id="@+id/textOra0"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:text="ora"
-        app:layout_constraintBottom_toBottomOf="@+id/textMateria0"
-        app:layout_constraintEnd_toStartOf="@+id/textMateria0"
-        app:layout_constraintHorizontal_bias="0.062"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textMateria0"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <TextView
-        android:id="@+id/textAula0"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="68dp"
-        android:text="aula"
-        app:layout_constraintBottom_toBottomOf="@+id/textMateria0"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textMateria0"
-        app:layout_constraintVertical_bias="0.0" />
 
 </android.support.constraint.ConstraintLayout>
