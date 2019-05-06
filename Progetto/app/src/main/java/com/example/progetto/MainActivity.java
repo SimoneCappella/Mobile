@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,6 +21,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     ImageButton book;
     ImageButton www;
     ImageButton settings;
+    Button btnVediDb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,11 +37,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         www = (ImageButton) findViewById(R.id.btnAppCondivisi);
         settings = (ImageButton) findViewById(R.id.btnSettings);
 
+        btnVediDb = findViewById(R.id.btnDB);
+        btnVediDb.setOnClickListener(this);
+
         clock.setOnClickListener(this);
         book.setOnClickListener(this);
         www.setOnClickListener(this);
         settings.setOnClickListener(this);
-
     }
 
     private AlphaAnimation buttonClick = new AlphaAnimation(1.2F, 0.6F);
@@ -79,6 +83,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 view.startAnimation(buttonClick);
                 launchSettings(view);
                 break;
+            case R.id.btnDB:
+                view.startAnimation(buttonClick);
+                launchAggMaterie(view);
         }
     }
 
@@ -110,5 +117,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();  //Da sostituire con gli Intent
         Log.i(getClass().getName(), message);
+    }
+
+    public void launchAggMaterie(View v)
+    {
+        Intent i = new Intent (this, AggMaterie.class);
+        startActivity(i);
     }
 }

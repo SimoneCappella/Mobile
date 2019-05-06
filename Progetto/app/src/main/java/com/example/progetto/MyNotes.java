@@ -12,7 +12,6 @@ import android.widget.ImageButton;
 public class MyNotes extends AppCompatActivity implements View.OnClickListener{
 
     ImageButton back;
-    Button agg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -21,10 +20,8 @@ public class MyNotes extends AppCompatActivity implements View.OnClickListener{
 
         getWindow().getDecorView().setBackgroundColor(Color.parseColor("#cccccc"));
 
-        agg = (Button) findViewById(R.id.btnAgg);
         back = (ImageButton) findViewById(R.id.back);
         back.setOnClickListener(this);
-        agg.setOnClickListener(this);
     }
 
     private AlphaAnimation buttonClick = new AlphaAnimation(1F, 0.7F);
@@ -37,17 +34,6 @@ public class MyNotes extends AppCompatActivity implements View.OnClickListener{
                 v.startAnimation(buttonClick);
                 finish();
                 break;
-            case R.id.btnAgg:
-                v.startAnimation(buttonClick);
-                launchAggMaterie(v);
-                break;
         }
-
-    }
-
-    public void launchAggMaterie(View v)
-    {
-        Intent i = new Intent (this, AggMaterie.class);
-        startActivity(i);
     }
 }

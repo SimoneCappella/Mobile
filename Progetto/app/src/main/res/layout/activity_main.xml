@@ -114,5 +114,15 @@
         app:layout_constraintStart_toStartOf="@+id/btnSettings"
         app:layout_constraintTop_toBottomOf="@+id/btnSettings" />
 
+    <Button
+        android:id="@+id/btnDB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="60dp"
+        android:text="vedi db"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
 
 </android.support.constraint.ConstraintLayout>
