@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     ImageButton www;
     ImageButton settings;
     public static String username;
+    Button btnVediDb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

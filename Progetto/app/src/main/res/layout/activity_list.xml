@@ -8,7 +8,7 @@
 
     <ListView
         android:background="#0000"
-        android:id="@+id/listappunticonivisi"
+        android:id="@+id/listMaterie"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
