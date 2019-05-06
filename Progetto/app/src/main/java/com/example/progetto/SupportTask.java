@@ -60,9 +60,14 @@ public class SupportTask extends AsyncTask <String, Void, String> {
                 bufferedWriter.close();
                 OS.close();
                 InputStream IS = httpURLConnection.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(IS, "iso-8859-1"));
+                while((line = bufferedReader.readLine()) != null)
+                {
+                    result += line;
+                }
+                bufferedReader.close();
                 IS.close();
                 httpURLConnection.disconnect();
-                result = "Registrazione avvenuta con successo";
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             } catch (IOException e) {

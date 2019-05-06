@@ -55,11 +55,16 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
         {
             e.printStackTrace();
         }
-        if (auth.equals("Registrazione avvenuta con successo"))
+        if (auth.equals("    Registrazione avvenuta con successo!  "))
         {
             show("Registrazione effettuata con successo, accedi!");
-        }else
-            show("Errore, riprova");
+        }else if (auth.equals("    Username in uso  "))
+            {
+            show("Username già in uso, prova con uno diverso!");
+            } else
+            {
+                show("Errore, riprovare più tardi!");
+            }
     }
     public void launchMainActivity(View view)
     {
