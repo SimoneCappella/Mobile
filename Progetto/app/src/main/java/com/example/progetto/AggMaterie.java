@@ -73,7 +73,7 @@ public class AggMaterie extends AppCompatActivity implements View.OnClickListene
                 break;
             case R.id.btnInsert:
                 v.startAnimation(buttonClick);
-                dm.insert(editMateria.getText().toString(), editOrario.getText().toString(), "aula", "cdoe");
+                dm.insert(editMateria.getText().toString(), editOrario.getText().toString(), "aula", "code");
                 break;
             case R.id.btnSelect:
                 v.startAnimation(buttonClick);

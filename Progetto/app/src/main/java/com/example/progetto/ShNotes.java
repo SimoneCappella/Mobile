@@ -42,7 +42,7 @@ public class ShNotes extends AppCompatActivity {
 //        final ArrayAdapter<String> arrayAdapter;
 //        arrayAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, ListaLuoghi);
 
-        ListaAppunti = findViewById(R.id.listappunticonivisi);
+        ListaAppunti = findViewById(R.id.listMaterie);
         ListaAppunti.setAdapter(arrayAdapter);
 
 

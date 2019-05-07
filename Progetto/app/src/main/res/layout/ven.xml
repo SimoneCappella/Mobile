@@ -87,9 +87,8 @@
                 android:layout_height="35dp"
                 android:gravity="center"
                 android:text="aula"
-                android:textColor="#404040"
                 android:textSize="16sp"
-                android:textStyle="bold" />
+                android:textStyle="bold|italic" />
 
             <ImageButton
                 android:id="@+id/edit2"
@@ -171,9 +170,8 @@
                 android:layout_height="35dp"
                 android:gravity="center"
                 android:text="aula"
-                android:textColor="#404040"
                 android:textSize="16sp"
-                android:textStyle="bold" />
+                android:textStyle="bold|italic" />
 
             <ImageButton
                 android:id="@+id/edit4"
@@ -255,9 +253,8 @@
                 android:layout_height="35dp"
                 android:gravity="center"
                 android:text="aula"
-                android:textColor="#404040"
                 android:textSize="16sp"
-                android:textStyle="bold" />
+                android:textStyle="bold|italic" />
 
             <ImageButton
                 android:id="@+id/edit6"
@@ -339,9 +336,8 @@
                 android:layout_height="35dp"
                 android:gravity="center"
                 android:text="aula"
-                android:textColor="#404040"
                 android:textSize="16sp"
-                android:textStyle="bold" />
+                android:textStyle="bold|italic" />
 
             <ImageButton
                 android:id="@+id/edit8"
@@ -423,9 +419,8 @@
                 android:layout_height="35dp"
                 android:gravity="center"
                 android:text="aula"
-                android:textColor="#404040"
                 android:textSize="16sp"
-                android:textStyle="bold" />
+                android:textStyle="bold|italic" />
 
             <ImageButton
                 android:id="@+id/edit10"

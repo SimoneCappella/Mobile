@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -46,28 +47,38 @@ public class List extends AppCompatActivity implements View.OnClickListener{
                 value = adapter.getItem(position);
                 Toast.makeText(getApplicationContext(), value, Toast.LENGTH_SHORT).show();
 
-                myDialog.setContentView(R.layout.pop_aula);
-                Button btnSalva;
-                myDialog.setContentView(R.layout.pop_aula);
-                editAula = myDialog.findViewById(R.id.editAula);
-                btnSalva = myDialog.findViewById(R.id.btnSalva);
-                btnSalva.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        aula = editAula.getText().toString();
-                        Toast.makeText(getApplicationContext(), "aula: " + aula, Toast.LENGTH_SHORT).show();
-                        String[] valore = {value, aula};
+                if (value.equals("Elimina")){
+                    Log.i("value", value);
+                    String[] valore = {null, null};
+                    Intent intent = new Intent();
+                    intent = intent.putExtra("mat", valore);
+                    setResult(Activity.RESULT_OK, intent);
 
-                        Intent intent = new Intent();
-                        intent = intent.putExtra("mat", valore);
-                        setResult(Activity.RESULT_OK, intent);
+                    finish();
+                }else {
+                    myDialog.setContentView(R.layout.pop_aula);
+                    Button btnSalva;
+                    myDialog.setContentView(R.layout.pop_aula);
+                    editAula = myDialog.findViewById(R.id.editAula);
+                    btnSalva = myDialog.findViewById(R.id.btnSalva);
+                    btnSalva.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            aula = editAula.getText().toString();
+                            Toast.makeText(getApplicationContext(), "aula: " + aula, Toast.LENGTH_SHORT).show();
+                            String[] valore = {value, aula};
 
-                        finish();
+                            Intent intent = new Intent();
+                            intent = intent.putExtra("mat", valore);
+                            setResult(Activity.RESULT_OK, intent);
 
-                        myDialog.dismiss();
-                    }
-                });
-                myDialog.show();
+                            finish();
+
+                            myDialog.dismiss();
+                        }
+                    });
+                    myDialog.show();
+                }
             }
         });
     }

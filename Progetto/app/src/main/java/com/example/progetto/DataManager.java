@@ -35,6 +35,7 @@ public class DataManager extends SQLiteOpenHelper {
 
     public void delete(String m){
         String query = "DELETE FROM " + TABLE_C_M_AND_O_AND_A + " WHERE " + TABLE_ROW_M + " = '" + m + "';";
+        Log.i("delete() = ", query);
         db.execSQL(query);
     }
 
@@ -96,7 +97,6 @@ public class DataManager extends SQLiteOpenHelper {
 
         SQLiteDatabase db = this.getReadableDatabase();
         try {
-
             String[] args = new String[]{nome};
             db.delete(DataManager.TABLE_ROW_A, DataManager.TABLE_ROW_ID + "=?", args);
 
