@@ -22,7 +22,7 @@ public class FirstActivity extends AppCompatActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        getWindow().getDecorView().setBackgroundColor(Color.parseColor("#cccccc"));
+        getWindow().getDecorView().setBackgroundColor(Color.parseColor("#dddddd"));
 
 
         editNome = findViewById(R.id.lgnusername);

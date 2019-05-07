@@ -21,13 +21,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     ImageButton book;
     ImageButton www;
     ImageButton settings;
+    Button btnVediDb;
     public static String username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        getWindow().getDecorView().setBackgroundColor(Color.parseColor("#cccccc"));
+        getWindow().getDecorView().setBackgroundColor(Color.parseColor("#dddddd"));
         TextView tv = findViewById(R.id.textBenvenuto);
         String w = "Benvenuto "+ username + "!";
         tv.setText(w);
