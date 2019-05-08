@@ -33,15 +33,4 @@ public class Settings extends AppCompatActivity {
         startActivity(i);
     }
 
-    private AlphaAnimation buttonClick = new AlphaAnimation(1F, 0.7F);
-
-    private class ButtonHandler implements View.OnClickListener
-    {
-        @Override
-        public void onClick(View v)
-        {
-            v.startAnimation(buttonClick);
-            finish();
-        }
-    }
 }

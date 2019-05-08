@@ -20,7 +20,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-        getWindow().getDecorView().setBackgroundColor(Color.parseColor("#cccccc"));
+        getWindow().getDecorView().setBackgroundColor(Color.parseColor("#dddddd"));
 
         Button registrami = findViewById(R.id.btnReg);
         registrami.setOnClickListener(this);
