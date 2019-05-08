@@ -44,6 +44,9 @@ public class AggiungiAppuntiLoc extends AppCompatActivity implements View.OnClic
                 String data = editData.getText().toString();
                 String appunti = editApp.getText().toString();
                 da.insert(a, data, titolo, appunti);
+                /*Intent intent = new Intent(this, Notes_Page.class);
+                intent.putExtra("mat", a);
+                startActivity(intent);*/
                 finish();
                 break;
         }

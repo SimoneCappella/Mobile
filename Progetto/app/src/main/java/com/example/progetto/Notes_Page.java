@@ -27,7 +27,7 @@ public class Notes_Page extends AppCompatActivity implements View.OnClickListene
 
     String a;
 
-    Cursor cursor;
+    //Cursor cursor;
 
     //SimpleCursorAdapter adapter;
 
@@ -40,8 +40,8 @@ public class Notes_Page extends AppCompatActivity implements View.OnClickListene
 
         getWindow().getDecorView().setBackgroundColor(Color.parseColor("#cccccc"));
 
-        Intent r = getIntent();
-        a = r.getStringExtra("mat");
+
+
 
         txt = findViewById(R.id.textMateria);
         txt.setText(a);
@@ -87,11 +87,15 @@ public class Notes_Page extends AppCompatActivity implements View.OnClickListene
     }
 
     @Override
-    protected void onStart(){
-        super.onStart();
+    protected void onRestart(){
+
+        super.onRestart();
+
+        Intent r = getIntent();
+        a = r.getStringExtra("mat");
 
         DataAppLoc da = new DataAppLoc(this);
-        cursor = da.searchM(a);
+        Cursor cursor = da.searchM(a);
 
         String[] fromColumns={"t", "d"};
         int[] viewsList = {R.id.txtTitle, R.id.txtDate};
@@ -120,6 +124,7 @@ public class Notes_Page extends AppCompatActivity implements View.OnClickListene
                 bundle.putString("app", app);
 
                 i.putExtra("data", bundle);
+                //i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(i);
             }
         });
