@@ -13,8 +13,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ModificaProfilo"></activity>
-        <activity android:name=".Register"/>
+        <activity android:name=".ModificaProfilo" />
+        <activity android:name=".Register" />
         <activity android:name=".List" />
         <activity android:name=".AggMaterie" />
         <activity android:name=".ShNotes" />

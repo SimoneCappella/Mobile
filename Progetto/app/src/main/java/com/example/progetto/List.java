@@ -31,7 +31,7 @@ public class List extends AppCompatActivity implements View.OnClickListener{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
 
-        listMaterie = findViewById(R.id.listappunticonivisi);
+        listMaterie = findViewById(R.id.listMaterie);
         textView = findViewById(R.id.textView);
         listItem = getResources().getStringArray(R.array.Materie);
 

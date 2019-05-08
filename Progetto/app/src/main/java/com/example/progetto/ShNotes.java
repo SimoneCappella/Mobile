@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Color;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -25,8 +24,6 @@ public class ShNotes extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sh_notes);
-
-        getWindow().getDecorView().setBackgroundColor(Color.parseColor("#cccccc"));
         ShNotes.ButtonHandler bh = new ShNotes.ButtonHandler();
         findViewById(R.id.back).setOnClickListener(bh);
 
@@ -127,6 +124,7 @@ public class ShNotes extends AppCompatActivity {
         {
             v.startAnimation(buttonClick);
             finish();
+            overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
         }
     }
 

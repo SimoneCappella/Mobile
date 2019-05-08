@@ -1,12 +1,9 @@
 package com.example.progetto;
 
-import android.content.Intent;
-import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
-import android.widget.Button;
 import android.widget.ImageButton;
 
 public class MyNotes extends AppCompatActivity implements View.OnClickListener{
@@ -17,9 +14,6 @@ public class MyNotes extends AppCompatActivity implements View.OnClickListener{
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_notes);
-
-        getWindow().getDecorView().setBackgroundColor(Color.parseColor("#cccccc"));
-
         back = (ImageButton) findViewById(R.id.back);
         back.setOnClickListener(this);
     }
@@ -33,6 +27,7 @@ public class MyNotes extends AppCompatActivity implements View.OnClickListener{
             case R.id.back:
                 v.startAnimation(buttonClick);
                 finish();
+                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
                 break;
         }
     }

@@ -1,6 +1,5 @@
 package com.example.progetto;
 
-import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.app.AlertDialog;
@@ -16,8 +15,6 @@ public class ModificaProfilo extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_modifica_profilo);
-
-        getWindow().getDecorView().setBackgroundColor(Color.parseColor("#cccccc"));
         ButtonHandler bh = new ButtonHandler();
         findViewById(R.id.back).setOnClickListener(bh);
 
