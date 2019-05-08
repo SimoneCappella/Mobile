@@ -16,7 +16,7 @@ public class Settings extends AppCompatActivity {
 
         getWindow().getDecorView().setBackgroundColor(Color.parseColor("#cccccc"));
         ButtonHandler bh = new ButtonHandler();
-        findViewById(R.id.back).setOnClickListener(bh);
+        findViewById(R.id.btnBack).setOnClickListener(bh);
 
         TextView tv = findViewById(R.id.modifica_profilo);
 

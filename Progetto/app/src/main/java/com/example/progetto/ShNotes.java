@@ -28,7 +28,7 @@ public class ShNotes extends AppCompatActivity {
 
         getWindow().getDecorView().setBackgroundColor(Color.parseColor("#cccccc"));
         ShNotes.ButtonHandler bh = new ShNotes.ButtonHandler();
-        findViewById(R.id.back).setOnClickListener(bh);
+        findViewById(R.id.btnBack).setOnClickListener(bh);
 
         //CURSOR FETCHALL
         DataManager mydatabase=new DataManager(ctx);

@@ -19,7 +19,7 @@ public class ModificaProfilo extends AppCompatActivity {
 
         getWindow().getDecorView().setBackgroundColor(Color.parseColor("#cccccc"));
         ButtonHandler bh = new ButtonHandler();
-        findViewById(R.id.back).setOnClickListener(bh);
+        findViewById(R.id.btnBack).setOnClickListener(bh);
 
 
         TextView modUser = findViewById(R.id.modifica_user);

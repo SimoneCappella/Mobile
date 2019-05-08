@@ -19,7 +19,7 @@ public class Clock extends AppCompatActivity implements BottomNavigationView.OnN
 
         getWindow().getDecorView().setBackgroundColor(Color.parseColor("#cccccc"));
         Clock.ButtonHandler bh = new Clock.ButtonHandler();
-        findViewById(R.id.back).setOnClickListener(bh);
+        findViewById(R.id.btnBack).setOnClickListener(bh);
         BottomNavigationView nav = findViewById(R.id.navigation);
         nav.setItemIconTintList(null);
         nav.setItemIconSize(110);
