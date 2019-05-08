@@ -1,7 +1,6 @@
 package com.example.progetto;
 
 import android.database.Cursor;
-import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -33,7 +32,6 @@ public class AggMaterie extends AppCompatActivity implements View.OnClickListene
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_agg_materie);
-        getWindow().getDecorView().setBackgroundColor(Color.parseColor("#cccccc"));
 
         dm = new DataManager(this);
 

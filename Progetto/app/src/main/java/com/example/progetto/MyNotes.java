@@ -65,6 +65,8 @@ public class MyNotes extends AppCompatActivity implements View.OnClickListener{
             case R.id.btnBack:
                 v.startAnimation(buttonClick);
                 finish();
+                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+                break;
         }
     }
 }

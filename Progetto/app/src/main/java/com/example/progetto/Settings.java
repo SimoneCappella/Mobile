@@ -1,12 +1,11 @@
 package com.example.progetto;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
-import android.widget.TextView;
+import android.widget.Button;
 
 public class Settings extends AppCompatActivity {
     @Override
@@ -33,4 +32,16 @@ public class Settings extends AppCompatActivity {
         startActivity(i);
     }
 
+    private AlphaAnimation buttonClick = new AlphaAnimation(1F, 0.7F);
+
+    private class ButtonHandler implements View.OnClickListener
+    {
+        @Override
+        public void onClick(View v)
+        {
+            v.startAnimation(buttonClick);
+            finish();
+            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+        }
+    }
 }
