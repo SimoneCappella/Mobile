@@ -67,5 +67,5 @@
         android:text="About us"
         app:layout_constraintStart_toStartOf="@+id/notifiche"
         app:layout_constraintTop_toBottomOf="@+id/notifiche" />
-    
+
 </android.support.constraint.ConstraintLayout>

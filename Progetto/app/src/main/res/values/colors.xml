@@ -4,5 +4,5 @@
     <color name="colorPrimaryDark">#000000</color>
     <color name="MainColor">#dddddd</color>
     <color name="colorAccent">#D81B60</color>
-    <color name="textPop">#ffffffff</color>
+    <color name="textPop">#FFFFFF</color>
 </resources>

@@ -25,7 +25,7 @@ public class ShNotes extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sh_notes);
         ShNotes.ButtonHandler bh = new ShNotes.ButtonHandler();
-        findViewById(R.id.back).setOnClickListener(bh);
+        findViewById(R.id.btnBack).setOnClickListener(bh);
 
         //CURSOR FETCHALL
         DataManager mydatabase=new DataManager(ctx);

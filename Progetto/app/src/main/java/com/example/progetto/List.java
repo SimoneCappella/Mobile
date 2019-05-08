@@ -12,13 +12,12 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 public class List extends AppCompatActivity implements View.OnClickListener{
 
     ListView listMaterie;
-    TextView textView;
+
     String[] listItem;
     String value;
     String aula;
@@ -32,7 +31,7 @@ public class List extends AppCompatActivity implements View.OnClickListener{
         setContentView(R.layout.activity_list);
 
         listMaterie = findViewById(R.id.listMaterie);
-        textView = findViewById(R.id.textView);
+
         listItem = getResources().getStringArray(R.array.Materie);
 
         myDialog = new Dialog(this);
