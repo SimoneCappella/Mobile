@@ -26,9 +26,7 @@ public class MyNotes extends AppCompatActivity implements View.OnClickListener{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_notes);
 
-        getWindow().getDecorView().setBackgroundColor(Color.parseColor("#cccccc"));
-
-        back = findViewById(R.id.btnBack);
+        back = findViewById(R.id.back);
         back.setOnClickListener(this);
 
         DataManager dm = new DataManager(this);
@@ -62,7 +60,7 @@ public class MyNotes extends AppCompatActivity implements View.OnClickListener{
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.btnBack:
+            case R.id.back:
                 v.startAnimation(buttonClick);
                 finish();
                 overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);

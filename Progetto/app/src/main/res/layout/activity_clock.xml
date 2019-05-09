@@ -44,7 +44,7 @@
         android:id="@+id/navigation"
         android:layout_width="416dp"
         android:layout_height="51dp"
-        android:background="#a6a6a6"
+        android:background="#eeeeee"
         app:labelVisibilityMode="unlabeled"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
