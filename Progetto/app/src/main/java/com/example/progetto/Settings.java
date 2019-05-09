@@ -1,22 +1,25 @@
 package com.example.progetto;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
+
+import android.widget.ImageButton;
 import android.widget.TextView;
 
-public class Settings extends AppCompatActivity {
+public class Settings extends AppCompatActivity implements View.OnClickListener{
+
+    ImageButton back;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
-        getWindow().getDecorView().setBackgroundColor(Color.parseColor("#cccccc"));
-        ButtonHandler bh = new ButtonHandler();
-        findViewById(R.id.back).setOnClickListener(bh);
+        back = findViewById(R.id.back);
+        back.setOnClickListener(this);
 
         TextView tv = findViewById(R.id.modifica_profilo);
 
@@ -35,14 +38,19 @@ public class Settings extends AppCompatActivity {
 
     private AlphaAnimation buttonClick = new AlphaAnimation(1F, 0.7F);
 
-    private class ButtonHandler implements View.OnClickListener
-    {
-        @Override
-        public void onClick(View v)
-        {
-            v.startAnimation(buttonClick);
-            finish();
-            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.back:
+                v.startAnimation(buttonClick);
+                finish();
+                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+                break;
         }
     }
+
+
+
+
+
 }

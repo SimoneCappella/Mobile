@@ -17,7 +17,6 @@ public class Clock extends AppCompatActivity implements BottomNavigationView.OnN
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_clock);
 
-        getWindow().getDecorView().setBackgroundColor(Color.parseColor("#cccccc"));
         Clock.ButtonHandler bh = new Clock.ButtonHandler();
         findViewById(R.id.back).setOnClickListener(bh);
         BottomNavigationView nav = findViewById(R.id.navigation);
