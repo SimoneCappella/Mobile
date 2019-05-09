@@ -26,8 +26,6 @@ public class MyNotes extends AppCompatActivity implements View.OnClickListener{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_notes);
 
-        getWindow().getDecorView().setBackgroundColor(Color.parseColor("#cccccc"));
-
         back = findViewById(R.id.back);
         back.setOnClickListener(this);
 

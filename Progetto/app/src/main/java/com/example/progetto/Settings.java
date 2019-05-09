@@ -19,7 +19,8 @@ public class Settings extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
-        getWindow().getDecorView().setBackgroundColor(Color.parseColor("#cccccc"));
+        Settings.ButtonHandler bh = new Settings.ButtonHandler();
+        findViewById(R.id.back).setOnClickListener(bh);
         //ButtonHandler bh = new ButtonHandler();
         //findViewById(R.id.btnBack).setOnClickListener(bh);
 
