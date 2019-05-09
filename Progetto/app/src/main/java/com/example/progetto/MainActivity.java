@@ -3,6 +3,7 @@ package com.example.progetto;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -20,13 +21,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     ImageButton book;
     ImageButton www;
     ImageButton settings;
-    Button btnVediDb;
     public static String username;
+    Button btnVediDb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        getWindow().getDecorView().setBackgroundColor(Color.parseColor("#cccccc"));
         TextView tv = findViewById(R.id.textBenvenuto);
         String w = "Benvenuto "+ username + "!";
         tv.setText(w);
@@ -83,8 +85,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 launchSettings(view);
                 break;
             //case R.id.btnDB:
-                //view.startAnimation(buttonClick);
-                //launchAggMaterie(view);
+            //view.startAnimation(buttonClick);
+            //launchAggMaterie(view);
         }
     }
 

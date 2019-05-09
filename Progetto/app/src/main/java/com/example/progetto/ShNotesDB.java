@@ -3,10 +3,11 @@ package com.example.progetto;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.widget.AdapterView;
@@ -14,6 +15,7 @@ import android.widget.ImageButton;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,21 +26,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class ShNotes extends AppCompatActivity implements View.OnClickListener{
+public class ShNotesDB extends AppCompatActivity implements View.OnClickListener{
 
     private static final String KEY_SUCCESS = "success";
     private static final String KEY_DATA = "data";
@@ -59,9 +50,18 @@ public class ShNotes extends AppCompatActivity implements View.OnClickListener{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_condivisi_listing);
 
-        ShNotes.ButtonHandler bh = new ShNotes.ButtonHandler();
+        //movieListView = (ListView) findViewById(R.id.movieList);
+        //new FetchMoviesAsyncTask().execute();
+        // opppure
 
-        findViewById(R.id.back).setOnClickListener(bh);
+        DataManager mydatabase=new DataManager(ctx);
+        String[] fromColumns={"m"};
+        int[] toViews = {R.id.nomemateria};
+        final Cursor cursor = mydatabase.selectAll();
+        final SimpleCursorAdapter arrayAdapter = new SimpleCursorAdapter(this,R.layout.modellorigamaterie,cursor,fromColumns,toViews,0);
+
+        materieListView = (ListView) findViewById(R.id.materieList);
+        materieListView.setAdapter(arrayAdapter);
 
         getWindow().getDecorView().setBackgroundColor(Color.parseColor("#cccccc"));
 
@@ -70,21 +70,6 @@ public class ShNotes extends AppCompatActivity implements View.OnClickListener{
         filtra = (ImageButton) findViewById(R.id.filtra);
         filtra.setOnClickListener(this);
 
-        materieListView = (ListView) findViewById(R.id.materieList);
-        new FetchMoviesAsyncTask().execute();
-
-
-
-
-        // opppure
-        /*
-        DataManager mydatabase=new DataManager(ctx);
-        String[] fromColumns={"m"};
-        int[] toViews = {R.id.nomemateria};
-        final Cursor cursor = mydatabase.selectAll();
-        final SimpleCursorAdapter arrayAdapter = new SimpleCursorAdapter(this,R.layout.modellorigamaterie,cursor,fromColumns,toViews,0);
-        materieListView = (ListView) findViewById(R.id.materieList);
-        materieListView.setAdapter(arrayAdapter);
         materieListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -105,7 +90,7 @@ public class ShNotes extends AppCompatActivity implements View.OnClickListener{
 
             }
         });
-*/
+
     }
 
     @Override
@@ -124,7 +109,7 @@ public class ShNotes extends AppCompatActivity implements View.OnClickListener{
         protected void onPreExecute() {
             super.onPreExecute();
             //Display progress bar
-            pDialog = new ProgressDialog(ShNotes.this);
+            pDialog = new ProgressDialog(ShNotesDB.this);
             pDialog.setMessage("Loading materie. Please wait...");
             pDialog.setIndeterminate(false);
             pDialog.setCancelable(false);
@@ -133,7 +118,6 @@ public class ShNotes extends AppCompatActivity implements View.OnClickListener{
 
         @Override
         protected String doInBackground(String... params) {
-
             HttpJsonParser httpJsonParser = new HttpJsonParser();
             JSONObject jsonObject = httpJsonParser.makeHttpRequest(
                     BASE_URL + "fetch_all_materie.php", "GET", null);
@@ -173,10 +157,10 @@ public class ShNotes extends AppCompatActivity implements View.OnClickListener{
 
     private void populateMovieList() {
         ListAdapter adapter = new SimpleAdapter(
-                ShNotes.this, movieList,
-                R.layout.modellorigamaterie, new String[]{KEY_MATERIA_ID,
+                ShNotesDB.this, movieList,
+                R.layout.list_item, new String[]{KEY_MATERIA_ID,
                 KEY_MATERIA_NAME},
-                new int[]{R.id.materiacondivisaID, R.id.nomemateria});
+                new int[]{R.id.materiacondivisaID, R.id.materiacondivisaName});
         // updating listview
         materieListView.setAdapter(adapter);
         //Call MovieUpdateDeleteActivity when a movie is clicked
@@ -185,16 +169,15 @@ public class ShNotes extends AppCompatActivity implements View.OnClickListener{
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 //Check for network connectivity
                 if (CheckNetworkStatus.isNetworkAvailable(getApplicationContext())) {
-
-                    String nomeMateria = ((TextView) view.findViewById(R.id.nomemateria))
+                    String movieId = ((TextView) view.findViewById(R.id.materiacondivisaID))
                             .getText().toString();
                     Intent intent = new Intent(getApplicationContext(),
-                            AppuntiListingActivity.class);
-                    intent.putExtra(KEY_MATERIA_NAME, nomeMateria);
-                    startActivityForResult(intent, 22);
+                            MovieUpdateDeleteActivity.class);
+                    intent.putExtra(KEY_MATERIA_ID, movieId);
+                    startActivityForResult(intent, 20);
 
                 } else {
-                    Toast.makeText(ShNotes.this,
+                    Toast.makeText(ShNotesDB.this,
                             "Unable to connect to internet",
                             Toast.LENGTH_LONG).show();
 
@@ -209,15 +192,7 @@ public class ShNotes extends AppCompatActivity implements View.OnClickListener{
 
 
 
-    private class ButtonHandler implements View.OnClickListener
-    {
-        @Override
-        public void onClick(View v)
-        {
-            v.startAnimation(buttonClick);
-            finish();
-        }
-    }
+
 
 
 
@@ -238,6 +213,7 @@ public class ShNotes extends AppCompatActivity implements View.OnClickListener{
 
                 finish();
                 break;
+
         }
     }
 
