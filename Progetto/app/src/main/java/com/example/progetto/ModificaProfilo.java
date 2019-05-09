@@ -17,10 +17,9 @@ public class ModificaProfilo extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_modifica_profilo);
 
-        getWindow().getDecorView().setBackgroundColor(Color.parseColor("#cccccc"));
+        //getWindow().getDecorView().setBackgroundColor(Color.parseColor("#cccccc"));
         ButtonHandler bh = new ButtonHandler();
-        findViewById(R.id.back).setOnClickListener(bh);
-
+        findViewById(R.id.btnBack).setOnClickListener(bh);
 
         TextView modUser = findViewById(R.id.modifica_user);
         TextView modEmail = findViewById(R.id.modifica_email);

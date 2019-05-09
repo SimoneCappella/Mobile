@@ -15,6 +15,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar"
         tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".VediAppunti" />
+        <activity android:name=".AggiungiAppuntiLoc" />
+        <activity android:name=".Notes_Page" />
         <activity android:name=".AppuntiListingActivity"></activity>
         <activity android:name=".ModificaProfilo" />
         <activity android:name=".Register" />

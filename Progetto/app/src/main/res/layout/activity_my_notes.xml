@@ -22,64 +22,25 @@
         android:id="@+id/back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="12dp"
+        android:scaleType="fitCenter"
         android:background="#0000"
         android:src="@drawable/back"
         app:layout_constraintEnd_toStartOf="@+id/textView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageButton
-        android:id="@+id/aggiungimateria"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="368dp"
+    <ListView
+        android:id="@+id/listMatLoc"
+        android:layout_width="390dp"
+        android:layout_height="620dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:background="#0000"
-        android:src="@drawable/add"
-        app:layout_constraintEnd_toStartOf="@+id/textView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageButton
-        android:id="@+id/filtramateria"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="336dp"
-        android:layout_marginTop="16dp"
-        android:background="#0000"
-        android:src="@drawable/filter"
-        android:visibility="invisible"
-        app:layout_constraintEnd_toStartOf="@+id/textView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/testorisposta2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="52dp"
-        android:text="Elenco materie"
-        android:textSize="18sp"
-        android:textStyle="italic"
+        android:layout_marginEnd="16dp"
+        android:scrollbars="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ListView
-        android:id="@+id/listMaterielocali"
-        android:layout_width="394dp"
-        android:layout_height="633dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="52dp"
-        android:divider="@android:color/transparent"
-        android:dividerHeight="5dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textMyNotes">
-
-    </ListView>
-
-
+        app:layout_constraintTop_toBottomOf="@+id/textMyNotes" />
 
 </android.support.constraint.ConstraintLayout>
