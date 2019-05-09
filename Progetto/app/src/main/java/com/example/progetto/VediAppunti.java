@@ -47,6 +47,7 @@ public class VediAppunti extends AppCompatActivity implements View.OnClickListen
     public void onClick(View v) {
         switch(v.getId()){
             case R.id.btnBack:
+
                 finish();
         }
     }

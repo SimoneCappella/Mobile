@@ -1,5 +1,6 @@
 package com.example.progetto;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
@@ -27,11 +28,14 @@ public class Notes_Page extends AppCompatActivity implements View.OnClickListene
 
     String a;
 
-    //Cursor cursor;
+    Cursor cursor;
 
-    //SimpleCursorAdapter adapter;
+    SimpleCursorAdapter adapter;
 
-    //DataAppLoc da;
+    DataAppLoc da;
+
+    public static final int REQUEST_CODE1 = 1111;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,8 +44,8 @@ public class Notes_Page extends AppCompatActivity implements View.OnClickListene
 
         getWindow().getDecorView().setBackgroundColor(Color.parseColor("#cccccc"));
 
-
-
+        Intent r = getIntent();
+        a = r.getStringExtra("mat");
 
         txt = findViewById(R.id.textMateria);
         txt.setText(a);
@@ -51,7 +55,7 @@ public class Notes_Page extends AppCompatActivity implements View.OnClickListene
         back.setOnClickListener(this);
         btnAggiungiApp.setOnClickListener(this);
 
-        /*da = new DataAppLoc(this);
+        da = new DataAppLoc(this);
         cursor = da.searchM(a);
 
         String[] fromColumns={"t", "d"};
@@ -73,7 +77,9 @@ public class Notes_Page extends AppCompatActivity implements View.OnClickListene
                 String app = c.getString(4);
                 Toast.makeText(getApplicationContext(), b, Toast.LENGTH_SHORT).show();
 
-                Intent i = new Intent(getApplication(), VediAppunti.class);
+                launchVedi(b, titolo, data, app);
+
+                /*Intent i = new Intent(getApplication(), VediAppunti.class);
                 Bundle bundle = new Bundle();
                 bundle.putString("materia", b);
                 bundle.putString("titolo", titolo);
@@ -81,20 +87,18 @@ public class Notes_Page extends AppCompatActivity implements View.OnClickListene
                 bundle.putString("app", app);
 
                 i.putExtra("data", bundle);
-                startActivity(i);
+
+                startActivity(i);*/
             }
-        });*/
+        });
     }
 
-    @Override
-    protected void onRestart(){
+    /*@Override
+    protected void onStart(){
 
-        super.onRestart();
+        super.onStart();
 
-        Intent r = getIntent();
-        a = r.getStringExtra("mat");
-
-        DataAppLoc da = new DataAppLoc(this);
+        final DataAppLoc da = new DataAppLoc(this);
         Cursor cursor = da.searchM(a);
 
         String[] fromColumns={"t", "d"};
@@ -116,19 +120,20 @@ public class Notes_Page extends AppCompatActivity implements View.OnClickListene
                 String app = c.getString(4);
                 Toast.makeText(getApplicationContext(), b, Toast.LENGTH_SHORT).show();
 
+                launchVedi(b, titolo, data, app);
+
                 Intent i = new Intent(getApplication(), VediAppunti.class);
                 Bundle bundle = new Bundle();
                 bundle.putString("materia", b);
                 bundle.putString("titolo", titolo);
                 bundle.putString("data", data);
                 bundle.putString("app", app);
-
                 i.putExtra("data", bundle);
-                //i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(i);
+
             }
         });
-    }
+    }*/
 
     private AlphaAnimation buttonClick = new AlphaAnimation(1F, 0.7F);
 
@@ -149,6 +154,30 @@ public class Notes_Page extends AppCompatActivity implements View.OnClickListene
     public void launchAggiungi(){
         Intent intent = new Intent(this, AggiungiAppuntiLoc.class);
         intent.putExtra("app", a);
-        startActivity(intent);
+        startActivityForResult(intent, REQUEST_CODE1);
+    }
+
+    public void launchVedi(String b, String titolo, String data, String app){
+        Intent i = new Intent(getApplication(), VediAppunti.class);
+        Bundle bundle = new Bundle();
+        bundle.putString("materia", b);
+        bundle.putString("titolo", titolo);
+        bundle.putString("data", data);
+        bundle.putString("app", app);
+        i.putExtra("data", bundle);
+        startActivity(i);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data){
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if ((requestCode == REQUEST_CODE1) && (resultCode == Activity.RESULT_OK)) {
+            String res = data.getStringExtra("res");
+            Toast.makeText(getApplicationContext(), res, Toast.LENGTH_SHORT).show();
+        }
+        startActivity(getIntent());
+        finish();
+        overridePendingTransition(0, 0);
     }
 }

@@ -1,5 +1,6 @@
 package com.example.progetto;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -44,9 +45,11 @@ public class AggiungiAppuntiLoc extends AppCompatActivity implements View.OnClic
                 String data = editData.getText().toString();
                 String appunti = editApp.getText().toString();
                 da.insert(a, data, titolo, appunti);
-                /*Intent intent = new Intent(this, Notes_Page.class);
-                intent.putExtra("mat", a);
-                startActivity(intent);*/
+                //set Result per passare il risultato alla prima activitu cosi riesco a riavviarla dalla on result
+                String res = "appunti salvati";
+                Intent intent = new Intent();
+                intent = intent.putExtra("res", res);
+                setResult(Activity.RESULT_OK, intent);
                 finish();
                 break;
         }
