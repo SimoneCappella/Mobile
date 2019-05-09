@@ -15,10 +15,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity
-            android:name=".sqwdefdgh"
-            android:label="@string/title_activity_sqwdefdgh"
-            android:theme="@style/AppTheme.NoActionBar.NoActionBar"></activity>
         <activity android:name=".VediAppunti" />
         <activity android:name=".AggiungiAppuntiLoc" />
         <activity android:name=".Notes_Page" />

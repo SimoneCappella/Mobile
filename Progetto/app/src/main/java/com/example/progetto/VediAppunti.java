@@ -19,8 +19,6 @@ public class VediAppunti extends AppCompatActivity implements View.OnClickListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vedi_appunti);
 
-        //getWindow().getDecorView().setBackgroundColor(Color.parseColor("#cccccc"));
-
         Intent r = getIntent();
         Bundle bundle = r.getBundleExtra("data");
 
