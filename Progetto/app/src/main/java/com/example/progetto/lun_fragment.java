@@ -216,7 +216,9 @@ public class lun_fragment extends Fragment implements View.OnClickListener {
             materia = res[0];
             aula = res[1];
         }
-        /*if ((materia.equals("null")) && (aula.equals("null"))) */salvaOrario(i, materia, aula); //un problema con il salvataggio nel caso in cui si elimina, prova a mettere un bottone sotto la Tview
+        if (materia!=null){
+            salvaOrario(i, materia, aula);
+        }
     }
 
     public void salvaOrario (String key, String materia, String aula){

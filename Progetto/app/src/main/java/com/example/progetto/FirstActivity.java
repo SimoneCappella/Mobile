@@ -1,15 +1,15 @@
 package com.example.progetto;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.Toast;
+
+import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 
 import static com.example.progetto.MainActivity.username;
@@ -22,6 +22,7 @@ public class FirstActivity extends AppCompatActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        getWindow().getDecorView().setBackgroundColor(Color.parseColor("#cccccc"));
 
 
         editNome = findViewById(R.id.lgnusername);
@@ -49,14 +50,11 @@ public class FirstActivity extends AppCompatActivity implements View.OnClickList
     {
         Intent i = new Intent(this, MainActivity.class);
         startActivity(i);
-        overridePendingTransition(R.anim.slideup, R.anim.slidedown);
-
     }
     public void launchReg(View view)
     {
         Intent i = new Intent(this , Register.class);
         startActivity(i);
-        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
     public void userLogin(View view) {
         login_name = editNome   .getText().toString();
@@ -79,13 +77,11 @@ public class FirstActivity extends AppCompatActivity implements View.OnClickList
             username = login_name;
             show("Benvenuto "+ login_name + "!");
             finish();
-
         }else
         {
             show("Dati errati. Riprova.");
         }
     }
-
     private void show(String message)
     {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();

@@ -3,7 +3,6 @@ package com.example.progetto;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
@@ -21,7 +20,7 @@ public class DataAppLoc extends SQLiteOpenHelper {
     private static final int DB_VERSION = 1;
     private static final String TABLE_M_D_A = "m_and_d_and_a";
 
-    public DataAppLoc (Context context){
+    public DataAppLoc(Context context){
         super(context, DB_NAME, null, DB_VERSION);
         CustomSQLiteOpenHelper helper = new CustomSQLiteOpenHelper (context);
         db = helper.getWritableDatabase();
