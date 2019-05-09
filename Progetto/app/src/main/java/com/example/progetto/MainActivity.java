@@ -3,6 +3,7 @@ package com.example.progetto;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -20,13 +21,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     ImageButton book;
     ImageButton www;
     ImageButton settings;
-    Button btnVediDb;
     public static String username;
+    Button btnVediDb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        getWindow().getDecorView().setBackgroundColor(Color.parseColor("#cccccc"));
         TextView tv = findViewById(R.id.textBenvenuto);
         String w = "Benvenuto "+ username + "!";
         tv.setText(w);
@@ -36,8 +38,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         www = findViewById(R.id.btnAppCondivisi);
         settings = findViewById(R.id.btnSettings);
 
-        //btnVediDb = findViewById(R.id.btnDB);
-        //btnVediDb.setOnClickListener(this);
+        btnVediDb = findViewById(R.id.btnDB);
+        btnVediDb.setOnClickListener(this);
 
         clock.setOnClickListener(this);
         book.setOnClickListener(this);
@@ -82,9 +84,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 view.startAnimation(buttonClick);
                 launchSettings(view);
                 break;
-            //case R.id.btnDB:
-                //view.startAnimation(buttonClick);
-                //launchAggMaterie(view);
+            case R.id.btnDB:
+                view.startAnimation(buttonClick);
+                launchAggMaterie(view);
         }
     }
 
@@ -92,28 +94,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     {
         Intent i = new Intent(this, Settings.class);
         startActivity(i);
-        overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
     }
 
     public void launchClock(View v)
     {
         Intent i = new Intent (this, Clock.class);
         startActivity(i);
-        overridePendingTransition(R.anim.slideleft, R.anim.slideright);
     }
 
     public void launchMyNotes(View v)
     {
         Intent i = new Intent (this, MyNotes.class);
         startActivity(i);
-        overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
     }
 
     public void launchShNotes(View v)
     {
         Intent i = new Intent (this, ShNotes.class);
         startActivity(i);
-        overridePendingTransition(R.anim.slideleft, R.anim.slideright);
     }
 
     public void show(String message)

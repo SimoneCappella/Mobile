@@ -4,6 +4,8 @@
     package="com.example.progetto">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <application
         android:allowBackup="true"
@@ -13,9 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".VediAppunti" />
-        <activity android:name=".AggiungiAppuntiLoc" />
-        <activity android:name=".Notes_Page" />
+        <activity android:name=".AppuntiListingActivity"></activity>
         <activity android:name=".ModificaProfilo" />
         <activity android:name=".Register" />
         <activity android:name=".List" />
@@ -24,6 +24,7 @@
         <activity android:name=".MyNotes" />
         <activity android:name=".Clock" />
         <activity android:name=".Settings" />
+        <activity android:name=".MovieUpdateDeleteActivity" />
         <activity android:name=".FirstActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

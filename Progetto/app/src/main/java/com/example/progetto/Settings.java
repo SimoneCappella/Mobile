@@ -1,11 +1,12 @@
 package com.example.progetto;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
-import android.widget.Button;
+import android.widget.TextView;
 
 public class Settings extends AppCompatActivity {
     @Override
@@ -14,8 +15,8 @@ public class Settings extends AppCompatActivity {
         setContentView(R.layout.activity_settings);
 
         getWindow().getDecorView().setBackgroundColor(Color.parseColor("#cccccc"));
-        //ButtonHandler bh = new ButtonHandler();
-        //findViewById(R.id.btnBack).setOnClickListener(bh);
+        ButtonHandler bh = new ButtonHandler();
+        findViewById(R.id.back).setOnClickListener(bh);
 
         TextView tv = findViewById(R.id.modifica_profilo);
 
@@ -41,7 +42,6 @@ public class Settings extends AppCompatActivity {
         {
             v.startAnimation(buttonClick);
             finish();
-            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
         }
     }
 }

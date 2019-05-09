@@ -26,7 +26,7 @@
         android:layout_marginTop="100dp"
         android:background="#0000"
         android:scaleType="fitCenter"
-        android:src="@drawable/calendar"
+        android:src="@drawable/clock"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textBenvenuto" />
 
