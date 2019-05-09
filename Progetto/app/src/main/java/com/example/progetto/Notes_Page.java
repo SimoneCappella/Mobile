@@ -1,15 +1,11 @@
 package com.example.progetto;
 
 import android.app.Activity;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.widget.AdapterView;
@@ -30,15 +26,13 @@ public class Notes_Page extends AppCompatActivity implements View.OnClickListene
 
     Button btnAggiungiApp;
 
-    String a, code;
+    String a;
 
     Cursor cursor;
 
     SimpleCursorAdapter adapter;
 
     DataAppLoc da;
-
-    final Context context = this;
 
     public static final int REQUEST_CODE1 = 1111;
 
@@ -48,13 +42,15 @@ public class Notes_Page extends AppCompatActivity implements View.OnClickListene
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notes_page);
 
+        getWindow().getDecorView().setBackgroundColor(Color.parseColor("#cccccc"));
+
         Intent r = getIntent();
         a = r.getStringExtra("mat");
 
         txt = findViewById(R.id.textMateria);
         txt.setText(a);
 
-        back = findViewById(R.id.back);
+        back = findViewById(R.id.btnBack);
         btnAggiungiApp = findViewById(R.id.btnAggiungi);
         back.setOnClickListener(this);
         btnAggiungiApp.setOnClickListener(this);
@@ -75,59 +71,76 @@ public class Notes_Page extends AppCompatActivity implements View.OnClickListene
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 Cursor c = adapter.getCursor();
-                code = c.getString(0);
-                String materia = c.getString(1);
+                String b = c.getString(1);
                 String titolo = c.getString(3);
                 String data = c.getString(2);
                 String app = c.getString(4);
-                Toast.makeText(getApplicationContext(), code, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), b, Toast.LENGTH_SHORT).show();
 
-                launchVedi(materia, titolo, data, app);
-            }
-        });
+                launchVedi(b, titolo, data, app);
 
-        listNote.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, final View view, final int position, long id) {
+                /*Intent i = new Intent(getApplication(), VediAppunti.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("materia", b);
+                bundle.putString("titolo", titolo);
+                bundle.putString("data", data);
+                bundle.putString("app", app);
 
-                Cursor c = adapter.getCursor();
-                code = c.getString(0);
+                i.putExtra("data", bundle);
 
-                LayoutInflater inflater = LayoutInflater.from(context);
-                View mess = inflater.inflate(R.layout.messaggio_elimina,null);
-                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
-                alertDialogBuilder.setView(mess);
-
-                alertDialogBuilder.setPositiveButton("ELIMINA", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        da.delete (code);
-                        Cursor nc;
-                        nc = da.searchM(a);
-                        adapter.changeCursor(nc);
-                        adapter.notifyDataSetChanged();
-                    }
-                });
-                alertDialogBuilder.setNegativeButton("ANNULLA", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                });
-                alertDialogBuilder.setCancelable(false);
-                AlertDialog alertDialog=alertDialogBuilder.create();
-                alertDialog.show();
-                return true;
+                startActivity(i);*/
             }
         });
     }
+
+    /*@Override
+    protected void onStart(){
+
+        super.onStart();
+
+        final DataAppLoc da = new DataAppLoc(this);
+        Cursor cursor = da.searchM(a);
+
+        String[] fromColumns={"t", "d"};
+        int[] viewsList = {R.id.txtTitle, R.id.txtDate};
+
+        final SimpleCursorAdapter adapter = new SimpleCursorAdapter(this, R.layout.list_app_loc, cursor, fromColumns, viewsList, 0);
+
+        listNote = findViewById(R.id.listApp);
+        listNote.setAdapter(adapter);
+
+        listNote.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                Cursor c = adapter.getCursor();
+                String b = c.getString(1);
+                String titolo = c.getString(3);
+                String data = c.getString(2);
+                String app = c.getString(4);
+                Toast.makeText(getApplicationContext(), b, Toast.LENGTH_SHORT).show();
+
+                launchVedi(b, titolo, data, app);
+
+                Intent i = new Intent(getApplication(), VediAppunti.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("materia", b);
+                bundle.putString("titolo", titolo);
+                bundle.putString("data", data);
+                bundle.putString("app", app);
+                i.putExtra("data", bundle);
+                startActivity(i);
+
+            }
+        });
+    }*/
 
     private AlphaAnimation buttonClick = new AlphaAnimation(1F, 0.7F);
 
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.back:
+            case R.id.btnBack:
                 v.startAnimation(buttonClick);
                 finish();
                 break;
@@ -144,10 +157,10 @@ public class Notes_Page extends AppCompatActivity implements View.OnClickListene
         startActivityForResult(intent, REQUEST_CODE1);
     }
 
-    public void launchVedi(String materia, String titolo, String data, String app){
+    public void launchVedi(String b, String titolo, String data, String app){
         Intent i = new Intent(getApplication(), VediAppunti.class);
         Bundle bundle = new Bundle();
-        bundle.putString("materia", materia);
+        bundle.putString("materia", b);
         bundle.putString("titolo", titolo);
         bundle.putString("data", data);
         bundle.putString("app", app);
@@ -163,9 +176,8 @@ public class Notes_Page extends AppCompatActivity implements View.OnClickListene
             String res = data.getStringExtra("res");
             Toast.makeText(getApplicationContext(), res, Toast.LENGTH_SHORT).show();
         }
-        Cursor nc;
-        nc = da.searchM(a);
-        adapter.changeCursor(nc);
-        adapter.notifyDataSetChanged();
+        startActivity(getIntent());
+        finish();
+        overridePendingTransition(0, 0);
     }
 }
