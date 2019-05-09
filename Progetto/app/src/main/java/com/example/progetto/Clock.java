@@ -17,7 +17,7 @@ public class Clock extends AppCompatActivity implements BottomNavigationView.OnN
         setContentView(R.layout.activity_clock);
 
         Clock.ButtonHandler bh = new Clock.ButtonHandler();
-        findViewById(R.id.btnBack).setOnClickListener(bh);
+        findViewById(R.id.back).setOnClickListener(bh);
         BottomNavigationView nav = findViewById(R.id.navigation);
         nav.setItemIconTintList(null);
         nav.setItemIconSize(110);
