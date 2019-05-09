@@ -7,25 +7,13 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/nomefile"
-        android:layout_width="wrap_content"
-        android:layout_height="31dp"
-        android:layout_marginStart="44dp"
-        android:layout_marginTop="60dp"
-        android:text=""
-        android:textSize="15sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
         android:id="@+id/testomessaggio"
         android:layout_width="wrap_content"
         android:layout_height="31dp"
         android:layout_marginStart="24dp"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="20dp"
-        android:text="Do you want to download file?"
+        android:text="Do you want to delete this location?"
         android:textSize="15sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"

@@ -1,7 +1,6 @@
 package com.example.progetto;
 
 import android.database.Cursor;
-import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -25,15 +24,18 @@ public class AggMaterie extends AppCompatActivity implements View.OnClickListene
     EditText editDelete;
     EditText editSearch;
 
-    private DataManager dm;
+    private DataManager dm; //dm se vuoi usare il db di appoggio per l'orario e le materie ricordati di aggiungere una colonna alla show
+
+    private DataAppLoc da; //da se vuoi usare il db per gli appunti in locale
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_agg_materie);
-        getWindow().getDecorView().setBackgroundColor(Color.parseColor("#cccccc"));
 
         dm = new DataManager(this);
+
+        da = new DataAppLoc(this);
 
         btnBack = (ImageButton) findViewById(R.id.btnBack);
         btnInsert = (Button) findViewById(R.id.btnInsert);
@@ -57,10 +59,8 @@ public class AggMaterie extends AppCompatActivity implements View.OnClickListene
 
     public void showData (Cursor c){
         while(c.moveToNext()){
-            String query = " / code: " + c.getString(1) + " / materia: " + c.getString(2) + "/ ora: " + c.getString(3) + "/ aula: " + c.getString(4);
+            String query = " / materia: " + c.getString(1) + " / data: " + c.getString(2) + "/ appunti: " + c.getString(3) + "  /titolo:  " + c.getString(4);
             Log.i("Data ---->", query);
-            /*String queryC = "c:" + c.getString(2);
-            Log.i("data", queryC);*/
         }
     }
 
@@ -73,19 +73,19 @@ public class AggMaterie extends AppCompatActivity implements View.OnClickListene
                 break;
             case R.id.btnInsert:
                 v.startAnimation(buttonClick);
-                dm.insert(editMateria.getText().toString(), editOrario.getText().toString(), "aula", "code");
+                da.insert(editMateria.getText().toString(), editOrario.getText().toString(), "app", "titolo");
                 break;
             case R.id.btnSelect:
                 v.startAnimation(buttonClick);
-                showData(dm.selectAll());
+                showData(da.selectAll());
                 break;
             case R.id.btnSearch:
                 v.startAnimation(buttonClick);
-                showData(dm.searchByCode(editSearch.getText().toString()));
+                showData(da.searchM(editSearch.getText().toString()));
                 break;
             case R.id.btnDelete:
                 v.startAnimation(buttonClick);
-                dm.delete(editDelete.getText().toString());
+                da.delete(editDelete.getText().toString());
                 break;
         }
     }

@@ -98,7 +98,7 @@ public class DataManager extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         try {
             String[] args = new String[]{nome};
-            db.delete(DataManager.TABLE_ROW_M, DataManager.TABLE_ROW_ID + "=?", args);
+            db.delete(DataManager.TABLE_ROW_A, DataManager.TABLE_ROW_ID + "=?", args);
 
             db.close();
         } catch (SQLiteException e) {

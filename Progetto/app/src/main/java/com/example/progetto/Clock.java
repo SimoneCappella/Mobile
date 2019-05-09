@@ -1,7 +1,6 @@
 package com.example.progetto;
 
 import android.app.Fragment;
-import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
@@ -16,7 +15,6 @@ public class Clock extends AppCompatActivity implements BottomNavigationView.OnN
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_clock);
-
         Clock.ButtonHandler bh = new Clock.ButtonHandler();
         findViewById(R.id.back).setOnClickListener(bh);
         BottomNavigationView nav = findViewById(R.id.navigation);
@@ -72,6 +70,7 @@ public class Clock extends AppCompatActivity implements BottomNavigationView.OnN
         {
             v.startAnimation(buttonClick);
             finish();
+            overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
         }
     }
 }
