@@ -41,9 +41,6 @@ public class Notes_Page extends AppCompatActivity implements View.OnClickListene
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notes_page);
-
-        getWindow().getDecorView().setBackgroundColor(Color.parseColor("#cccccc"));
-
         Intent r = getIntent();
         a = r.getStringExtra("mat");
 
