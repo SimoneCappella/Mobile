@@ -32,8 +32,8 @@ public class DataAppLoc extends SQLiteOpenHelper {
         db.execSQL(query);
     }
 
-    public void delete(String m){
-        String query = "DELETE FROM " + TABLE_M_D_A + " WHERE " + TABLE_ROW_M + " = '" + m + "';";
+    public void delete(String i){
+        String query = "DELETE FROM " + TABLE_M_D_A + " WHERE " + TABLE_ROW_ID + " = '" + i + "';";
         Log.i("delete() = ", query);
         db.execSQL(query);
     }
