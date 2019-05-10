@@ -46,7 +46,6 @@ public class Notes_Page extends AppCompatActivity implements View.OnClickListene
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notes_page);
-
         Intent r = getIntent();
         a = r.getStringExtra("mat");
 
