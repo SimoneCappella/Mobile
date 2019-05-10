@@ -1,7 +1,6 @@
 package com.example.progetto;
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -9,6 +8,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -216,7 +216,9 @@ public class lun_fragment extends Fragment implements View.OnClickListener {
             materia = res[0];
             aula = res[1];
         }
-        /*if ((materia.equals("null")) && (aula.equals("null"))) */salvaOrario(i, materia, aula); //un problema con il salvataggio nel caso in cui si elimina, prova a mettere un bottone sotto la Tview
+        if (materia!=null){
+            salvaOrario(i, materia, aula);
+        }
     }
 
     public void salvaOrario (String key, String materia, String aula){

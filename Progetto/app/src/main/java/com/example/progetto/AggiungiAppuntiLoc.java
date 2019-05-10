@@ -3,8 +3,8 @@ package com.example.progetto;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,7 +23,7 @@ public class AggiungiAppuntiLoc extends AppCompatActivity implements View.OnClic
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_aggiungi__appunti__loc);
 
-        getWindow().getDecorView().setBackgroundColor(Color.parseColor("#cccccc"));
+        //getWindow().getDecorView().setBackgroundColor(Color.parseColor("#cccccc"));
 
         Intent r = getIntent();
         a = r.getStringExtra("app");

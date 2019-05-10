@@ -1,11 +1,8 @@
 package com.example.progetto;
 
 import android.content.Intent;
-import android.database.Cursor;
-import android.graphics.Color;
-import android.provider.ContactsContract;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -21,7 +18,7 @@ public class VediAppunti extends AppCompatActivity implements View.OnClickListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vedi_appunti);
 
-        getWindow().getDecorView().setBackgroundColor(Color.parseColor("#cccccc"));
+        //getWindow().getDecorView().setBackgroundColor(Color.parseColor("#cccccc"));
 
         Intent r = getIntent();
         Bundle bundle = r.getBundleExtra("data");
