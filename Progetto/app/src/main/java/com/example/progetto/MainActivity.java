@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.btnAppCondivisi:
                 view.startAnimation(buttonClick);
-                //launchShNotes(view);
+                launchShNotes(view);
                 break;
             case R.id.btnSettings:
                 view.startAnimation(buttonClick);
@@ -111,12 +111,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
     }
 
-    /*public void launchShNotes(View v)
+    public void launchShNotes(View v)
     {
         Intent i = new Intent (this, ShNotes.class);
         startActivity(i);
         overridePendingTransition(R.anim.slideleft, R.anim.slideright);
-    }*/
+    }
 
     public void show(String message)
     {
