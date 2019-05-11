@@ -203,8 +203,9 @@ public class mar_fragment extends Fragment implements View.OnClickListener {
     }
 
     public void launchList(){
-        Intent intent1 = new Intent (getActivity(), List.class);
-        startActivityForResult(intent1, REQUEST_CODE);
+        Intent intent = new Intent (getActivity(), List.class);
+        intent.putExtra("tit", "martedì");
+        startActivityForResult(intent, REQUEST_CODE);
     }
 
     @Override

@@ -7,7 +7,7 @@
     tools:context=".MyNotes">
 
         <TextView
-            android:id="@+id/textMateria"
+            android:id="@+id/textTitolo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
@@ -41,7 +41,7 @@
         app:layout_constraintBottom_toTopOf="@+id/btnAggiungi"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textMateria" />
+        app:layout_constraintTop_toBottomOf="@+id/textTitolo" />
 
     <Button
         android:id="@+id/btnAggiungi"

@@ -204,6 +204,8 @@ public class lun_fragment extends Fragment implements View.OnClickListener {
 
     public void launchList(){
         Intent intent = new Intent (getActivity(), List.class);
+        intent.putExtra("giorno_ora", "lunedì  " + ora);
+        //intent.putExtra("ora", ora);
         startActivityForResult(intent, REQUEST_CODE);
     }
 
