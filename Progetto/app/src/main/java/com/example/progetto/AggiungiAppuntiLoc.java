@@ -21,9 +21,7 @@ public class AggiungiAppuntiLoc extends AppCompatActivity implements View.OnClic
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_aggiungi__appunti__loc);
-
-        //getWindow().getDecorView().setBackgroundColor(Color.parseColor("#cccccc"));
+        setContentView(R.layout.activity_aggiungi_appunti_loc);
 
         Intent r = getIntent();
         a = r.getStringExtra("app");

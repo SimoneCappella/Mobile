@@ -85,7 +85,7 @@ public class AppuntiListingActivity extends AppCompatActivity implements View.On
         materiaName = intent.getStringExtra(KEY_MATERIA_NAME);
 
         new FetchMoviesAsyncTask().execute();
-        back = (ImageButton) findViewById(R.id.back);
+        back = findViewById(R.id.back);
         back.setOnClickListener(this);
 
     }
