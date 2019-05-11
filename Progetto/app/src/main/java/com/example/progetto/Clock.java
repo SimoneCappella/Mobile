@@ -47,7 +47,7 @@ public class Clock extends AppCompatActivity implements BottomNavigationView.OnN
                     }
             curr = next;
             ft.replace(R.id.fragment_container, fragment);
-            ft.commit();//tramite il frag manag e la transaction viene rimpiazzato il
+            ft.commit();                                                                                         //tramite il frag manag e la transaction viene rimpiazzato il
             return true;                                                                                         //fragment container (che era il nome del frame dato allo spazio
         }                                                                                                        //dove appaiono i fragment) con il fragment che viene passato al metodo
         return false;
@@ -89,6 +89,7 @@ public class Clock extends AppCompatActivity implements BottomNavigationView.OnN
         {
             v.startAnimation(buttonClick);
             finish();
+            overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
         }
     }
 }

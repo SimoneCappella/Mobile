@@ -85,7 +85,7 @@ public class AppuntiListingActivity extends AppCompatActivity implements View.On
         materiaName = intent.getStringExtra(KEY_MATERIA_NAME);
 
         new FetchMoviesAsyncTask().execute();
-        back = (ImageButton) findViewById(R.id.back);
+        back = findViewById(R.id.back);
         back.setOnClickListener(this);
 
     }
@@ -313,9 +313,10 @@ public class AppuntiListingActivity extends AppCompatActivity implements View.On
                 //fileName = timestamp + "_" + fileName;
 
                 //External directory path to save file
+
                 folder = Environment.getExternalStorageDirectory() + File.separator + "Appunti/";
 
-                //Create androiddeft folder if it does not exist
+                //Create folder if it does not exist
                 File directory = new File(folder);
 
                 if (!directory.exists()) {
