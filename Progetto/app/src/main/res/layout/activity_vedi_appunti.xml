@@ -19,15 +19,14 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
-        android:id="@+id/btnBack"
+        android:id="@+id/back"
         android:layout_width="28dp"
         android:layout_height="28dp"
         android:layout_marginStart="12dp"
         android:layout_marginTop="12dp"
-        android:scaleType="center"
         android:background="#0000"
+        android:scaleType="fitCenter"
         android:src="@drawable/back"
-        app:layout_constraintEnd_toStartOf="@+id/textView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -37,6 +36,8 @@
         android:layout_height="0dp"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         android:textColorHighlight="#FFFF00"
         android:textColorLink="@color/design_default_color_primary_dark"
         android:textCursorDrawable="@color/textPop"

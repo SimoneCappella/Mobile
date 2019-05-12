@@ -1,16 +1,17 @@
 package com.example.progetto;
 
-import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
+
+import java.util.Calendar;
 
 public class Clock extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
     public int curr = 0;
@@ -28,7 +29,43 @@ public class Clock extends AppCompatActivity implements BottomNavigationView.OnN
         nav.setOnNavigationItemSelectedListener(this);//settato il listner sulla navigation bar
         nav.setItemIconTintList(null);
         nav.setItemIconSize(110);
-        loadFragment(new lun_fragment());  //il fragment di lunedi di default
+
+
+
+        //loadFragment(new mer_fragment());  //il fragment di lunedi di default
+
+
+    }
+
+    public void onStart(){
+        super.onStart();
+        Calendar calendar = Calendar.getInstance();
+        int day = calendar.get(Calendar.DAY_OF_WEEK);
+        Fragment fragment = null;
+        switch (day){
+            case Calendar.MONDAY:
+                fragment = new lun_fragment();
+                break;
+            case Calendar.TUESDAY:
+                fragment = new mar_fragment();
+                break;
+            case Calendar.WEDNESDAY:
+                fragment = new mer_fragment();
+                break;
+            case Calendar.THURSDAY:
+                fragment = new gio_fragment();
+                break;
+            case Calendar.FRIDAY:
+                fragment = new ven_fragment();
+                break;
+            case Calendar.SATURDAY:
+                fragment = new ven_fragment();
+                break;
+            case Calendar.SUNDAY:
+                fragment = new lun_fragment();
+                break;
+        }
+        loadFragment(fragment);
     }
 
     private AlphaAnimation buttonClick = new AlphaAnimation(1F, 0.7F);
