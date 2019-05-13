@@ -16,6 +16,7 @@ import java.util.Calendar;
 public class Clock extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
     public int curr = 0;
     public int next;
+    BottomNavigationView nav;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,49 +25,49 @@ public class Clock extends AppCompatActivity implements BottomNavigationView.OnN
 
         Clock.ButtonHandler bh = new Clock.ButtonHandler();
         findViewById(R.id.back).setOnClickListener(bh);
-        BottomNavigationView nav = findViewById(R.id.navigation);
+        nav = findViewById(R.id.navigation);
 
         nav.setOnNavigationItemSelectedListener(this);//settato il listner sulla navigation bar
         nav.setItemIconTintList(null);
         nav.setItemIconSize(110);
 
-
-
-        //loadFragment(new mer_fragment());  //il fragment di lunedi di default
-
-
-    }
-
-    public void onStart(){
-        super.onStart();
         Calendar calendar = Calendar.getInstance();
         int day = calendar.get(Calendar.DAY_OF_WEEK);
         Fragment fragment = null;
         switch (day){
             case Calendar.MONDAY:
                 fragment = new lun_fragment();
+                nav.setSelectedItemId(R.id.lun);
                 break;
             case Calendar.TUESDAY:
                 fragment = new mar_fragment();
+                nav.setSelectedItemId(R.id.mar);
                 break;
             case Calendar.WEDNESDAY:
                 fragment = new mer_fragment();
+                nav.setSelectedItemId(R.id.mer);
                 break;
             case Calendar.THURSDAY:
                 fragment = new gio_fragment();
+                nav.setSelectedItemId(R.id.gio);
                 break;
             case Calendar.FRIDAY:
                 fragment = new ven_fragment();
+                nav.setSelectedItemId(R.id.ven);
                 break;
             case Calendar.SATURDAY:
                 fragment = new ven_fragment();
+                nav.setSelectedItemId(R.id.ven);
                 break;
             case Calendar.SUNDAY:
                 fragment = new lun_fragment();
+                nav.setSelectedItemId(R.id.lun);
                 break;
         }
         loadFragment(fragment);
     }
+
+
 
     private AlphaAnimation buttonClick = new AlphaAnimation(1F, 0.7F);
 
