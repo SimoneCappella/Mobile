@@ -47,9 +47,7 @@ public class ShNotes extends AppCompatActivity implements View.OnClickListener{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_condivisi_listing);
-
         ShNotes.ButtonHandler bh = new ShNotes.ButtonHandler();
-
         findViewById(R.id.back).setOnClickListener(bh);
 
         //getWindow().getDecorView().setBackgroundColor(Color.parseColor("#cccccc"));
@@ -189,6 +187,7 @@ public class ShNotes extends AppCompatActivity implements View.OnClickListener{
             case R.id.back:
                 v.startAnimation(buttonClick);
                 finish();
+                overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
                 break;
             case R.id.filtra:
 

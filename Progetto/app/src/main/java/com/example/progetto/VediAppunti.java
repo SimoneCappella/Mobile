@@ -18,8 +18,6 @@ public class VediAppunti extends AppCompatActivity implements View.OnClickListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vedi_appunti);
 
-        //getWindow().getDecorView().setBackgroundColor(Color.parseColor("#cccccc"));
-
         Intent r = getIntent();
         Bundle bundle = r.getBundleExtra("data");
 
@@ -31,8 +29,8 @@ public class VediAppunti extends AppCompatActivity implements View.OnClickListen
         txtTitolo = findViewById(R.id.textTitolo);
         txtData = findViewById(R.id.textData);
         txtAppunti = findViewById(R.id.textAppunti);
-        txtMateria = findViewById(R.id.textMateria);
-        back = findViewById(R.id.btnBack);
+        txtMateria = findViewById(R.id.textTitolo);
+        back = findViewById(R.id.back);
 
         txtMateria.setText(materia);
         txtTitolo.setText(titolo);
@@ -45,7 +43,7 @@ public class VediAppunti extends AppCompatActivity implements View.OnClickListen
     @Override
     public void onClick(View v) {
         switch(v.getId()){
-            case R.id.btnBack:
+            case R.id.back:
 
                 finish();
         }

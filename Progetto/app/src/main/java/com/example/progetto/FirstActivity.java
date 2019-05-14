@@ -55,6 +55,7 @@ public class FirstActivity extends AppCompatActivity implements View.OnClickList
     {
         Intent i = new Intent(this , Register.class);
         startActivity(i);
+        overridePendingTransition(R.anim.slideleft, R.anim.slideright);
     }
     public void userLogin(View view) {
         login_name = editNome   .getText().toString();

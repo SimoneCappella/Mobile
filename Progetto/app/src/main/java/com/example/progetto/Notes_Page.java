@@ -52,7 +52,7 @@ public class Notes_Page extends AppCompatActivity implements View.OnClickListene
         Intent r = getIntent();
         a = r.getStringExtra("mat");
 
-        txt = findViewById(R.id.textMateria);
+        txt = findViewById(R.id.textTitolo);
         txt.setText(a);
 
         back = findViewById(R.id.back);

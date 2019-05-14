@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 public class lun_fragment extends Fragment implements View.OnClickListener {
@@ -204,6 +205,8 @@ public class lun_fragment extends Fragment implements View.OnClickListener {
 
     public void launchList(){
         Intent intent = new Intent (getActivity(), List.class);
+        intent.putExtra("giorno_ora", "lunedì  " + ora);
+        //intent.putExtra("ora", ora);
         startActivityForResult(intent, REQUEST_CODE);
     }
 
@@ -216,19 +219,31 @@ public class lun_fragment extends Fragment implements View.OnClickListener {
             materia = res[0];
             aula = res[1];
         }
-        if (materia!=null){
+        if (materia.equals("svuota")){
+            materia = " ";
+            aula = null;
+            setMateria(i, materia, getActivity());
+            setAula(i, aula, getActivity());
+            inserisci();
+            Toast.makeText(getContext(), "l'eliminazione funziona", Toast.LENGTH_SHORT).show();
+        }
+        else if (materia.equals("back")){}
+        else{
             salvaOrario(i, materia, aula);
+            inserisci();
         }
     }
 
-    public void salvaOrario (String key, String materia, String aula){
-        if (dm.searchM(materia)!=null){
+    public void salvaOrario (String key, String materia, String aula) {
+        if (dm.searchM(materia) != null) {
             dm.delete(materia);
         }
         dm.insert(materia, ora, aula, key); //salva la materia nel db
         setMateria(key, materia, getActivity());
         setAula(key, aula, getActivity());
+    }
 
+    public void inserisci(){
         switch (i){
             case "lun_1":
                 txtMat1.setText(getMateria("lun_1", getActivity()));

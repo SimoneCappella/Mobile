@@ -33,7 +33,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/testorisposta"
+        android:id="@+id/MateriaDegliAppunti"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -46,25 +46,14 @@
 
     <ImageButton
         android:id="@+id/back"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="12dp"
         android:background="#0000"
+        android:scaleType="fitCenter"
         android:src="@drawable/back"
         app:layout_constraintEnd_toStartOf="@+id/textView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/MateriaDegliAppunti"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="52dp"
-        android:text="Nome materia"
-        android:textSize="18sp"
-        android:textStyle="italic"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -73,11 +62,11 @@
         android:layout_width="394dp"
         android:layout_height="633dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="52dp"
+        android:layout_marginTop="28dp"
         android:divider="@android:color/transparent"
         android:dividerHeight="5dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/testorisposta">
+        app:layout_constraintTop_toBottomOf="@+id/MateriaDegliAppunti">
 
     </ListView>
 

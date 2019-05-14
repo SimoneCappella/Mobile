@@ -32,6 +32,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
     {
         userRegister();
         finish();
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 
     private void show (String message)
