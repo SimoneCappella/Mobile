@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.os.Environment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,6 +19,8 @@ import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.io.File;
 
 public class Notes_Page extends AppCompatActivity implements View.OnClickListener {
 
@@ -90,6 +93,7 @@ public class Notes_Page extends AppCompatActivity implements View.OnClickListene
 
                 Cursor c = adapter.getCursor();
                 code = c.getString(0);
+                final String titolo = c.getString(3);
 
                 LayoutInflater inflater = LayoutInflater.from(context);
                 View mess = inflater.inflate(R.layout.messaggio_elimina,null);
@@ -104,6 +108,12 @@ public class Notes_Page extends AppCompatActivity implements View.OnClickListene
                         nc = da.searchM(a);
                         adapter.changeCursor(nc);
                         adapter.notifyDataSetChanged();
+
+                        //Elimino il file appunti dall'SD CARD
+                        String folder;
+                        folder = Environment.getExternalStorageDirectory() + File.separator + "Appunti/";
+                        File file = new File(folder + titolo + ".txt");
+                        boolean deleted = file.delete();
                     }
                 });
                 alertDialogBuilder.setNegativeButton("ANNULLA", new DialogInterface.OnClickListener() {

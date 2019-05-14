@@ -22,7 +22,6 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.progetto.helper.CheckNetworkStatus;
 import com.example.progetto.helper.HttpJsonParser;
 
 import org.json.JSONArray;
@@ -57,7 +56,8 @@ public class AppuntiListingActivity extends AppCompatActivity implements View.On
     private static final String KEY_MATERIA_ID = "materia_id";
     private static final String KEY_MATERIA_NAME = "materia_name";
     private static final String KEY_APPUNTO_LINK = "appunto_link";
-    private static final String KEY_APPUNTO_NAME = "appunto_name";
+    private static final String KEY_APPUNTO_TITOLO = "appunto_titolo";
+    private static final String KEY_APPUNTO_DATA = "appunto_data";
 
     private static final String BASE_URL = "http://mobileproject.altervista.org/";
 
@@ -125,12 +125,15 @@ public class AppuntiListingActivity extends AppCompatActivity implements View.On
                     for (int i = 0; i < appunti.length(); i++) {
                         JSONObject Appunto = appunti.getJSONObject(i);
                         Integer movieId = Appunto.getInt(KEY_MATERIA_ID);
-                        String appuntoName = Appunto.getString(KEY_APPUNTO_NAME);
+                        String appuntoTitolo = Appunto.getString(KEY_APPUNTO_TITOLO);
                         String appuntoLink = Appunto.getString(KEY_APPUNTO_LINK);
+                        String appuntoData = Appunto.getString(KEY_APPUNTO_DATA);
                         HashMap<String, String> map = new HashMap<String, String>();
                         map.put(KEY_MATERIA_ID, movieId.toString());
-                        map.put(KEY_APPUNTO_NAME, appuntoName);
+                        map.put(KEY_APPUNTO_TITOLO, appuntoTitolo);
                         map.put(KEY_APPUNTO_LINK, appuntoLink);
+                        map.put(KEY_APPUNTO_DATA, appuntoData);
+
                         appuntiList.add(map);
                     }
                 }
@@ -161,8 +164,8 @@ public class AppuntiListingActivity extends AppCompatActivity implements View.On
         ListAdapter adapter = new SimpleAdapter(
                 AppuntiListingActivity.this, appuntiList,
                 R.layout.list_item, new String[]{KEY_MATERIA_ID,
-                KEY_APPUNTO_NAME,KEY_APPUNTO_LINK},
-                new int[]{R.id.materiacondivisaID, R.id.materiacondivisaName,R.id.appuntoLink});
+                KEY_APPUNTO_TITOLO,KEY_APPUNTO_LINK,KEY_APPUNTO_DATA},
+                new int[]{R.id.appuntocondivisoID, R.id.appuntotitolo,R.id.appuntoLink,R.id.appuntoData});
         // updating listview
         appuntiListView.setAdapter(adapter);
         //Call MovieUpdateDeleteActivity when a movie is clicked
@@ -214,6 +217,9 @@ public class AppuntiListingActivity extends AppCompatActivity implements View.On
                             //check if app has permission to write to the external storage.
                             if (EasyPermissions.hasPermissions(AppuntiListingActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
                                 new DownloadFile().execute(nomeLink);
+                                //qui dovrei aggiornare il database locale
+                                //ma non ho il contenuto dell'appunto
+
                             } else {
                                 //If permission is not present request for the same.
                                 EasyPermissions.requestPermissions(AppuntiListingActivity.this, getString(R.string.write_file), WRITE_REQUEST_CODE, Manifest.permission.READ_EXTERNAL_STORAGE);

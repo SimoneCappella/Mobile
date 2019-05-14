@@ -28,7 +28,7 @@ public class MovieUpdateDeleteActivity extends AppCompatActivity {
     private static final String KEY_DATA = "data";
     private static final String KEY_MATERIA_ID = "materia_id";
     private static final String KEY_MATERIA_NAME = "materia_name";
-    private static final String KEY_APPUNTO_LINK = "appunto_link";
+    private static final String KEY_APPUNTO_LINK2 = "appunto_link2";
     private static final String KEY_APPUNTO_NAME = "appunto_name";
 
    private static final String BASE_URL = "http://mobileproject.altervista.org/";
@@ -116,7 +116,7 @@ public class MovieUpdateDeleteActivity extends AppCompatActivity {
                     //Parse the JSON response
                     appunto = jsonObject.getJSONObject(KEY_DATA);
                     materiaName = appunto.getString(KEY_MATERIA_NAME);
-                    link = appunto.getString(KEY_APPUNTO_LINK);
+                    link = appunto.getString(KEY_APPUNTO_LINK2);
                     titoloappunto = appunto.getString(KEY_APPUNTO_NAME);
                     //note = appunto.getString(KEY_RATING);
 
@@ -277,7 +277,7 @@ public class MovieUpdateDeleteActivity extends AppCompatActivity {
             //Populating request parameters
             httpParams.put(KEY_MATERIA_ID, appuntoId);
             httpParams.put(KEY_MATERIA_NAME, materiaName);
-            httpParams.put(KEY_APPUNTO_LINK, link);
+            httpParams.put(KEY_APPUNTO_LINK2, link);
             httpParams.put(KEY_APPUNTO_NAME, titoloappunto);
             //httpParams.put(KEY_NOTE, note);
             JSONObject jsonObject = httpJsonParser.makeHttpRequest(

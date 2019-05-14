@@ -24,17 +24,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -63,7 +52,7 @@ public class ShNotes extends AppCompatActivity implements View.OnClickListener{
 
         findViewById(R.id.back).setOnClickListener(bh);
 
-        getWindow().getDecorView().setBackgroundColor(Color.parseColor("#cccccc"));
+        //getWindow().getDecorView().setBackgroundColor(Color.parseColor("#cccccc"));
 
         back = (ImageButton) findViewById(R.id.back);
         back.setOnClickListener(this);
@@ -73,39 +62,6 @@ public class ShNotes extends AppCompatActivity implements View.OnClickListener{
         materieListView = (ListView) findViewById(R.id.materieList);
         new FetchMoviesAsyncTask().execute();
 
-
-
-
-        // opppure
-        /*
-        DataManager mydatabase=new DataManager(ctx);
-        String[] fromColumns={"m"};
-        int[] toViews = {R.id.nomemateria};
-        final Cursor cursor = mydatabase.selectAll();
-        final SimpleCursorAdapter arrayAdapter = new SimpleCursorAdapter(this,R.layout.modellorigamaterie,cursor,fromColumns,toViews,0);
-        materieListView = (ListView) findViewById(R.id.materieList);
-        materieListView.setAdapter(arrayAdapter);
-        materieListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //Intent i = new Intent(ctx, AppuntiListingActivity.class);
-                //startActivity(i);
-                ///fino qui è ok
-
-
-                String nomeMateria = ((TextView) view.findViewById(R.id.nomemateria))
-                        .getText().toString();
-                Intent intent = new Intent(getApplicationContext(),
-                        AppuntiListingActivity.class);
-                intent.putExtra(KEY_MATERIA_NAME, nomeMateria);
-                startActivityForResult(intent, 22);
-
-
-                finish();//finishing activity
-
-            }
-        });
-*/
     }
 
     @Override
@@ -176,7 +132,7 @@ public class ShNotes extends AppCompatActivity implements View.OnClickListener{
                 ShNotes.this, movieList,
                 R.layout.modellorigamaterie, new String[]{KEY_MATERIA_ID,
                 KEY_MATERIA_NAME},
-                new int[]{R.id.materiacondivisaID, R.id.nomemateria});
+                new int[]{R.id.appuntocondivisoID, R.id.nomemateria});
         // updating listview
         materieListView.setAdapter(adapter);
         //Call MovieUpdateDeleteActivity when a movie is clicked
