@@ -30,7 +30,7 @@
     <string name="write_file">This app needs access to your file storage so that it can write files.</string>
 
     <string-array name="Materie">
-        <item>T. per automazione e robotica</item>
+        <item>T.A.R.</item>
         <item>Ricerca operativa</item>
         <item>Tecnologie web</item>
         <item>Programmazione ad oggetti</item>
