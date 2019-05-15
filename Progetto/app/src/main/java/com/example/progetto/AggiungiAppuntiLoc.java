@@ -1,12 +1,10 @@
 package com.example.progetto;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -17,7 +15,6 @@ import android.widget.Toast;
 
 import com.example.progetto.helper.HttpJsonParser;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.DataOutputStream;
@@ -50,7 +47,6 @@ public class AggiungiAppuntiLoc extends AppCompatActivity implements View.OnClic
     TextView nomemateria;
     Button btnSalva;
     CheckBox checkCondividi;
-    private String folder;
 
     String a;
 
@@ -86,51 +82,48 @@ public class AggiungiAppuntiLoc extends AppCompatActivity implements View.OnClic
                 String data = editData.getText().toString();
                 String appunti = editApp.getText().toString();
                 da.insert(a, data, titolo, appunti);
-                //set Result per passare il risultato alla prima activitu cosi riesco a riavviarla dalla on result
+                //set Result per passare il risultato alla prima activity cosi riesco a riavviarla dalla on result
                 String res = "Appunti salvati";
                 Intent intent = new Intent();
                 intent = intent.putExtra("res", res);
                 setResult(Activity.RESULT_OK, intent);
 
-                //Salvo l'appunto sull'SD CARD come file di testo
-                if (CheckForSDCard.isSDCardPresent()) {
-                    //External directory path to save file
-                    folder = Environment.getExternalStorageDirectory() + File.separator + "Appunti/";
-                    File directory = new File(folder);
-                    if (!directory.exists()) {
-                        directory.mkdirs();
+                // Salvo l'appunto nella mamoeria interna del cellulare come file di testo
+                Context context = getApplicationContext();
+                final String folder = context.getFilesDir().getAbsolutePath() + File.separator + "Appunti/";
+                File subFolder = new File(folder);
+                if (!subFolder.exists()) {
+                    subFolder.mkdirs();
+                }
+                final String NomeFile = titolo + ".txt";
+                FileOutputStream fos = null;
+                try {
+
+                    FileOutputStream outputStream = new FileOutputStream(new File(subFolder, NomeFile));
+                    outputStream.write(appunti.getBytes());
+                    outputStream.close();
+
+                    // Il percorso assoluto di archiviazione è:
+                    // data/data/com.example.progetto/files/Appunti/[NomeFile]
+                    // data/user/0/com.example.progetto/files/Appunti/[NomeFile]
+
+                    if(checkCondividi.isChecked()){
+                        //ora faccio UPLOAD file sul server
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                //creating new thread to handle Http Operations
+
+                                uploadFile( folder + NomeFile);
+                                //aggiorno il database del server
+                                aggiornaAppuntiRemoto();
+                            }
+                        }).start();
                     }
-                    try {
-                        FileOutputStream fos = new FileOutputStream(
-                                new File(folder, titolo + ".txt"));
-                        fos.write(appunti.getBytes());
-                        fos.close();
-                        //Toast.makeText(this,"Data written in external storage",Toast.LENGTH_SHORT).show();
-
-                        if(checkCondividi.isChecked()){
-                            //ora faccio UPLOAD file sul server
-                            new Thread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    //creating new thread to handle Http Operations
-                                    uploadFile(folder +titolo + ".txt");
-                                    //aggiorno il database del server
-                                    aggiornaAppuntiRemoto();
-                                }
-                            }).start();
-                        }
-
-
-
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-
-                }else{
-                    Toast.makeText(this,
-                            "External Storage is not Available or is Read Only",
-                            Toast.LENGTH_LONG).show();
-
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
 
                 finish();
