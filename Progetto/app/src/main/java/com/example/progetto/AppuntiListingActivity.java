@@ -45,11 +45,12 @@ public class AppuntiListingActivity extends AppCompatActivity implements View.On
 
     private static final String KEY_SUCCESS = "success";
     private static final String KEY_DATA = "data";
-    private static final String KEY_MATERIA_ID = "materia_id";
-    private static final String KEY_MATERIA_NAME = "materia_name";
+    private static final String KEY_APPUNTO_ID = "materia_id";
+    private static final String KEY_APPUNTO_MATERIA = "materia_name";
     private static final String KEY_APPUNTO_LINK = "appunto_link";
     private static final String KEY_APPUNTO_TITOLO = "appunto_titolo";
     private static final String KEY_APPUNTO_DATA = "appunto_data";
+    private static final String KEY_APPUNTO_CONTENUTO = "appunto_contenuto";
 
     private static final String BASE_URL = "http://mobileproject.altervista.org/";
 
@@ -60,8 +61,12 @@ public class AppuntiListingActivity extends AppCompatActivity implements View.On
     private TextView MateriaAppunti;
 
     private String nomeLink;
+    private String titoloAppunto;
     private String fileName;
 
+    private String appuntoMateria;
+    private String appuntoData;
+    private String appuntoContenuto;
 
     ImageButton back;
 
@@ -74,9 +79,9 @@ public class AppuntiListingActivity extends AppCompatActivity implements View.On
         MateriaAppunti = findViewById(R.id.MateriaDegliAppunti);
 
         Intent intent = getIntent();
-        materiaName = intent.getStringExtra(KEY_MATERIA_NAME);
+        materiaName = intent.getStringExtra(KEY_APPUNTO_MATERIA);
 
-        new FetchMoviesAsyncTask().execute();
+        new FetchAppuntiListAsyncTask().execute();
         back = findViewById(R.id.back);
         back.setOnClickListener(this);
 
@@ -87,7 +92,7 @@ public class AppuntiListingActivity extends AppCompatActivity implements View.On
     /**
      * Fetches the list of appunti from the server
      */
-    private class FetchMoviesAsyncTask extends AsyncTask<String, String, String> {
+    private class FetchAppuntiListAsyncTask extends AsyncTask<String, String, String> {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -104,7 +109,7 @@ public class AppuntiListingActivity extends AppCompatActivity implements View.On
             HttpJsonParser httpJsonParser = new HttpJsonParser();
             Map<String, String> httpParams = new HashMap<>();
             //Populating request parameters
-            httpParams.put(KEY_MATERIA_NAME, materiaName);
+            httpParams.put(KEY_APPUNTO_MATERIA, materiaName);
 
             JSONObject jsonObject = httpJsonParser.makeHttpRequest(BASE_URL + "fetch_appunti.php", "POST", httpParams);
             try {
@@ -116,12 +121,12 @@ public class AppuntiListingActivity extends AppCompatActivity implements View.On
                     //Iterate through the response and populate appunti list
                     for (int i = 0; i < appunti.length(); i++) {
                         JSONObject Appunto = appunti.getJSONObject(i);
-                        Integer movieId = Appunto.getInt(KEY_MATERIA_ID);
+                        Integer appuntoID = Appunto.getInt(KEY_APPUNTO_ID);
                         String appuntoTitolo = Appunto.getString(KEY_APPUNTO_TITOLO);
                         String appuntoLink = Appunto.getString(KEY_APPUNTO_LINK);
                         String appuntoData = Appunto.getString(KEY_APPUNTO_DATA);
                         HashMap<String, String> map = new HashMap<String, String>();
-                        map.put(KEY_MATERIA_ID, movieId.toString());
+                        map.put(KEY_APPUNTO_ID, appuntoID.toString());
                         map.put(KEY_APPUNTO_TITOLO, appuntoTitolo);
                         map.put(KEY_APPUNTO_LINK, appuntoLink);
                         map.put(KEY_APPUNTO_DATA, appuntoData);
@@ -146,7 +151,7 @@ public class AppuntiListingActivity extends AppCompatActivity implements View.On
 
     }
 
-    /**
+     /**
      * Updating parsed JSON data into ListView
      * */
     private void populateAppuntiList() {
@@ -155,7 +160,7 @@ public class AppuntiListingActivity extends AppCompatActivity implements View.On
 
         ListAdapter adapter = new SimpleAdapter(
                 AppuntiListingActivity.this, appuntiList,
-                R.layout.list_item, new String[]{KEY_MATERIA_ID,
+                R.layout.list_item, new String[]{KEY_APPUNTO_ID,
                 KEY_APPUNTO_TITOLO,KEY_APPUNTO_LINK,KEY_APPUNTO_DATA},
                 new int[]{R.id.appuntocondivisoID, R.id.appuntotitolo,R.id.appuntoLink,R.id.appuntoData});
         // updating listview
@@ -172,6 +177,7 @@ public class AppuntiListingActivity extends AppCompatActivity implements View.On
         appuntiListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                titoloAppunto = ((TextView) view.findViewById(R.id.appuntotitolo)).getText().toString();
                 nomeLink = ((TextView) view.findViewById(R.id.appuntoLink)).getText().toString();
                 //Extract file name from URL
                 fileName = nomeLink.substring(nomeLink.lastIndexOf('/') + 1, nomeLink.length());
@@ -184,16 +190,24 @@ public class AppuntiListingActivity extends AppCompatActivity implements View.On
                 testoFileName.setText(fileName);
 
 
-                alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                alertDialogBuilder.setNeutralButton("Visualizza", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        new DownloadFile().execute(nomeLink);
+                        //leggo i campi dal database remoto
+                        new FetchAppuntiDetails().execute();
+                    }
+                });
+
+                alertDialogBuilder.setPositiveButton("Annulla", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
 
                     }
                 });
-                alertDialogBuilder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                alertDialogBuilder.setNegativeButton("Scarica", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        new DownloadFile().execute(nomeLink);
 
                     }
                 });
@@ -203,6 +217,66 @@ public class AppuntiListingActivity extends AppCompatActivity implements View.On
                 alertDialog.show();
             }
         });
+
+    }
+
+    private class FetchAppuntiDetails extends AsyncTask<String, String, String> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            //Display progress bar
+            pDialog = new ProgressDialog(AppuntiListingActivity.this);
+            pDialog.setMessage("Loading dettagli. Please wait...");
+            pDialog.setIndeterminate(false);
+            pDialog.setCancelable(false);
+            pDialog.show();
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            HttpJsonParser httpJsonParser = new HttpJsonParser();
+            Map<String, String> httpParams = new HashMap<>();
+            //Populating request parameters
+            httpParams.put(KEY_APPUNTO_TITOLO, titoloAppunto);
+
+            JSONObject jsonObject = httpJsonParser.makeHttpRequest(BASE_URL + "get_appunto_details.php", "POST", httpParams);
+            try {
+                int success = jsonObject.getInt(KEY_SUCCESS);
+                JSONArray appunti;
+                if (success == 1) {
+                    appunti = jsonObject.getJSONArray(KEY_DATA);
+                    //Iterate through the response and populate appunti list
+                    for (int i = 0; i < appunti.length(); i++) {
+                        JSONObject Appunto = appunti.getJSONObject(i);
+
+                        Integer appuntoID = Appunto.getInt(KEY_APPUNTO_ID);
+                        appuntoMateria = Appunto.getString(KEY_APPUNTO_MATERIA);
+                        appuntoData = Appunto.getString(KEY_APPUNTO_DATA);
+                        String appuntoLink = Appunto.getString(KEY_APPUNTO_LINK);
+                        appuntoContenuto = Appunto.getString(KEY_APPUNTO_CONTENUTO);
+
+                    }
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        protected void onPostExecute(String result) {
+            pDialog.dismiss();
+
+            //visualizzo i campi nell'activity VediAppunti
+            Intent i = new Intent(getApplication(), VediAppunti.class);
+            Bundle bundle = new Bundle();
+            bundle.putString("materia", appuntoMateria);
+            bundle.putString("titolo", titoloAppunto);
+            bundle.putString("data", appuntoData);
+            bundle.putString("app", appuntoContenuto);
+            i.putExtra("data", bundle);
+            startActivity(i);
+
+        }
 
     }
 
