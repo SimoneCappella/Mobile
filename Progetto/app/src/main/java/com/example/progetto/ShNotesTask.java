@@ -20,11 +20,7 @@ import java.net.URLEncoder;
 public class ShNotesTask extends AsyncTask <String, Void, String> {
     AlertDialog alertDialog;
     Context ctx;
-    public String line="", result="", response="";
-
-    ShNotesTask(Context ctx) {
-        this.ctx = ctx;
-    }
+    public String line="", response="";
 
     protected void show(String message) {
         Toast.makeText(ctx, message, Toast.LENGTH_LONG).show();
@@ -75,18 +71,6 @@ public class ShNotesTask extends AsyncTask <String, Void, String> {
         super.onProgressUpdate(values);
     }
 
-    /*protected void onPostExecute(String result) {
-        if(result.equals("Registration Success..."))
-        {
-            Toast.makeText(ctx, result, Toast.LENGTH_LONG).show();
-        }
-        else
-        {
-            alertDialog.setMessage(result);
-            alertDialog.show();
-        }
-
-    }*/
 }
 
 

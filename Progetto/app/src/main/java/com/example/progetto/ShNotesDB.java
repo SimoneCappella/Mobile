@@ -160,7 +160,7 @@ public class ShNotesDB extends AppCompatActivity implements View.OnClickListener
                 ShNotesDB.this, movieList,
                 R.layout.list_item, new String[]{KEY_MATERIA_ID,
                 KEY_MATERIA_NAME},
-                new int[]{R.id.materiacondivisaID, R.id.materiacondivisaName});
+                new int[]{R.id.appuntocondivisoID, R.id.appuntotitolo});
         // updating listview
         materieListView.setAdapter(adapter);
         //Call MovieUpdateDeleteActivity when a movie is clicked
@@ -169,7 +169,7 @@ public class ShNotesDB extends AppCompatActivity implements View.OnClickListener
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 //Check for network connectivity
                 if (CheckNetworkStatus.isNetworkAvailable(getApplicationContext())) {
-                    String movieId = ((TextView) view.findViewById(R.id.materiacondivisaID))
+                    String movieId = ((TextView) view.findViewById(R.id.appuntocondivisoID))
                             .getText().toString();
                     Intent intent = new Intent(getApplicationContext(),
                             MovieUpdateDeleteActivity.class);

@@ -71,6 +71,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="34dp"
         android:text="About us"
+        android:clickable="true"
         app:layout_constraintStart_toStartOf="@+id/notifiche"
         app:layout_constraintTop_toBottomOf="@+id/notifiche" />
 

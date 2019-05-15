@@ -1,18 +1,21 @@
 package com.example.progetto;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.progetto.helper.HttpJsonParser;
+
+import org.json.JSONObject;
 
 import java.io.DataOutputStream;
 import java.io.File;
@@ -23,25 +26,36 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
 public class AggiungiAppuntiLoc extends AppCompatActivity implements View.OnClickListener{
+
+    private int success;
+    private String appuntoTitolo;
+    private String appuntoData;
+    private String appuntoLink;
+    private String appuntomateria;
+    private String appuntocontenuto;
+
+    private static String STRING_EMPTY = "";
 
     final Context ctx=this;
     DataAppLoc da;
 
     EditText editTitolo, editData, editApp;
+    TextView nomemateria;
     Button btnSalva;
     CheckBox checkCondividi;
-    private String folder;
 
     String a;
 
-    private static final String BASE_URL = "http://mobileproject.altervista.org/UploadToServer.php";
+    private static final String BASE_URL = "http://mobileproject.altervista.org/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_aggiungi_appunti_loc);
+        setContentView(R.layout.activity_aggiungi__appunti__loc);
 
         Intent r = getIntent();
         a = r.getStringExtra("app");
@@ -54,6 +68,10 @@ public class AggiungiAppuntiLoc extends AppCompatActivity implements View.OnClic
         btnSalva = findViewById(R.id.btnSalvaApp);
         btnSalva.setOnClickListener(this);
         checkCondividi = findViewById((R.id.CBcondividi));
+        nomemateria = findViewById(R.id.materiaDegliAppunti);
+
+        nomemateria.setText(a);
+
     }
 
     @Override
@@ -64,62 +82,132 @@ public class AggiungiAppuntiLoc extends AppCompatActivity implements View.OnClic
                 String data = editData.getText().toString();
                 String appunti = editApp.getText().toString();
                 da.insert(a, data, titolo, appunti);
-                //set Result per passare il risultato alla prima activitu cosi riesco a riavviarla dalla on result
-                String res = "appunti salvati";
+                //set Result per passare il risultato alla prima activity cosi riesco a riavviarla dalla on result
+                String res = "Appunti salvati";
                 Intent intent = new Intent();
                 intent = intent.putExtra("res", res);
                 setResult(Activity.RESULT_OK, intent);
 
-                if (checkCondividi.isChecked()) {
-                    //se il chekbox CONDIVIDI è selezionato, devo salvare l'appunto sul server
-                    if (CheckForSDCard.isSDCardPresent()) {
-                        //External directory path to save file
-                        folder = Environment.getExternalStorageDirectory() + File.separator + "Appunti/";
-                        //Create androiddeft folder if it does not exist
-                        File directory = new File(folder);
-                        if (!directory.exists()) {
-                            directory.mkdirs();
-                        }
-                        try {
-                            FileOutputStream fos = new FileOutputStream(
-                                    new File(getExternalFilesDir("Appunti/"), titolo + ".txt"));
-                            //new File(getExternalFilesDir(folder), titolo + ".txt"));
-                            fos.write(appunti.getBytes());
-                            fos.close();
-                            Toast.makeText(this,
-                                    "Data written in external storage",
-                                    Toast.LENGTH_SHORT).show();
-                            //ora faccio UPLOAD file sul server
-                            new Thread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    //creating new thread to handle Http Operations
+                // Salvo l'appunto nella mamoeria interna del cellulare come file di testo
+                Context context = getApplicationContext();
+                final String folder = context.getFilesDir().getAbsolutePath() + File.separator + "Appunti/";
+                File subFolder = new File(folder);
+                if (!subFolder.exists()) {
+                    subFolder.mkdirs();
+                }
+                final String NomeFile = titolo + ".txt";
+                FileOutputStream fos = null;
+                try {
 
-                                    uploadFile("/storage/emulated/0/Android/data/com.example.progetto/files/Appunti/" +titolo + ".txt");
-                                    //uploadFile("com.example.progetto/files/Appunti/" +titolo + ".txt");
-                                    //uploadFile("Appunti/" +titolo + ".txt");
-                                    //uploadFile(folder+titolo + ".txt");
-                                }
-                            }).start();
-                            //aggiungo l'appunto sul DB remoto
+                    FileOutputStream outputStream = new FileOutputStream(new File(subFolder, NomeFile));
+                    outputStream.write(appunti.getBytes());
+                    outputStream.close();
 
+                    // Il percorso assoluto di archiviazione è:
+                    // data/data/com.example.progetto/files/Appunti/[NomeFile]
+                    // data/user/0/com.example.progetto/files/Appunti/[NomeFile]
 
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
+                    if(checkCondividi.isChecked()){
+                        //ora faccio UPLOAD file sul server
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                //creating new thread to handle Http Operations
 
-                    }else{
-                        Toast.makeText(this,
-                                "External Storage is not Available or is Read Only",
-                                Toast.LENGTH_LONG).show();
-
+                                uploadFile( folder + NomeFile);
+                                //aggiorno il database del server
+                                aggiornaAppuntiRemoto();
+                            }
+                        }).start();
                     }
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
 
                 finish();
                 break;
         }
     }
+
+    private void aggiornaAppuntiRemoto() {
+        if (!STRING_EMPTY.equals(editTitolo.getText().toString()) &&
+                !STRING_EMPTY.equals(editData.getText().toString()) &&
+                !STRING_EMPTY.equals(nomemateria.getText().toString())) {
+
+            appuntoTitolo = editTitolo.getText().toString();
+            appuntoData = editData.getText().toString();
+            appuntoLink= "http://mobileproject.altervista.org/Appunti/" + appuntoTitolo + ".txt";
+            appuntomateria = nomemateria.getText().toString();
+            appuntocontenuto = editApp.getText().toString();
+
+            new AddAppuntoremotoAsyncTask().execute();
+        } else {
+            Toast.makeText(this,
+                    "One or more fields left empty!",
+                    Toast.LENGTH_LONG).show();
+
+        }
+
+
+    }
+
+    private class AddAppuntoremotoAsyncTask extends AsyncTask<String, String, String> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            HttpJsonParser httpJsonParser = new HttpJsonParser();
+            Map<String, String> httpParams = new HashMap<>();
+            //Populating request parameters
+
+            httpParams.put("appunto_link", appuntoLink);
+            httpParams.put("appunto_titolo", appuntoTitolo);
+            httpParams.put("appunto_data", appuntoData);
+            httpParams.put("appunto_materia", appuntomateria);
+            httpParams.put("appunto_contenuto", appuntocontenuto);
+
+            JSONObject jsonObject = httpJsonParser.makeHttpRequest(
+                    BASE_URL + "add_appunti.php", "POST", httpParams);
+            try {
+                success = jsonObject.getInt("success");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        protected void onPostExecute(String result) {
+            runOnUiThread(new Runnable() {
+                public void run() {
+                    if (success == 1) {
+                        //Display success message
+                        Toast.makeText(ctx,
+                                "Appunto added on remote DB", Toast.LENGTH_LONG).show();
+                        Intent i = getIntent();
+                        //send result code 20 to notify about movie update
+                        setResult(20, i);
+                        //Finish ths activity and go back to listing activity
+                        finish();
+
+                    } else {
+                        Toast.makeText(ctx,
+                                "Some error occurred while adding appunto",
+                                Toast.LENGTH_LONG).show();
+
+                    }
+                }
+            });
+        }
+    }
+
+
 
     //android upload file to server
     public int uploadFile(final String selectedFilePath){
@@ -154,7 +242,7 @@ public class AggiungiAppuntiLoc extends AppCompatActivity implements View.OnClic
         }else{
             try{
                 FileInputStream fileInputStream = new FileInputStream(selectedFile);
-                URL url = new URL(BASE_URL);
+                URL url = new URL(BASE_URL + "UploadToServer.php");
                 connection = (HttpURLConnection) url.openConnection();
                 connection.setDoInput(true);//Allow Inputs
                 connection.setDoOutput(true);//Allow Outputs

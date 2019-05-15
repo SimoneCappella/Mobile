@@ -1,6 +1,5 @@
 package com.example.progetto;
 
-import android.Manifest;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -8,7 +7,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,7 +20,6 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.progetto.helper.CheckNetworkStatus;
 import com.example.progetto.helper.HttpJsonParser;
 
 import org.json.JSONArray;
@@ -36,20 +33,14 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
 import java.net.URLConnection;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-
-import pub.devrel.easypermissions.EasyPermissions;
 
 public class AppuntiListingActivity extends AppCompatActivity implements View.OnClickListener {
 
     final Context ctx=this;
 
-    private static final int WRITE_REQUEST_CODE = 300;
-    private String url;
     private static final String TAG = MainActivity.class.getSimpleName();
 
     private static final String KEY_SUCCESS = "success";
@@ -57,7 +48,8 @@ public class AppuntiListingActivity extends AppCompatActivity implements View.On
     private static final String KEY_MATERIA_ID = "materia_id";
     private static final String KEY_MATERIA_NAME = "materia_name";
     private static final String KEY_APPUNTO_LINK = "appunto_link";
-    private static final String KEY_APPUNTO_NAME = "appunto_name";
+    private static final String KEY_APPUNTO_TITOLO = "appunto_titolo";
+    private static final String KEY_APPUNTO_DATA = "appunto_data";
 
     private static final String BASE_URL = "http://mobileproject.altervista.org/";
 
@@ -93,7 +85,7 @@ public class AppuntiListingActivity extends AppCompatActivity implements View.On
 
 
     /**
-     * Fetches the list of movies from the server
+     * Fetches the list of appunti from the server
      */
     private class FetchMoviesAsyncTask extends AsyncTask<String, String, String> {
         @Override
@@ -121,16 +113,19 @@ public class AppuntiListingActivity extends AppCompatActivity implements View.On
                 if (success == 1) {
                     appuntiList = new ArrayList<>();
                     appunti = jsonObject.getJSONArray(KEY_DATA);
-                    //Iterate through the response and populate movies list
+                    //Iterate through the response and populate appunti list
                     for (int i = 0; i < appunti.length(); i++) {
                         JSONObject Appunto = appunti.getJSONObject(i);
                         Integer movieId = Appunto.getInt(KEY_MATERIA_ID);
-                        String appuntoName = Appunto.getString(KEY_APPUNTO_NAME);
+                        String appuntoTitolo = Appunto.getString(KEY_APPUNTO_TITOLO);
                         String appuntoLink = Appunto.getString(KEY_APPUNTO_LINK);
+                        String appuntoData = Appunto.getString(KEY_APPUNTO_DATA);
                         HashMap<String, String> map = new HashMap<String, String>();
                         map.put(KEY_MATERIA_ID, movieId.toString());
-                        map.put(KEY_APPUNTO_NAME, appuntoName);
+                        map.put(KEY_APPUNTO_TITOLO, appuntoTitolo);
                         map.put(KEY_APPUNTO_LINK, appuntoLink);
+                        map.put(KEY_APPUNTO_DATA, appuntoData);
+
                         appuntiList.add(map);
                     }
                 }
@@ -161,31 +156,15 @@ public class AppuntiListingActivity extends AppCompatActivity implements View.On
         ListAdapter adapter = new SimpleAdapter(
                 AppuntiListingActivity.this, appuntiList,
                 R.layout.list_item, new String[]{KEY_MATERIA_ID,
-                KEY_APPUNTO_NAME,KEY_APPUNTO_LINK},
-                new int[]{R.id.materiacondivisaID, R.id.materiacondivisaName,R.id.appuntoLink});
+                KEY_APPUNTO_TITOLO,KEY_APPUNTO_LINK,KEY_APPUNTO_DATA},
+                new int[]{R.id.appuntocondivisoID, R.id.appuntotitolo,R.id.appuntoLink,R.id.appuntoData});
         // updating listview
         appuntiListView.setAdapter(adapter);
-        //Call MovieUpdateDeleteActivity when a movie is clicked
+
         appuntiListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
 
-                /*
-                //Check for network connectivity
-                if (CheckNetworkStatus.isNetworkAvailable(getApplicationContext())) {
-                    String movieId = ((TextView) view.findViewById(R.id.materiacondivisaID))
-                            .getText().toString();
-                    Intent intent = new Intent(getApplicationContext(),
-                            MovieUpdateDeleteActivity.class);
-                    intent.putExtra(KEY_MATERIA_ID, movieId);
-                    startActivityForResult(intent, 20);
-
-                } else {
-                    Toast.makeText(AppuntiListingActivity.this,
-                            "Unable to connect to internet",
-                            Toast.LENGTH_LONG).show();
-
-                }*/
                 return false;
             }
         });
@@ -208,23 +187,8 @@ public class AppuntiListingActivity extends AppCompatActivity implements View.On
                 alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        //scarico il file del link
-                        if (CheckForSDCard.isSDCardPresent()) {
+                        new DownloadFile().execute(nomeLink);
 
-                            //check if app has permission to write to the external storage.
-                            if (EasyPermissions.hasPermissions(AppuntiListingActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                                new DownloadFile().execute(nomeLink);
-                            } else {
-                                //If permission is not present request for the same.
-                                EasyPermissions.requestPermissions(AppuntiListingActivity.this, getString(R.string.write_file), WRITE_REQUEST_CODE, Manifest.permission.READ_EXTERNAL_STORAGE);
-                            }
-
-
-                        } else {
-                            Toast.makeText(getApplicationContext(),
-                                    "SD Card not found", Toast.LENGTH_LONG).show();
-
-                        }
                     }
                 });
                 alertDialogBuilder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
@@ -247,8 +211,8 @@ public class AppuntiListingActivity extends AppCompatActivity implements View.On
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == 20) {
             // If the result code is 20 that means that
-            // the user has deleted/updated the movie.
-            // So refresh the movie listing
+            // the user has deleted/updated the appunto.
+            // So refresh the appunto listing
             Intent intent = getIntent();
             finish();
             startActivity(intent);
@@ -304,25 +268,21 @@ public class AppuntiListingActivity extends AppCompatActivity implements View.On
                 // input stream to read file - with 8k buffer
                 InputStream input = new BufferedInputStream(url.openStream(), 8192);
 
-                String timestamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());
 
                 //Extract file name from URL
                 fileName = f_url[0].substring(f_url[0].lastIndexOf('/') + 1, f_url[0].length());
 
                 //Append timestamp to file name
+                //String timestamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());
                 //fileName = timestamp + "_" + fileName;
 
-                //External directory path to save file
-
-                folder = Environment.getExternalStorageDirectory() + File.separator + "Appunti/";
-
-                //Create folder if it does not exist
-                File directory = new File(folder);
-
-                if (!directory.exists()) {
-                    directory.mkdirs();
+                // Salvo l'appunto nella mmemoria interna del cellulare come file di testo
+                Context context = getApplicationContext();
+                final String folder = context.getFilesDir().getAbsolutePath() + File.separator + "Appunti/";
+                File subFolder = new File(folder);
+                if (!subFolder.exists()) {
+                    subFolder.mkdirs();
                 }
-
                 // Output stream to write file
                 OutputStream output = new FileOutputStream(folder + fileName);
 

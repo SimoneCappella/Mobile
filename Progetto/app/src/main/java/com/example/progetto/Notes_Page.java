@@ -19,6 +19,8 @@ import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.File;
+
 public class Notes_Page extends AppCompatActivity implements View.OnClickListener {
 
     TextView txt;
@@ -90,6 +92,7 @@ public class Notes_Page extends AppCompatActivity implements View.OnClickListene
 
                 Cursor c = adapter.getCursor();
                 code = c.getString(0);
+                final String titolo = c.getString(3);
 
                 LayoutInflater inflater = LayoutInflater.from(context);
                 View mess = inflater.inflate(R.layout.messaggio_elimina,null);
@@ -104,6 +107,13 @@ public class Notes_Page extends AppCompatActivity implements View.OnClickListene
                         nc = da.searchM(a);
                         adapter.changeCursor(nc);
                         adapter.notifyDataSetChanged();
+
+                        //Elimino il file appunti dalla memoria interna
+
+                        Context context = getApplicationContext();
+                        String folder = context.getFilesDir().getAbsolutePath() + File.separator + "Appunti/";
+                        File file = new File(folder + titolo + ".txt");
+                        boolean deleted = file.delete();
                     }
                 });
                 alertDialogBuilder.setNegativeButton("ANNULLA", new DialogInterface.OnClickListener() {

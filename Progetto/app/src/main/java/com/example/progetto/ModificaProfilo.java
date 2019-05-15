@@ -22,20 +22,18 @@ public class ModificaProfilo extends AppCompatActivity {
         findViewById(R.id.btnBack).setOnClickListener(bh);
 
         TextView modUser = findViewById(R.id.modifica_user);
-        TextView modEmail = findViewById(R.id.modifica_email);
         TextView modPass = findViewById(R.id.modifica_pass);
+
+        TextView utente = findViewById(R.id.showUser);
+        utente.setText(FirstActivity.login_name);
+        TextView password = findViewById(R.id.showPassword);
+        password.setText(FirstActivity.login_pass);
+
 
         modUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 alertDialogUser();
-            }
-        });
-
-        modEmail.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                alertDialogEmail();
             }
         });
 
