@@ -16,7 +16,7 @@ import static com.example.progetto.MainActivity.username;
 
 public class FirstActivity extends AppCompatActivity implements View.OnClickListener {
     EditText editNome, editPass;
-    String login_name, login_pass;
+    public static String login_name, login_pass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

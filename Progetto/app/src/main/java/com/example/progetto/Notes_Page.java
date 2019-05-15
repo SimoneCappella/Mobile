@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
-import android.os.Environment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -109,9 +108,10 @@ public class Notes_Page extends AppCompatActivity implements View.OnClickListene
                         adapter.changeCursor(nc);
                         adapter.notifyDataSetChanged();
 
-                        //Elimino il file appunti dall'SD CARD
-                        String folder;
-                        folder = Environment.getExternalStorageDirectory() + File.separator + "Appunti/";
+                        //Elimino il file appunti dalla memoria interna
+
+                        Context context = getApplicationContext();
+                        String folder = context.getFilesDir().getAbsolutePath() + File.separator + "Appunti/";
                         File file = new File(folder + titolo + ".txt");
                         boolean deleted = file.delete();
                     }
