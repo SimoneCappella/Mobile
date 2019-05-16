@@ -112,8 +112,6 @@ public class AggiungiAppuntiLoc extends AppCompatActivity implements View.OnClic
                         new Thread(new Runnable() {
                             @Override
                             public void run() {
-                                //creating new thread to handle Http Operations
-
                                 uploadFile( folder + NomeFile);
                                 //aggiorno il database del server
                                 aggiornaAppuntiRemoto();

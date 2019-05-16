@@ -1,10 +1,12 @@
 package com.example.progetto;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -70,6 +72,8 @@ public class AppuntiListingActivity extends AppCompatActivity implements View.On
 
     ImageButton back;
 
+    DataAppLoc da;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,6 +88,8 @@ public class AppuntiListingActivity extends AppCompatActivity implements View.On
         new FetchAppuntiListAsyncTask().execute();
         back = findViewById(R.id.back);
         back.setOnClickListener(this);
+
+        da = new DataAppLoc(this);
 
     }
 
@@ -204,10 +210,11 @@ public class AppuntiListingActivity extends AppCompatActivity implements View.On
 
                     }
                 });
-                alertDialogBuilder.setNegativeButton("Scarica", new DialogInterface.OnClickListener() {
+                alertDialogBuilder.setNegativeButton("Salva", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         new DownloadFile().execute(nomeLink);
+                        new AggiornaDB().execute();
 
                     }
                 });
@@ -217,6 +224,71 @@ public class AppuntiListingActivity extends AppCompatActivity implements View.On
                 alertDialog.show();
             }
         });
+
+    }
+
+    private class AggiornaDB extends AsyncTask<String, String, String> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            //Display progress bar
+            pDialog = new ProgressDialog(AppuntiListingActivity.this);
+            pDialog.setMessage("Aggiorno database locale. Please wait...");
+            pDialog.setIndeterminate(false);
+            pDialog.setCancelable(false);
+            pDialog.show();
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            HttpJsonParser httpJsonParser = new HttpJsonParser();
+            Map<String, String> httpParams = new HashMap<>();
+            //Populating request parameters
+            httpParams.put(KEY_APPUNTO_TITOLO, titoloAppunto);
+
+            JSONObject jsonObject = httpJsonParser.makeHttpRequest(BASE_URL + "get_appunto_details.php", "POST", httpParams);
+            try {
+                int success = jsonObject.getInt(KEY_SUCCESS);
+                JSONArray appunti;
+                if (success == 1) {
+                    appunti = jsonObject.getJSONArray(KEY_DATA);
+                    //Iterate through the response and populate appunti list
+                    for (int i = 0; i < appunti.length(); i++) {
+                        JSONObject Appunto = appunti.getJSONObject(i);
+
+                        Integer appuntoID = Appunto.getInt(KEY_APPUNTO_ID);
+                        appuntoMateria = Appunto.getString(KEY_APPUNTO_MATERIA);
+                        appuntoData = Appunto.getString(KEY_APPUNTO_DATA);
+                        String appuntoLink = Appunto.getString(KEY_APPUNTO_LINK);
+                        appuntoContenuto = Appunto.getString(KEY_APPUNTO_CONTENUTO);
+
+                    }
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        protected void onPostExecute(String result) {
+            pDialog.dismiss();
+
+            Cursor nc;
+            nc = da.searchTitolo(titoloAppunto);
+            int num = nc.getCount();
+            if(nc.getCount()<=0){
+                //Se l'appunto non è presente nel database locale, lo aggiungo
+                da.insert(appuntoMateria, appuntoData, titoloAppunto, appuntoContenuto);
+                //set Result per passare il risultato alla prima activity cosi riesco a riavviarla dalla on result
+                String res = "Appunti salvati";
+                Intent intent = new Intent();
+                intent = intent.putExtra("res", res);
+                setResult(Activity.RESULT_OK, intent);
+            }else{
+                //Se c'è già un appunto colo nome 'titoloAppunto' non lo aggiungo
+                Toast.makeText(getApplicationContext(), "Appunto " + titoloAppunto + " già presente nel database locale", Toast.LENGTH_SHORT).show();
+            }
+        }
 
     }
 
@@ -350,7 +422,7 @@ public class AppuntiListingActivity extends AppCompatActivity implements View.On
                 //String timestamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());
                 //fileName = timestamp + "_" + fileName;
 
-                // Salvo l'appunto nella mmemoria interna del cellulare come file di testo
+                // Salvo l'appunto nella memoria interna del cellulare come file di testo
                 Context context = getApplicationContext();
                 final String folder = context.getFilesDir().getAbsolutePath() + File.separator + "Appunti/";
                 File subFolder = new File(folder);
@@ -381,7 +453,11 @@ public class AppuntiListingActivity extends AppCompatActivity implements View.On
                 // closing streams
                 output.close();
                 input.close();
+
                 return "Downloaded at: " + folder + fileName;
+
+
+
 
             } catch (Exception e) {
                 Log.e("Error: ", e.getMessage());

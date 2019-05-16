@@ -8,23 +8,22 @@
 
     <TextView
         android:id="@+id/nomefile"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="31dp"
         android:layout_marginStart="44dp"
-        android:layout_marginTop="60dp"
-        android:text=""
+        android:layout_marginTop="16dp"
         android:textSize="15sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/testomessaggio" />
 
     <TextView
         android:id="@+id/testomessaggio"
-        android:layout_width="wrap_content"
-        android:layout_height="31dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="20dp"
-        android:text="Vuoi visualizzare o scaricare il file ?"
+        android:layout_width="246dp"
+        android:layout_height="53dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text='Vuoi visualizzare il file o salvarlo su "I miei appunti" ?'
         android:textSize="15sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"

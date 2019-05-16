@@ -133,7 +133,6 @@ public class ShNotes extends AppCompatActivity implements View.OnClickListener{
                 new int[]{R.id.appuntocondivisoID, R.id.nomemateria});
         // updating listview
         materieListView.setAdapter(adapter);
-        //Call MovieUpdateDeleteActivity when a movie is clicked
         materieListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
