@@ -1,6 +1,5 @@
 package com.example.progetto;
 
-import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.app.AlertDialog;
@@ -24,9 +23,9 @@ public class ModificaProfilo extends AppCompatActivity {
         TextView modUser = findViewById(R.id.modifica_user);
         TextView modPass = findViewById(R.id.modifica_pass);
 
-        TextView utente = findViewById(R.id.showUser);
+        TextView utente = findViewById(R.id.nuovaPassword);
         utente.setText(FirstActivity.login_name);
-        TextView password = findViewById(R.id.showPassword);
+        TextView password = findViewById(R.id.confermaPassword);
         password.setText(FirstActivity.login_pass);
 
 
@@ -48,15 +47,6 @@ public class ModificaProfilo extends AppCompatActivity {
 
 
     public void alertDialogUser()                                                                   //Dialog
-    {
-        AlertDialog.Builder miaAlert = new AlertDialog.Builder(this);
-        miaAlert.setTitle("AlertDialog di MrWebMaster");                                        //titolo del dialog
-        miaAlert.setMessage("Questa è la mia prima AlertDialog");                               //messaggio del dialog
-        AlertDialog alert = miaAlert.create();
-        alert.show();
-    }
-
-    public void alertDialogEmail()                                                                   //Dialog
     {
         AlertDialog.Builder miaAlert = new AlertDialog.Builder(this);
         miaAlert.setTitle("AlertDialog di MrWebMaster");                                        //titolo del dialog

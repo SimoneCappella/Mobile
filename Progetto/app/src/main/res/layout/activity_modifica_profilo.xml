@@ -67,8 +67,8 @@
         android:orientation="vertical"
         app:layout_constraintGuide_end="391dp" />
 
-    <TextView
-        android:id="@+id/showUser"
+    <EditText
+        android:id="@+id/nuovaPassword"
         android:layout_width="134dp"
         android:layout_height="19dp"
         android:layout_marginStart="44dp"
@@ -77,8 +77,8 @@
         app:layout_constraintStart_toEndOf="@+id/modifica_user"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/showPassword"
+    <EditText
+        android:id="@+id/confermaPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -88,6 +88,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/modifica_pass"
-        app:layout_constraintTop_toBottomOf="@+id/showUser" />
+        app:layout_constraintTop_toBottomOf="@+id/nuovaPassword" />
 
 </android.support.constraint.ConstraintLayout>

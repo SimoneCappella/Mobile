@@ -104,7 +104,9 @@ public class SupportTask extends AsyncTask <String, Void, String> {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }return response;
+        }
+
+        return response;
     }
 
     @Override
