@@ -31,6 +31,7 @@ public class Clock extends AppCompatActivity implements BottomNavigationView.OnN
         nav.setItemIconTintList(null);
         nav.setItemIconSize(110);
 
+
         Calendar calendar = Calendar.getInstance();
         int day = calendar.get(Calendar.DAY_OF_WEEK);
         Fragment fragment = null;

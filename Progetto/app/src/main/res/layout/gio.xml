@@ -21,9 +21,9 @@
             android:id="@+id/day"
             android:layout_width="220dp"
             android:layout_height="35dp"
-            android:background="#000000"
+            android:background="#dddddd"
             android:gravity="center"
-            android:text="giovedì"
+            android:text="Giovedì"
             android:textColor="#cc0000"
             android:textSize="16sp"
             android:textStyle="bold" />
@@ -36,39 +36,39 @@
                 android:id="@+id/ora"
                 android:layout_width="60dp"
                 android:layout_height="35dp"
+                android:background="#dddddd"
                 android:gravity="center"
-                android:text="ora"
+                android:text="Ora"
                 android:textColor="#cc0000"
                 android:textSize="16sp"
-                android:textStyle="bold"
-                android:background="#000000"/>
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/materia"
                 android:layout_width="220dp"
                 android:layout_height="35dp"
+                android:background="#dddddd"
                 android:gravity="center"
-                android:text="materia"
+                android:text="Materia"
                 android:textColor="#cc0000"
                 android:textSize="16sp"
-                android:textStyle="bold"
-                android:background="#000000"/>
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/aula"
                 android:layout_width="80dp"
                 android:layout_height="35dp"
+                android:background="#dddddd"
                 android:gravity="center"
-                android:text="aula"
+                android:text="Aula"
                 android:textColor="#cc0000"
                 android:textSize="16sp"
-                android:textStyle="bold"
-                android:background="#000000"/>
+                android:textStyle="bold" />
 
             <TextView
                 android:layout_width="36dp"
                 android:layout_height="match_parent"
-                android:background="#000000" />
+                android:background="#dddddd" />
 
         </TableRow>
 

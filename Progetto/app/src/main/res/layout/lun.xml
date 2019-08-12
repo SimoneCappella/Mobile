@@ -7,7 +7,7 @@
 
     <TableLayout
         android:id="@+id/tableLayout"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
@@ -21,12 +21,12 @@
             android:id="@+id/day"
             android:layout_width="220dp"
             android:layout_height="35dp"
+            android:background="#dddddd"
             android:gravity="center"
-            android:text="lunedì"
+            android:text="Lunedì"
             android:textColor="#cc0000"
             android:textSize="16sp"
-            android:textStyle="bold"
-            android:background="#000000"/>
+            android:textStyle="bold" />
 
         <TableRow
             android:layout_width="match_parent"
@@ -36,39 +36,39 @@
                 android:id="@+id/ora"
                 android:layout_width="60dp"
                 android:layout_height="35dp"
+                android:background="#dddddd"
                 android:gravity="center"
-                android:text="ora"
+                android:text="Ora"
                 android:textColor="#cc0000"
                 android:textSize="16sp"
-                android:textStyle="bold"
-                android:background="#000000"/>
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/materia"
                 android:layout_width="220dp"
                 android:layout_height="35dp"
+                android:background="#dddddd"
                 android:gravity="center"
-                android:text="materia"
+                android:text="Materia"
                 android:textColor="#cc0000"
                 android:textSize="16sp"
-                android:textStyle="bold"
-                android:background="#000000"/>
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/aula"
                 android:layout_width="80dp"
                 android:layout_height="35dp"
+                android:background="#dddddd"
                 android:gravity="center"
-                android:text="aula"
+                android:text="Aula"
                 android:textColor="#cc0000"
                 android:textSize="16sp"
-                android:textStyle="bold"
-                android:background="#000000"/>
+                android:textStyle="bold" />
 
             <TextView
                 android:layout_width="36dp"
                 android:layout_height="match_parent"
-                android:background="#000000" />
+                android:background="#dddddd" />
 
         </TableRow>
 
@@ -80,35 +80,35 @@
                 android:id="@+id/ora1"
                 android:layout_width="60dp"
                 android:layout_height="35dp"
+                android:background="#dddddd"
                 android:clickable="true"
                 android:gravity="center"
                 android:text="8.30"
                 android:textColor="#404040"
                 android:textSize="16sp"
-                android:textStyle="bold"
-                android:background="#dddddd"/>
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/materia1"
                 android:layout_width="220dp"
                 android:layout_height="35dp"
+                android:background="#dddddd"
                 android:gravity="center"
                 android:text="materia"
                 android:textColor="#404040"
                 android:textSize="16sp"
-                android:textStyle="bold"
-                android:background="#dddddd"/>
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/aula1"
                 android:layout_width="80dp"
                 android:layout_height="35dp"
+                android:background="#dddddd"
                 android:gravity="center"
                 android:text="aula"
                 android:textColor="#404040"
                 android:textSize="16sp"
-                android:textStyle="bold"
-                android:background="#dddddd"/>
+                android:textStyle="bold" />
 
             <ImageButton
                 android:id="@+id/edit1"
@@ -127,31 +127,31 @@
                 android:id="@+id/ora2"
                 android:layout_width="wrap_content"
                 android:layout_height="35dp"
+                android:background="#eeeeee"
                 android:gravity="center"
                 android:text="9.30"
                 android:textSize="16sp"
-                android:textStyle="bold|italic"
-                android:background="#eeeeee" />
+                android:textStyle="bold|italic" />
 
             <TextView
                 android:id="@+id/materia2"
                 android:layout_width="87dp"
                 android:layout_height="35dp"
+                android:background="#eeeeee"
                 android:gravity="center"
                 android:text="materia"
                 android:textSize="16sp"
-                android:textStyle="bold|italic"
-                android:background="#eeeeee"/>
+                android:textStyle="bold|italic" />
 
             <TextView
                 android:id="@+id/aula2"
                 android:layout_width="80dp"
                 android:layout_height="35dp"
+                android:background="#eeeeee"
                 android:gravity="center"
                 android:text="aula"
                 android:textSize="16sp"
-                android:textStyle="bold|italic"
-                android:background="#eeeeee"/>
+                android:textStyle="bold|italic" />
 
             <ImageButton
                 android:id="@+id/edit2"
@@ -169,34 +169,34 @@
                 android:id="@+id/ora3"
                 android:layout_width="wrap_content"
                 android:layout_height="35dp"
+                android:background="#dddddd"
                 android:gravity="center"
                 android:text="10.30"
                 android:textColor="#404040"
                 android:textSize="16sp"
-                android:textStyle="bold"
-                android:background="#dddddd"/>
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/materia3"
                 android:layout_width="87dp"
                 android:layout_height="35dp"
+                android:background="#dddddd"
                 android:gravity="center"
                 android:text="materia"
                 android:textColor="#404040"
                 android:textSize="16sp"
-                android:textStyle="bold"
-                android:background="#dddddd"/>
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/aula3"
                 android:layout_width="80dp"
                 android:layout_height="35dp"
+                android:background="#dddddd"
                 android:gravity="center"
                 android:text="aula"
                 android:textColor="#404040"
                 android:textSize="16sp"
-                android:textStyle="bold"
-                android:background="#dddddd"/>
+                android:textStyle="bold" />
 
             <ImageButton
                 android:id="@+id/edit3"
@@ -214,31 +214,31 @@
                 android:id="@+id/ora4"
                 android:layout_width="wrap_content"
                 android:layout_height="35dp"
+                android:background="#eeeeee"
                 android:gravity="center"
                 android:text="11.30"
                 android:textSize="16sp"
-                android:textStyle="bold|italic"
-                android:background="#eeeeee"/>
+                android:textStyle="bold|italic" />
 
             <TextView
                 android:id="@+id/materia4"
                 android:layout_width="87dp"
                 android:layout_height="35dp"
+                android:background="#eeeeee"
                 android:gravity="center"
                 android:text="materia"
                 android:textSize="16sp"
-                android:textStyle="bold|italic"
-                android:background="#eeeeee"/>
+                android:textStyle="bold|italic" />
 
             <TextView
                 android:id="@+id/aula4"
                 android:layout_width="80dp"
                 android:layout_height="35dp"
+                android:background="#eeeeee"
                 android:gravity="center"
                 android:text="aula"
                 android:textSize="16sp"
-                android:textStyle="bold|italic"
-                android:background="#eeeeee"/>
+                android:textStyle="bold|italic" />
 
             <ImageButton
                 android:id="@+id/edit4"
@@ -256,34 +256,34 @@
                 android:id="@+id/ora5"
                 android:layout_width="wrap_content"
                 android:layout_height="35dp"
+                android:background="#dddddd"
                 android:gravity="center"
                 android:text="12.30"
                 android:textColor="#404040"
                 android:textSize="16sp"
-                android:textStyle="bold"
-                android:background="#dddddd"/>
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/materia5"
                 android:layout_width="87dp"
                 android:layout_height="35dp"
+                android:background="#dddddd"
                 android:gravity="center"
                 android:text="materia"
                 android:textColor="#404040"
                 android:textSize="16sp"
-                android:textStyle="bold"
-                android:background="#dddddd"/>
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/aula5"
                 android:layout_width="80dp"
                 android:layout_height="35dp"
+                android:background="#dddddd"
                 android:gravity="center"
                 android:text="aula"
                 android:textColor="#404040"
                 android:textSize="16sp"
-                android:textStyle="bold"
-                android:background="#dddddd"/>
+                android:textStyle="bold" />
 
             <ImageButton
                 android:id="@+id/edit5"
@@ -301,31 +301,31 @@
                 android:id="@+id/ora6"
                 android:layout_width="wrap_content"
                 android:layout_height="35dp"
+                android:background="#eeeeee"
                 android:gravity="center"
                 android:text="13.30"
                 android:textSize="16sp"
-                android:textStyle="bold|italic"
-                android:background="#eeeeee"/>
+                android:textStyle="bold|italic" />
 
             <TextView
                 android:id="@+id/materia6"
                 android:layout_width="87dp"
                 android:layout_height="35dp"
+                android:background="#eeeeee"
                 android:gravity="center"
                 android:text="materia"
                 android:textSize="16sp"
-                android:textStyle="bold|italic"
-                android:background="#eeeeee"/>
+                android:textStyle="bold|italic" />
 
             <TextView
                 android:id="@+id/aula6"
                 android:layout_width="80dp"
                 android:layout_height="35dp"
+                android:background="#eeeeee"
                 android:gravity="center"
                 android:text="aula"
                 android:textSize="16sp"
-                android:textStyle="bold|italic"
-                android:background="#eeeeee"/>
+                android:textStyle="bold|italic" />
 
             <ImageButton
                 android:id="@+id/edit6"
@@ -343,34 +343,34 @@
                 android:id="@+id/ora7"
                 android:layout_width="wrap_content"
                 android:layout_height="35dp"
+                android:background="#dddddd"
                 android:gravity="center"
                 android:text="14.30"
                 android:textColor="#404040"
                 android:textSize="16sp"
-                android:textStyle="bold"
-                android:background="#dddddd"/>
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/materia7"
                 android:layout_width="87dp"
                 android:layout_height="35dp"
+                android:background="#dddddd"
                 android:gravity="center"
                 android:text="materia"
                 android:textColor="#404040"
                 android:textSize="16sp"
-                android:textStyle="bold"
-                android:background="#dddddd"/>
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/aula7"
                 android:layout_width="80dp"
                 android:layout_height="35dp"
+                android:background="#dddddd"
                 android:gravity="center"
                 android:text="aula"
                 android:textColor="#404040"
                 android:textSize="16sp"
-                android:textStyle="bold"
-                android:background="#dddddd"/>
+                android:textStyle="bold" />
 
             <ImageButton
                 android:id="@+id/edit7"
@@ -388,31 +388,31 @@
                 android:id="@+id/ora8"
                 android:layout_width="wrap_content"
                 android:layout_height="35dp"
+                android:background="#eeeeee"
                 android:gravity="center"
                 android:text="15.30"
                 android:textSize="16sp"
-                android:textStyle="bold|italic"
-                android:background="#eeeeee"/>
+                android:textStyle="bold|italic" />
 
             <TextView
                 android:id="@+id/materia8"
                 android:layout_width="87dp"
                 android:layout_height="35dp"
+                android:background="#eeeeee"
                 android:gravity="center"
                 android:text="materia"
                 android:textSize="16sp"
-                android:textStyle="bold|italic"
-                android:background="#eeeeee"/>
+                android:textStyle="bold|italic" />
 
             <TextView
                 android:id="@+id/aula8"
                 android:layout_width="80dp"
                 android:layout_height="35dp"
+                android:background="#eeeeee"
                 android:gravity="center"
                 android:text="aula"
                 android:textSize="16sp"
-                android:textStyle="bold|italic"
-                android:background="#eeeeee"/>
+                android:textStyle="bold|italic" />
 
             <ImageButton
                 android:id="@+id/edit8"
@@ -430,34 +430,34 @@
                 android:id="@+id/ora9"
                 android:layout_width="wrap_content"
                 android:layout_height="35dp"
+                android:background="#dddddd"
                 android:gravity="center"
                 android:text="16.30"
                 android:textColor="#404040"
                 android:textSize="16sp"
-                android:textStyle="bold"
-                android:background="#dddddd"/>
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/materia9"
                 android:layout_width="87dp"
                 android:layout_height="35dp"
+                android:background="#dddddd"
                 android:gravity="center"
                 android:text="materia"
                 android:textColor="#404040"
                 android:textSize="16sp"
-                android:textStyle="bold"
-                android:background="#dddddd"/>
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/aula9"
                 android:layout_width="80dp"
                 android:layout_height="35dp"
+                android:background="#dddddd"
                 android:gravity="center"
                 android:text="aula"
                 android:textColor="#404040"
                 android:textSize="16sp"
-                android:textStyle="bold"
-                android:background="#dddddd"/>
+                android:textStyle="bold" />
 
             <ImageButton
                 android:id="@+id/edit9"
@@ -475,31 +475,31 @@
                 android:id="@+id/ora10"
                 android:layout_width="wrap_content"
                 android:layout_height="35dp"
+                android:background="#eeeeee"
                 android:gravity="center"
                 android:text="17.30"
                 android:textSize="16sp"
-                android:textStyle="bold|italic"
-                android:background="#eeeeee"/>
+                android:textStyle="bold|italic" />
 
             <TextView
                 android:id="@+id/materia10"
                 android:layout_width="87dp"
                 android:layout_height="35dp"
+                android:background="#eeeeee"
                 android:gravity="center"
                 android:text="materia"
                 android:textSize="16sp"
-                android:textStyle="bold|italic"
-                android:background="#eeeeee"/>
+                android:textStyle="bold|italic" />
 
             <TextView
                 android:id="@+id/aula10"
                 android:layout_width="80dp"
                 android:layout_height="35dp"
+                android:background="#eeeeee"
                 android:gravity="center"
                 android:text="aula"
                 android:textSize="16sp"
-                android:textStyle="bold|italic"
-                android:background="#eeeeee"/>
+                android:textStyle="bold|italic" />
 
             <ImageButton
                 android:id="@+id/edit10"
@@ -517,34 +517,34 @@
                 android:id="@+id/ora11"
                 android:layout_width="wrap_content"
                 android:layout_height="35dp"
+                android:background="#dddddd"
                 android:gravity="center"
                 android:text="18.30"
                 android:textColor="#404040"
                 android:textSize="16sp"
-                android:textStyle="bold"
-                android:background="#dddddd"/>
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/materia11"
                 android:layout_width="87dp"
                 android:layout_height="35dp"
+                android:background="#dddddd"
                 android:gravity="center"
                 android:text="materia"
                 android:textColor="#404040"
                 android:textSize="16sp"
-                android:textStyle="bold"
-                android:background="#dddddd"/>
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/aula11"
                 android:layout_width="80dp"
                 android:layout_height="35dp"
+                android:background="#dddddd"
                 android:gravity="center"
                 android:text="aula"
                 android:textColor="#404040"
                 android:textSize="16sp"
-                android:textStyle="bold"
-                android:background="#dddddd"/>
+                android:textStyle="bold" />
 
             <ImageButton
                 android:id="@+id/edit11"
