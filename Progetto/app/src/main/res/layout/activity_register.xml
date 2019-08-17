@@ -7,6 +7,17 @@
     tools:context=".Register"
     android:background="@drawable/gradient">
 
+    <ImageButton
+        android:id="@+id/back"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="12dp"
+        android:background="#0000"
+        android:src="@drawable/back"
+        android:scaleType="fitCenter"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
     <TextView
         android:id="@+id/txtReg"
         android:layout_width="wrap_content"

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import java.util.concurrent.ExecutionException;
@@ -15,7 +16,6 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
 
     EditText username, password;
     String register_name, register_pass;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,13 +26,18 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
         registrami.setOnClickListener(this);
         username = findViewById(R.id.editUser);
         password = findViewById(R.id.editPsw);
+
     }
 
-    public void onClick (View v)
-    {
-        userRegister();
-        finish();
-        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+    public void onClick (View v) {
+        switch (v.getId()) {
+            case R.id.back:
+                finish();
+                break;
+            case R.id.btnReg:
+                userRegister();
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+        }
     }
 
     private void show (String message)
@@ -59,17 +64,22 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
         if (auth.equals("    Registrazione avvenuta con successo!  "))
         {
             show("Registrazione effettuata con successo, accedi!");
-        }else if (auth.equals("    Username in uso  "))
-            {
+            finish();
+        }
+        else if (auth.equals("    Username in uso  "))
+        {
             show("Username già in uso, prova con uno diverso!");
-            } else
-            {
-                show("Errore, riprovare più tardi!");
-            }
+        }
+        else if(auth.equals("    Richiesta POST vuota  "))
+        {
+            show("I form non possono rimanere vuoti.");
+        }
     }
+
+    /*
     public void launchMainActivity(View view)
     {
         Intent i = new Intent(this, MainActivity.class);
         startActivity(i);
-    }
+    }*/
 }
