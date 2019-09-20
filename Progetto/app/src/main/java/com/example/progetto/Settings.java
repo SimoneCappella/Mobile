@@ -10,8 +10,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,145 +23,83 @@ import com.example.progetto.helper.HttpJsonParser;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
-public class Settings extends AppCompatActivity {
+public class Settings extends AppCompatActivity implements View.OnClickListener{
 
-    private String PasswordNuova;
-    final Context ctx=this;
+    ListView lv;
     ImageButton back;
-    private static final String BASE_URL = "http://mobileproject.altervista.org/";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
+        back = findViewById(R.id.back);
+        back.setOnClickListener(this);
+        lv = findViewById(R.id.listview);
 
-        Settings.ButtonHandler bh = new Settings.ButtonHandler();
-        findViewById(R.id.back).setOnClickListener(bh);
 
-        TextView tvModUser = findViewById(R.id.modifica_username);
-        TextView tvModPassword = findViewById(R.id.modifica_password);
+        final ArrayList<String> al = new ArrayList<>();
 
-        tvModPassword.setOnClickListener(new View.OnClickListener() {
+        al.add("Modifica Username");
+        al.add("Modifica Password");
+        al.add("About Us");
+
+        ArrayAdapter arrayadapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, al);
+        lv.setAdapter(arrayadapter);
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onClick(View v) {
-                LayoutInflater li=LayoutInflater.from(ctx);
-                final View promptsView=li.inflate(R.layout.modifica_password, null);
-                AlertDialog.Builder alertDialogBuilder=new AlertDialog.Builder(ctx);
-                alertDialogBuilder.setView(promptsView);
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                switch(position)
+                {
+                    case 0:
+                        launchEditUser(view);
+                        break;
+                    case 1:
+                        launchEditPass(view);
+                        break;
+                    case 2:
+                        break;
+                }
 
-                EditText UtenteAttuale = promptsView.findViewById(R.id.Username);
-                UtenteAttuale.setText(FirstActivity.login_name);
-
-                alertDialogBuilder.setPositiveButton("Salva", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        EditText nuovapassword = promptsView.findViewById(R.id.nuovaPassword);
-                        EditText confermapassword = promptsView.findViewById(R.id.confermaPassword);
-                        String nuovaPassword = nuovapassword.getText().toString();
-                        String confermaPassword = confermapassword.getText().toString();
-                        if (nuovaPassword.equals(confermaPassword)){
-                            if (nuovaPassword.equals("")){
-                                show("Inserire una password");
-                            }else{
-                                PasswordNuova=nuovaPassword;
-                                new UpadtePasswordAsyncTask().execute();
-                                show("Password aggiornata");
-                            }
-                        }else{
-                            show("Le password non coincidono!");
-                        }
-                    }
-                });
-                alertDialogBuilder.setNegativeButton("Annulla", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                });
-
-                alertDialogBuilder.setCancelable(false);
-                AlertDialog alertDialog=alertDialogBuilder.create();
-                alertDialog.show();
-            }
-        });
-
-        tvModUser.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                LayoutInflater li=LayoutInflater.from(ctx);
-                final View promptsView=li.inflate(R.layout.modifica_username, null);
-                AlertDialog.Builder alertDialogBuilder=new AlertDialog.Builder(ctx);
-                alertDialogBuilder.setView(promptsView);
-
-                EditText VecchioUtente = promptsView.findViewById(R.id.Username);
-                VecchioUtente.setText(FirstActivity.login_name);
-
-                alertDialogBuilder.setPositiveButton("Salva", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        //salvo le nuove credenziali sul db remoto
-                        EditText utente = promptsView.findViewById(R.id.nuovaPassword);
-                        EditText password = promptsView.findViewById(R.id.confermaPassword);
-                        String register_name = utente.getText().toString();
-                        String register_pass = password.getText().toString();
-
-                        if(register_name.equals("")||(register_pass.equals(""))){
-                            show("Inserire username e password !");
-                        }else{
-                            String method = "register";
-                            String auth="";
-                            SupportTask supportTask = new SupportTask(ctx);
-                            try {
-                                auth = supportTask.execute(method, register_name, register_pass).get();
-                            } catch (ExecutionException e)
-                            {
-                                e.printStackTrace();
-                            } catch (InterruptedException e)
-                            {
-                                e.printStackTrace();
-                            }
-                            if (auth.equals("    Registrazione avvenuta con successo!  "))
-                            {
-                                show("Registrazione effettuata con successo!");
-                                //elimino l'utente vecchio
-                                new DeleteUserAsyncTask().execute();
-                                show("Effettua di nuovo il login!");
-
-                            }else if (auth.equals("    Username in uso  "))
-                            {
-                                show("Username già in uso, prova con uno diverso!");
-                            } else
-                            {
-                                show("Errore, riprovare più tardi!");
-                            }
-                        }
-                    }
-                });
-                alertDialogBuilder.setNegativeButton("Annulla", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                });
-
-                alertDialogBuilder.setCancelable(false);
-                AlertDialog alertDialog=alertDialogBuilder.create();
-                alertDialog.show();
             }
         });
     }
 
-    private void show (String message)
+    public void launchEditUser(View v)
+    {
+        Intent i = new Intent(this , EditUser.class);
+        startActivity(i);
+        overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+    }
+
+    public void launchEditPass(View v)
+    {
+        Intent i = new Intent(this , editPass.class);
+        startActivity(i);
+        overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+    }
+
+    private AlphaAnimation buttonClick = new AlphaAnimation(1F, 0.7F);
+
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.back:
+                v.startAnimation(buttonClick);
+                finish();
+                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+                break;
+        }
+    }
+
+    /*private void show (String message)
     {
         Toast.makeText(this, message,Toast.LENGTH_LONG).show();
     }
 
-    private class UpadtePasswordAsyncTask extends AsyncTask<String, String, String> {
+    private class UpdatePasswordAsyncTask extends AsyncTask<String, String, String> {
 
         @Override
         protected void onPreExecute() {
@@ -254,5 +195,5 @@ public class Settings extends AppCompatActivity {
             finish();
             overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
         }
-    }
+    }*/
 }

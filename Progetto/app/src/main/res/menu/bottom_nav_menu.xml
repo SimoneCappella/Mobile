@@ -4,7 +4,7 @@
     <item
         android:id="@+id/lun"
         android:title="Lun"
-        android:icon=""
+        android:icon="@drawable/ico"
          />
 
     <item
