@@ -9,11 +9,13 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.widget.ImageView;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,9 +28,10 @@ public class mar_fragment extends Fragment implements View.OnClickListener {
 
     SalvaOrario sa;
 
-    TextView txtMat1, txtMat2, txtMat3, txtMat4, txtMat5, txtMat6, txtMat7, txtMat8, txtMat9, txtMat10, txtMat11;
-    TextView txtOra1, txtOra2, txtOra3, txtOra4, txtOra5, txtOra6, txtOra7, txtOra8, txtOra9, txtOra10, txtOra11;
-    TextView txtAula1, txtAula2, txtAula3, txtAula4, txtAula5, txtAula6, txtAula7, txtAula8, txtAula9, txtAula10, txtAula11;
+    TextView txtMat1, txtMat2, txtMat3, txtMat4, txtMat5, txtMat6, txtMat7, txtMat8, txtMat9, txtMat10, txtMat11, txtMat0;
+    TextView txtOra1, txtOra2, txtOra3, txtOra4, txtOra5, txtOra6, txtOra7, txtOra8, txtOra9, txtOra10, txtOra11, txtOra0;
+    TextView txtAula1, txtAula2, txtAula3, txtAula4, txtAula5, txtAula6, txtAula7, txtAula8, txtAula9, txtAula10, txtAula11, txtAula0;
+    TextView txtDel0;
 
     String ora, materia, aula, i="mar_";
     int n, inc;
@@ -36,6 +39,33 @@ public class mar_fragment extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
     {
         View v = inflater.inflate(R.layout.mar, container, false);
+
+        Clock misure = new Clock();
+        int height = misure.getHeight();
+        int widht = misure.getWidth();
+        Log.i("larghezza", "la larghezza è:" + widht);
+
+        int widthMat = (widht*50)/100;
+        int widthOra = (widht*15)/100;
+        int widthAula = (widht*25)/100;
+        int widthElimina = (widht*10)/100;
+        height = (height*90)/100;
+        height = height/13;
+
+        TableRow.LayoutParams materia = new TableRow.LayoutParams(widthMat, height);
+        TableRow.LayoutParams ora = new TableRow.LayoutParams(widthOra, height);
+        TableRow.LayoutParams aula = new TableRow.LayoutParams(widthAula, height);
+        TableRow.LayoutParams elimina = new TableRow.LayoutParams(widthElimina, height);
+
+        txtMat0 = v.findViewById(R.id.materia);
+        txtOra0 = v.findViewById(R.id.ora);
+        txtAula0 = v.findViewById(R.id.aula);
+        txtDel0 = v.findViewById(R.id.elimina);
+
+        txtMat0.setLayoutParams(materia);
+        txtOra0.setLayoutParams(ora);
+        txtAula0.setLayoutParams(aula);
+        txtDel0.setLayoutParams(elimina);
 
         txtMat1 = v.findViewById(R.id.materia1);
         txtMat1.setText(sa.getMateria("mar_1", getActivity()));

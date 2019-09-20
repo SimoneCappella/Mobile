@@ -1,27 +1,56 @@
 package com.example.progetto;
 
+import android.graphics.Point;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Display;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
+import android.widget.FrameLayout;
 
 import java.util.Calendar;
 
 public class Clock extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
     public int curr = 0;
     public int next;
+    public static int width;
+    public static int height;
     BottomNavigationView nav;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_clock);
+
+        //impostare le dimensioni relativamente allo schermo del dispositivo
+        /*Display display = getWindowManager().getDefaultDisplay();
+        FrameLayout fragments = findViewById(R.id.fragment_container);
+        int width = display.getWidth();
+        int height = display.getHeight();
+        ConstraintLayout.LayoutParams params = new ConstraintLayout.LayoutParams(width, height);
+        fragments.setLayoutParams(params);*/
+
+        Display display = getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        try{
+            display.getRealSize(size);
+        }catch(NoSuchMethodError err){
+            display.getSize(size);
+        }
+        width = size.x;
+        height = size.y;
+        height = (height*90)/100;
+
+        FrameLayout frameLayout = findViewById(R.id.fragment_container);
+        ConstraintLayout.LayoutParams params = new ConstraintLayout.LayoutParams(width, height);
+        frameLayout.setLayoutParams(params);
 
         Clock.ButtonHandler bh = new Clock.ButtonHandler();
         findViewById(R.id.back).setOnClickListener(bh);
@@ -130,5 +159,13 @@ public class Clock extends AppCompatActivity implements BottomNavigationView.OnN
             finish();
             overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
         }
+    }
+
+    public int getHeight(){
+        return height;
+    }
+
+    public int getWidth(){
+        return width;
     }
 }

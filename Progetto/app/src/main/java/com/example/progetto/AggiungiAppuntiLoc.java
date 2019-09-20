@@ -67,7 +67,7 @@ public class AggiungiAppuntiLoc extends AppCompatActivity implements View.OnClic
         editApp = findViewById(R.id.editApp);
         btnSalva = findViewById(R.id.btnSalvaApp);
         btnSalva.setOnClickListener(this);
-        checkCondividi = findViewById((R.id.CBcondividi));
+        checkCondividi = findViewById(R.id.CBcondividi);
         nomemateria = findViewById(R.id.materiaDegliAppunti);
 
         nomemateria.setText(a);
