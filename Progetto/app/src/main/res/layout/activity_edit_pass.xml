@@ -34,7 +34,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/txtNewPass"
+        android:id="@+id/txtNewUser"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
@@ -46,14 +46,14 @@
         app:layout_constraintTop_toBottomOf="@+id/txtOldPass" />
 
     <Button
-        android:id="@+id/btnEditPass"
+        android:id="@+id/btnEditUser"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="23dp"
         android:text="Cambia!"
-        app:layout_constraintEnd_toEndOf="@+id/txtNewPass"
-        app:layout_constraintStart_toStartOf="@+id/txtNewPass"
-        app:layout_constraintTop_toBottomOf="@+id/txtNewPass" />
+        app:layout_constraintEnd_toEndOf="@+id/txtNewUser"
+        app:layout_constraintStart_toStartOf="@+id/txtNewUser"
+        app:layout_constraintTop_toBottomOf="@+id/txtNewUser" />
 
     <EditText
         android:id="@+id/txtOldPass"

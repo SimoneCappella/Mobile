@@ -8,8 +8,6 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 public class editPass extends AppCompatActivity implements View.OnClickListener{
 
     TextView txtOldPass;
@@ -22,8 +20,8 @@ public class editPass extends AppCompatActivity implements View.OnClickListener{
         setContentView(R.layout.activity_edit_pass);
 
         txtOldPass = findViewById(R.id.txtOldPass);
-        txtNewPass = findViewById(R.id.txtNewPass);
-        btnChangePass = findViewById(R.id.btnEditPass);
+        txtNewPass = findViewById(R.id.txtNewUser);
+        btnChangePass = findViewById(R.id.btnEditUser);
         back = findViewById(R.id.back);
         back.setOnClickListener(this);
     }

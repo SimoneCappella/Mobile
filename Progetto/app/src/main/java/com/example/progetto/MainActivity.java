@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     ImageButton book;
     ImageButton www;
     ImageButton settings;
-    public static String username;
+    String username;
     Button btnVediDb;
 
     @Override
@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         getWindow().getDecorView().setBackgroundColor(Color.parseColor("#cccccc"));
         TextView tv = findViewById(R.id.textBenvenuto);
+        username = FirstActivity.login_name;
         String w = "Benvenuto "+ username + "!";
         tv.setText(w);
 
@@ -128,5 +129,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     {
         Intent i = new Intent (this, AggMaterie.class);
         startActivity(i);
+    }
+
+    public void setUsername(String user)
+    {
+        username = user;
     }
 }

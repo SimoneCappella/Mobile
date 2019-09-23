@@ -12,7 +12,6 @@ import android.widget.Toast;
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 
-import static com.example.progetto.MainActivity.username;
 
 public class FirstActivity extends AppCompatActivity implements View.OnClickListener {
     EditText editNome, editPass;
@@ -75,7 +74,6 @@ public class FirstActivity extends AppCompatActivity implements View.OnClickList
         if(auth.equals("    Login Success  "))
         {
             launchMainActivity(view);
-            username = login_name;
             show("Benvenuto "+ login_name + "!");
             finish();
         }else
