@@ -1,6 +1,5 @@
 package com.example.progetto;
 
-import android.graphics.Point;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.BottomNavigationView;
@@ -8,25 +7,29 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Display;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.widget.FrameLayout;
-
 import java.util.Calendar;
 
+/**
+ * Classe principale dell'orario, lancia il fragment relativo al giorno corrente
+ */
 public class Clock extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
-    public int curr = 0;
-    public int next;
-    BottomNavigationView nav;
+    private int curr = 0;
+    private int next;
+    private BottomNavigationView nav;
+    private AlphaAnimation buttonClick = new AlphaAnimation(1F, 0.7F);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_clock);
 
+        /**
+         * Blocco utilizzato per impostare la larghezza e l'altezza del fragment contenente l'orario, allo stesso modo per la BottomNavigationView
+         */
         MainActivity misure = new MainActivity();
         int height = misure.getHeight();
         int width = misure.getWidth();
@@ -41,15 +44,15 @@ public class Clock extends AppCompatActivity implements BottomNavigationView.OnN
         findViewById(R.id.back).setOnClickListener(bh);
         nav = findViewById(R.id.navigation);
 
-        navHeight = navHeight*70/100;
+        navHeight = navHeight*70/100; //dimensione della bottom navbar
 
-        Log.i("misure", "la larghezza è:" + width + " e l'altezza nav è: " + navHeight);
-
-        nav.setOnNavigationItemSelectedListener(this);//settato il listner sulla navigation bar
+        nav.setOnNavigationItemSelectedListener(this); //settato il listner sulla navigation bar
         nav.setItemIconTintList(null);
         nav.setItemIconSize(navHeight);
 
-
+        /**
+         * Switch sul giorno corrente per caricare il relativo fragment.
+         */
         Calendar calendar = Calendar.getInstance();
         int day = calendar.get(Calendar.DAY_OF_WEEK);
         Fragment fragment = null;
@@ -86,11 +89,12 @@ public class Clock extends AppCompatActivity implements BottomNavigationView.OnN
         loadFragment(fragment);
     }
 
-
-
-    private AlphaAnimation buttonClick = new AlphaAnimation(1F, 0.7F);
-
-    private boolean loadFragment(android.support.v4.app.Fragment fragment)    //per caricare il fragment
+    /**
+     * Funzione per caricare il fragment, con le variabili curr e next gestisce l'animazione a scorrimento.
+     * @param fragment fragment da caricare.
+     * @return
+     */
+    private boolean loadFragment(android.support.v4.app.Fragment fragment)
     {
         if(fragment!= null)
             {
@@ -110,6 +114,11 @@ public class Clock extends AppCompatActivity implements BottomNavigationView.OnN
         return false;
     }
 
+    /**
+     * Funzione utilizzata nel momento in cui si sceglie un elemento dalla BottomNavigationBar, lo switch prepara il fragment da passare alla funzione load fragment e imposta la variabile next.
+     * @param item item scelto dalla BottomNavigationBar.
+     * @return
+     */
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {  //semplice switch che associa in base all' item menu cliccato  un'istanza del fragment all oggetto fragment
         Fragment fragment = null;
@@ -136,7 +145,7 @@ public class Clock extends AppCompatActivity implements BottomNavigationView.OnN
                 fragment = new ven_fragment();
                 break;
         }
-        return loadFragment(fragment);       //viene passato al metodo load fragment il fragment selezionato dallo switch
+        return loadFragment(fragment);
     }
 
     private class ButtonHandler implements View.OnClickListener

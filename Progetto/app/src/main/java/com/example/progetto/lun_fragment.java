@@ -1,9 +1,7 @@
 package com.example.progetto;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Point;
 import android.os.Bundle;
