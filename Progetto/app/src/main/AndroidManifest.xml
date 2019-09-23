@@ -15,7 +15,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".editPass"></activity>
+        <activity android:name=".AboutUs"></activity>
+        <activity android:name=".editPass" />
         <activity android:name=".EditUser" />
         <activity android:name=".VediAppunti" />
         <activity android:name=".AggiungiAppuntiLoc" />
