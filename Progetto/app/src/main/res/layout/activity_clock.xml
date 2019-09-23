@@ -42,7 +42,7 @@
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/navigation"
-        android:layout_width="411dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="#eeeeee"
         app:itemIconTint="@drawable/selector"

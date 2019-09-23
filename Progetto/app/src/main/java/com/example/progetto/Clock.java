@@ -1,15 +1,19 @@
 package com.example.progetto;
 
+import android.graphics.Point;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Display;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
+import android.widget.FrameLayout;
 
 import java.util.Calendar;
 
@@ -23,13 +27,27 @@ public class Clock extends AppCompatActivity implements BottomNavigationView.OnN
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_clock);
 
+        MainActivity misure = new MainActivity();
+        int height = misure.getHeight();
+        int width = misure.getWidth();
+        int navHeight = (height*5)/100;
+        height = (height*90)/100;
+
+        FrameLayout frameLayout = findViewById(R.id.fragment_container);
+        ConstraintLayout.LayoutParams params = new ConstraintLayout.LayoutParams(width, height);
+        frameLayout.setLayoutParams(params);
+
         Clock.ButtonHandler bh = new Clock.ButtonHandler();
         findViewById(R.id.back).setOnClickListener(bh);
         nav = findViewById(R.id.navigation);
 
+        navHeight = navHeight*70/100;
+
+        Log.i("misure", "la larghezza è:" + width + " e l'altezza nav è: " + navHeight);
+
         nav.setOnNavigationItemSelectedListener(this);//settato il listner sulla navigation bar
         nav.setItemIconTintList(null);
-        nav.setItemIconSize(110);
+        nav.setItemIconSize(navHeight);
 
 
         Calendar calendar = Calendar.getInstance();
