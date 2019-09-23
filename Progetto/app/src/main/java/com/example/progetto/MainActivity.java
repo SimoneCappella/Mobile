@@ -4,10 +4,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.Point;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Display;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.widget.Button;
@@ -23,6 +25,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     ImageButton settings;
     public static String username;
     Button btnVediDb;
+    public static int width;
+    public static int height;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +36,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         TextView tv = findViewById(R.id.textBenvenuto);
         String w = "Benvenuto "+ username + "!";
         tv.setText(w);
+
+        Display display = getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        try{
+            display.getRealSize(size);
+        }catch(NoSuchMethodError err){
+            display.getSize(size);
+        }
+        width = size.x;
+        height = size.y;
 
         clock = findViewById(R.id.btnClock);
         book = findViewById(R.id.btnBook);
@@ -128,5 +142,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     {
         Intent i = new Intent (this, AggMaterie.class);
         startActivity(i);
+    }
+
+    public int getHeight(){
+        return height;
+    }
+
+    public int getWidth(){
+        return width;
     }
 }

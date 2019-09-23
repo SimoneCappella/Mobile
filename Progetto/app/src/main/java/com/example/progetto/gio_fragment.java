@@ -40,7 +40,7 @@ public class gio_fragment extends Fragment implements View.OnClickListener {
     {
         View v = inflater.inflate(R.layout.gio, container, false);
 
-        Clock misure = new Clock();
+        MainActivity misure = new MainActivity();
         int height = misure.getHeight();
         int widht = misure.getWidth();
         Log.i("larghezza", "la larghezza è:" + widht);
@@ -49,8 +49,10 @@ public class gio_fragment extends Fragment implements View.OnClickListener {
         int widthOra = (widht*15)/100;
         int widthAula = (widht*25)/100;
         int widthElimina = (widht*10)/100;
-        height = (height*90)/100;
+        height = (height*50)/100;
+        Log.i("larghezza", "l'altezza è:" + height);
         height = height/13;
+        Log.i("larghezza", "l'altezza divisa è:" + height);
 
         TableRow.LayoutParams materia = new TableRow.LayoutParams(widthMat, height);
         TableRow.LayoutParams ora = new TableRow.LayoutParams(widthOra, height);

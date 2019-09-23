@@ -20,8 +20,6 @@ import java.util.Calendar;
 public class Clock extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
     public int curr = 0;
     public int next;
-    public static int width;
-    public static int height;
     BottomNavigationView nav;
 
     @Override
@@ -29,23 +27,10 @@ public class Clock extends AppCompatActivity implements BottomNavigationView.OnN
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_clock);
 
-        //impostare le dimensioni relativamente allo schermo del dispositivo
-        /*Display display = getWindowManager().getDefaultDisplay();
-        FrameLayout fragments = findViewById(R.id.fragment_container);
-        int width = display.getWidth();
-        int height = display.getHeight();
-        ConstraintLayout.LayoutParams params = new ConstraintLayout.LayoutParams(width, height);
-        fragments.setLayoutParams(params);*/
-
-        Display display = getWindowManager().getDefaultDisplay();
-        Point size = new Point();
-        try{
-            display.getRealSize(size);
-        }catch(NoSuchMethodError err){
-            display.getSize(size);
-        }
-        width = size.x;
-        height = size.y;
+        MainActivity misure = new MainActivity();
+        int height = misure.getHeight();
+        int width = misure.getWidth();
+        int navHeight = (height*5)/100;
         height = (height*90)/100;
 
         FrameLayout frameLayout = findViewById(R.id.fragment_container);
@@ -56,9 +41,13 @@ public class Clock extends AppCompatActivity implements BottomNavigationView.OnN
         findViewById(R.id.back).setOnClickListener(bh);
         nav = findViewById(R.id.navigation);
 
+        navHeight = navHeight*70/100;
+
+        Log.i("misure", "la larghezza è:" + width + " e l'altezza nav è: " + navHeight);
+
         nav.setOnNavigationItemSelectedListener(this);//settato il listner sulla navigation bar
         nav.setItemIconTintList(null);
-        nav.setItemIconSize(110);
+        nav.setItemIconSize(navHeight);
 
 
         Calendar calendar = Calendar.getInstance();
@@ -159,13 +148,5 @@ public class Clock extends AppCompatActivity implements BottomNavigationView.OnN
             finish();
             overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
         }
-    }
-
-    public int getHeight(){
-        return height;
-    }
-
-    public int getWidth(){
-        return width;
     }
 }
