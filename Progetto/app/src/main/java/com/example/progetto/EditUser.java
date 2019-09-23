@@ -23,8 +23,8 @@ public class EditUser extends AppCompatActivity implements View.OnClickListener 
         setContentView(R.layout.activity_edit_user);
 
         back = findViewById(R.id.back);
-        txtNewusr = findViewById(R.id.txtNewUser);
-        btnEdit = findViewById(R.id.btnEditUser);
+        txtNewusr = findViewById(R.id.txtNewPass);
+        btnEdit = findViewById(R.id.btnEditPass);
         back.setOnClickListener(this);
         btnEdit.setOnClickListener(this);
 
@@ -38,7 +38,7 @@ public class EditUser extends AppCompatActivity implements View.OnClickListener 
                 finish();
                 overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
                 break;
-            case R.id.btnEditUser:
+            case R.id.btnEditPass:
                 String method = "edit";
                 String newusr = txtNewusr.getText().toString();
                 String auth = "";

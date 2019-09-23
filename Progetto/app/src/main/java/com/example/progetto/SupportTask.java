@@ -145,8 +145,43 @@ public class SupportTask extends AsyncTask <String, Void, String> {
             Log.d("STATE", state.trim());
             return state.trim();
 
+        }else if(method.equals("passedit"))
+        {
+            String state = "";
+            String oldpass = params[1];
+            String newpass = params[2];
+            try
+            {
+                URL url = new URL(params[3]);
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.setDoOutput(true);
+                httpURLConnection.setDoInput(true);
+                OutputStream outputStream = httpURLConnection.getOutputStream();
+                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
+                String data =  URLEncoder.encode("username", "UTF-8") + "=" + URLEncoder.encode(FirstActivity.login_name, "UTF-8") + "&" +
+                        URLEncoder.encode("oldpass", "UTF-8") + "=" + URLEncoder.encode(oldpass, "UTF-8") + "&" +
+                        URLEncoder.encode("newpass", "UTF-8") + "=" + URLEncoder.encode(newpass, "UTF-8");
+                bufferedWriter.write(data);
+                bufferedWriter.flush();
+                bufferedWriter.close();
+                outputStream.close();
+                InputStream inputStream = httpURLConnection.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "iso-8859-1"));
+                while ((line = bufferedReader.readLine()) != null) {
+                    state += line;
+                }
+                bufferedReader.close();
+                inputStream.close();
+                httpURLConnection.disconnect();
+            }catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return state.trim();
         }
-            return null;
+        else return null;
     }
 
     @Override

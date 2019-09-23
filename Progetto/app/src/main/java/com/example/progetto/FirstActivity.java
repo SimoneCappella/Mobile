@@ -15,7 +15,7 @@ import java.util.concurrent.ExecutionException;
 
 public class FirstActivity extends AppCompatActivity implements View.OnClickListener {
     EditText editNome, editPass;
-    public static String login_name, login_pass;
+    public static String login_name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +58,7 @@ public class FirstActivity extends AppCompatActivity implements View.OnClickList
     }
     public void userLogin(View view) {
         login_name = editNome   .getText().toString();
-        login_pass = editPass.getText().toString();
+        String login_pass = editPass.getText().toString();
         String method = "login";
         String auth="";
         SupportTask supportTask = new SupportTask(FirstActivity.this);
