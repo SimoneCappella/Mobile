@@ -18,25 +18,20 @@ import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import java.io.File;
 
+/**
+ * Lista degli appunti cui si accede una volta scelta la materia
+ */
 public class Notes_Page extends AppCompatActivity implements View.OnClickListener {
 
     TextView txt;
-
     ListView listNote;
-
     ImageButton back;
-
     Button btnAggiungiApp;
-
     String a, code;
-
     Cursor cursor;
-
     SimpleCursorAdapter adapter;
-
     DataAppLoc da;
 
     final Context context = this;
@@ -65,6 +60,7 @@ public class Notes_Page extends AppCompatActivity implements View.OnClickListene
         String[] fromColumns={"t", "d"};
         int[] viewsList = {R.id.txtTitle, R.id.txtDate};
 
+        //Con il cursore si popola la lista con gli appunti trovati relativamente a quella materia
         adapter = new SimpleCursorAdapter(this, R.layout.list_app_loc, cursor, fromColumns, viewsList, 0);
 
         listNote = findViewById(R.id.listApp);
@@ -86,6 +82,9 @@ public class Notes_Page extends AppCompatActivity implements View.OnClickListene
             }
         });
 
+        /**
+         * Con un longclick si può eliminare l'appunto in questione
+         */
         listNote.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, final View view, final int position, long id) {
@@ -146,12 +145,22 @@ public class Notes_Page extends AppCompatActivity implements View.OnClickListene
         }
     }
 
+    /**
+     * Lancia l'activity per aggiungere appunti, c'è il passaggio della stringa della materia
+     */
     public void launchAggiungi(){
         Intent intent = new Intent(this, AggiungiAppuntiLoc.class);
         intent.putExtra("app", a);
         startActivityForResult(intent, REQUEST_CODE1);
     }
 
+    /**
+     * Lancia la pagina che mi permette di visualizzare l'appunto scelto
+     * @param materia
+     * @param titolo
+     * @param data
+     * @param app
+     */
     public void launchVedi(String materia, String titolo, String data, String app){
         Intent i = new Intent(getApplication(), VediAppunti.class);
         Bundle bundle = new Bundle();
@@ -173,7 +182,7 @@ public class Notes_Page extends AppCompatActivity implements View.OnClickListene
         }
         Cursor nc;
         nc = da.searchM(a);
-        adapter.changeCursor(nc);
-        adapter.notifyDataSetChanged();
+        adapter.changeCursor(nc);           //Utilizzati per aggiornare la lista
+        adapter.notifyDataSetChanged();     //una volta inserito un nuovo appunto
     }
 }

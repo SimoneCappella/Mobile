@@ -6,15 +6,18 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+/**
+ * Database contenente gli appunti
+ */
 public class DataAppLoc extends SQLiteOpenHelper {
 
     private SQLiteDatabase db;
 
-    public static final String TABLE_ROW_ID = "_id";
-    public static final String TABLE_ROW_M = "m";
-    public static final String TABLE_ROW_D = "d";
-    public static final String TABLE_ROW_T = "t";
-    public static final String TABLE_ROW_A = "a";
+    public static final String TABLE_ROW_ID = "_id";    //id dell'elemento
+    public static final String TABLE_ROW_M = "m";       //nome della materia relativa all'appunto
+    public static final String TABLE_ROW_D = "d";       //data
+    public static final String TABLE_ROW_T = "t";       //titolo
+    public static final String TABLE_ROW_A = "a";       //appunto
 
     private static final String DB_NAME = "m_d_t_a_db";
     private static final int DB_VERSION = 1;
@@ -26,23 +29,39 @@ public class DataAppLoc extends SQLiteOpenHelper {
         db = helper.getWritableDatabase();
     }
 
+    /**
+     * Inserimento degli appunti nel database
+     * @param m
+     * @param d
+     * @param t
+     * @param a
+     */
     public void insert(String m, String d, String t, String a){
         String query = "INSERT INTO " + TABLE_M_D_A + " (" + TABLE_ROW_M + ", " + TABLE_ROW_D + ", " + TABLE_ROW_T + ", " + TABLE_ROW_A + ") " + "VALUES (" + "'" + m + "'" + ", " + "'" + d + "'" + ", " + "'" + t + "'" + ", " + "'" + a + "'" + ");";
         Log.i("insert() = ", query);
         db.execSQL(query);
     }
 
+    /**
+     * Cancellazione sulla base dell'id
+     * @param i
+     */
     public void delete(String i){
         String query = "DELETE FROM " + TABLE_M_D_A + " WHERE " + TABLE_ROW_ID + " = '" + i + "';";
         Log.i("delete() = ", query);
         db.execSQL(query);
     }
 
-    public Cursor selectAll(){
+    /*public Cursor selectAll(){
         Cursor c = db.rawQuery("SELECT* " + "FROM " + TABLE_M_D_A , null);
         return c;
-    }
+    }*/
 
+    /**
+     * Ricerca degli appunti per nome della materia
+     * @param m
+     * @return
+     */
     public Cursor searchM(String m){
         String query = "SELECT " + TABLE_ROW_ID + ", " + TABLE_ROW_M + ", " + TABLE_ROW_D + ", " + TABLE_ROW_T + ", " + TABLE_ROW_A + " from " + TABLE_M_D_A + " WHERE " + TABLE_ROW_M + " = '" + m + "';";
         Log.i("searchM() = ", query);
@@ -50,6 +69,11 @@ public class DataAppLoc extends SQLiteOpenHelper {
         return c;
     }
 
+    /**
+     * Ricerca degli appunti per titolo
+     * @param t
+     * @return
+     */
     public Cursor searchTitolo(String t){
         String query = "SELECT " + TABLE_ROW_ID + ", " + TABLE_ROW_M + ", " + TABLE_ROW_D + ", " + TABLE_ROW_T + ", " + TABLE_ROW_A + " from " + TABLE_M_D_A + " WHERE " + TABLE_ROW_T + " = '" + t + "';";
         Log.i("searchTitolo() = ", query);

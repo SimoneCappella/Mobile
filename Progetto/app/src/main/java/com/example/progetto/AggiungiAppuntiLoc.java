@@ -12,11 +12,8 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.example.progetto.helper.HttpJsonParser;
-
 import org.json.JSONObject;
-
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -29,6 +26,9 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Activity che permette di inserire l'appunto relativo ad una certa materia, inserendo titolo, data, e testo degli appunti
+ */
 public class AggiungiAppuntiLoc extends AppCompatActivity implements View.OnClickListener{
 
     private int success;
@@ -37,9 +37,7 @@ public class AggiungiAppuntiLoc extends AppCompatActivity implements View.OnClic
     private String appuntoLink;
     private String appuntomateria;
     private String appuntocontenuto;
-
     private static String STRING_EMPTY = "";
-
     final Context ctx=this;
     DataAppLoc da;
 
@@ -47,7 +45,6 @@ public class AggiungiAppuntiLoc extends AppCompatActivity implements View.OnClic
     TextView nomemateria;
     Button btnSalva;
     CheckBox checkCondividi;
-
     String a;
 
     private static final String BASE_URL = "http://mobileproject.altervista.org/";

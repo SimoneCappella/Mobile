@@ -2,17 +2,20 @@ package com.example.progetto;
 
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
 
+/**
+ * Activity con la lista degli appunti salvati in locale
+ */
 public class MyNotes extends AppCompatActivity implements View.OnClickListener{
 
     ListView listMat;
@@ -26,6 +29,8 @@ public class MyNotes extends AppCompatActivity implements View.OnClickListener{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_notes);
 
+        listMat = findViewById(R.id.listMatLoc);
+
         back = findViewById(R.id.back);
         back.setOnClickListener(this);
 
@@ -35,11 +40,12 @@ public class MyNotes extends AppCompatActivity implements View.OnClickListener{
         String[] fromColumns={"m"};
         int[] viewsList = {R.id.txtMat};
 
+        //Il cursore riempie la lista con le materie prese dal database delle materie
         final SimpleCursorAdapter adapter = new SimpleCursorAdapter(this, R.layout.list_mat, cursor, fromColumns, viewsList, 0);
 
-        listMat = findViewById(R.id.listMatLoc);
         listMat.setAdapter(adapter);
 
+        //Gestisce la scelta su un elemento dalla lista degli appunti
         listMat.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

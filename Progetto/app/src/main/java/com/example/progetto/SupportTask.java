@@ -113,19 +113,6 @@ public class SupportTask extends AsyncTask <String, Void, String> {
     protected void onProgressUpdate(Void... values) {
         super.onProgressUpdate(values);
     }
-
-    /*protected void onPostExecute(String result) {
-        if(result.equals("Registration Success..."))
-        {
-            Toast.makeText(ctx, result, Toast.LENGTH_LONG).show();
-        }
-        else
-        {
-            alertDialog.setMessage(result);
-            alertDialog.show();
-        }
-
-    }*/
 }
 
 
