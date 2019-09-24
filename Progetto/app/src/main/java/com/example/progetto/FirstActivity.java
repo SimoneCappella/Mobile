@@ -12,11 +12,10 @@ import android.widget.Toast;
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 
-import static com.example.progetto.MainActivity.username;
 
 public class FirstActivity extends AppCompatActivity implements View.OnClickListener {
     EditText editNome, editPass;
-    public static String login_name, login_pass;
+    public static String login_name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +58,7 @@ public class FirstActivity extends AppCompatActivity implements View.OnClickList
     }
     public void userLogin(View view) {
         login_name = editNome   .getText().toString();
-        login_pass = editPass.getText().toString();
+        String login_pass = editPass.getText().toString();
         String method = "login";
         String auth="";
         SupportTask supportTask = new SupportTask(FirstActivity.this);
@@ -75,7 +74,6 @@ public class FirstActivity extends AppCompatActivity implements View.OnClickList
         if(auth.equals("    Login Success  "))
         {
             launchMainActivity(view);
-            username = login_name;
             show("Benvenuto "+ login_name + "!");
             finish();
         }else
