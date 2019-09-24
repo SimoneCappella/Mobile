@@ -168,13 +168,10 @@ public class mer_fragment extends Fragment implements View.OnClickListener {
         btnEdit10.setOnClickListener(this);
         ImageView btnEdit11 = v.findViewById(R.id.edit11);
         btnEdit11.setOnClickListener(this);
-
         dm = new DataManager(getActivity());
         sa = new SalvaOrario();
-
         return v;
     }
-
     /**
      * Funzione con uno switch che dipende dall'elemento premuto e attiva le diverse funzioni, salva o cancella l'elemento di riferimento.
      * @param v vista

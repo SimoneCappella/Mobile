@@ -1,32 +1,15 @@
 package com.example.progetto;
 
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import com.example.progetto.helper.HttpJsonParser;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.ExecutionException;
 
 public class Settings extends AppCompatActivity implements View.OnClickListener{
 
@@ -64,7 +47,6 @@ public class Settings extends AppCompatActivity implements View.OnClickListener{
                         launchAboutUs(view);
                         break;
                 }
-
             }
         });
     }
@@ -101,107 +83,4 @@ public class Settings extends AppCompatActivity implements View.OnClickListener{
                 break;
         }
     }
-
-    /*private void show (String message)
-    {
-        Toast.makeText(this, message,Toast.LENGTH_LONG).show();
-    }
-
-    private class UpdatePasswordAsyncTask extends AsyncTask<String, String, String> {
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-
-        }
-
-        @Override
-        protected String doInBackground(String... params) {
-            HttpJsonParser httpJsonParser = new HttpJsonParser();
-            Map<String, String> httpParams = new HashMap<>();
-            String userPrecedente= FirstActivity.login_name;
-            httpParams.put("username", userPrecedente);
-            httpParams.put("password", PasswordNuova);
-            JSONObject jsonObject = httpJsonParser.makeHttpRequest(
-                    BASE_URL + "aggiorna_password.php", "POST", httpParams);
-            try {
-                int success = jsonObject.getInt("success");
-                if (success == 1) {
-                    //se ho modificato la password riavvio l'app
-                    Intent i = getBaseContext().getPackageManager().getLaunchIntentForPackage(getBaseContext().getPackageName());
-                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(i);
-                    finish();
-                }
-
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        protected void onPostExecute(String result) {
-
-            runOnUiThread(new Runnable() {
-                public void run() {
-
-                }
-            });
-        }
-    }
-
-    private class DeleteUserAsyncTask extends AsyncTask<String, String, String> {
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-
-        }
-
-        @Override
-        protected String doInBackground(String... params) {
-            HttpJsonParser httpJsonParser = new HttpJsonParser();
-            Map<String, String> httpParams = new HashMap<>();
-            String userPrecedente= FirstActivity.login_name;
-            httpParams.put("username", userPrecedente);
-            JSONObject jsonObject = httpJsonParser.makeHttpRequest(
-                    BASE_URL + "elimina_utente.php", "POST", httpParams);
-            try {
-                int success = jsonObject.getInt("success");
-                if (success == 1) {
-                    //se ho modificato l'utente riavvio l'app
-                    Intent i = getBaseContext().getPackageManager().getLaunchIntentForPackage(getBaseContext().getPackageName());
-                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(i);
-                    finish();
-                }
-
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        protected void onPostExecute(String result) {
-
-            runOnUiThread(new Runnable() {
-                public void run() {
-
-                }
-            });
-        }
-    }
-
-    private AlphaAnimation buttonClick = new AlphaAnimation(1F, 0.7F);
-
-    private class ButtonHandler implements View.OnClickListener
-    {
-        @Override
-        public void onClick(View v)
-        {
-            v.startAnimation(buttonClick);
-            finish();
-            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
-        }
-    }*/
 }

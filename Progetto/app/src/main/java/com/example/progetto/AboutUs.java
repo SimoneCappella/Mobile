@@ -7,7 +7,6 @@ import android.view.animation.AlphaAnimation;
 import android.widget.ImageButton;
 
 public class AboutUs extends AppCompatActivity implements View.OnClickListener {
-
     ImageButton back;
     @Override
     protected void onCreate(Bundle savedInstanceState) {

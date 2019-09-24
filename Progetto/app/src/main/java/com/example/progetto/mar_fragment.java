@@ -42,7 +42,6 @@ public class mar_fragment extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
     {
         View v = inflater.inflate(R.layout.mar, container, false);
-
         MainActivity misure = new MainActivity();
         int height = misure.getHeight();
         int widht = misure.getWidth();

@@ -12,7 +12,6 @@ import android.widget.Toast;
 import java.util.concurrent.ExecutionException;
 
 public class EditUser extends AppCompatActivity implements View.OnClickListener {
-
     TextView txtNewusr;
     Button btnEdit;
     ImageButton back;
@@ -21,13 +20,11 @@ public class EditUser extends AppCompatActivity implements View.OnClickListener 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_user);
-
         back = findViewById(R.id.back);
         txtNewusr = findViewById(R.id.txtNewPass);
         btnEdit = findViewById(R.id.btnEditPass);
         back.setOnClickListener(this);
         btnEdit.setOnClickListener(this);
-
     }
     private AlphaAnimation buttonClick = new AlphaAnimation(1F, 0.7F);
 

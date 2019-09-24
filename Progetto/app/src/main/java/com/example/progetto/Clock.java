@@ -44,9 +44,11 @@ public class Clock extends AppCompatActivity implements BottomNavigationView.OnN
         findViewById(R.id.back).setOnClickListener(bh);
         nav = findViewById(R.id.navigation);
 
-        navHeight = navHeight*70/100; //dimensione della bottom navbar
+        //dimensione della bottom navbar
+        navHeight = navHeight*70/100;
 
-        nav.setOnNavigationItemSelectedListener(this); //settato il listner sulla navigation bar
+        //settato il listner sulla navigation bar
+        nav.setOnNavigationItemSelectedListener(this);
         nav.setItemIconTintList(null);
         nav.setItemIconSize(navHeight);
 
@@ -108,9 +110,9 @@ public class Clock extends AppCompatActivity implements BottomNavigationView.OnN
                     }
             curr = next;
             ft.replace(R.id.fragment_container, fragment);
-            ft.commit();                                                                                         //tramite il frag manag e la transaction viene rimpiazzato il
-            return true;                                                                                         //fragment container (che era il nome del frame dato allo spazio
-        }                                                                                                        //dove appaiono i fragment) con il fragment che viene passato al metodo
+            ft.commit();
+            return true;
+        }
         return false;
     }
 
