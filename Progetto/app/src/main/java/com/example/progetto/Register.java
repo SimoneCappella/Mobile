@@ -1,32 +1,28 @@
 package com.example.progetto;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.Toast;
-
 import java.util.concurrent.ExecutionException;
 
 public class Register extends AppCompatActivity implements View.OnClickListener {
 
     EditText username, password;
     String register_name, register_pass;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         getWindow().getDecorView().setBackgroundColor(Color.parseColor("#cccccc"));
-
         Button registrami = findViewById(R.id.btnReg);
         registrami.setOnClickListener(this);
         username = findViewById(R.id.editUser);
         password = findViewById(R.id.editPsw);
-
     }
 
     public void onClick (View v) {
@@ -52,34 +48,27 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
         String method = "register";
         String auth="";
         SupportTask supportTask = new SupportTask(Register.this);
-        try {
-            auth = supportTask.execute(method, register_name, register_pass).get();
-        } catch (ExecutionException e)
+        //Controllo risposta database
+        if (register_name.length() >= 3 && register_pass.length() >= 3)
         {
-            e.printStackTrace();
-        } catch (InterruptedException e)
-        {
-            e.printStackTrace();
+            try {
+                String url = "http://mobileproject.altervista.org/register.php";
+                auth = supportTask.execute(method, register_name, register_pass, url).get();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            if (auth.equals("Registrazione avvenuta con successo!")) {
+                show("Registrazione effettuata con successo, accedi!");
+                finish();
+            } else if (auth.equals("Username in uso")) {
+                show("Username già in uso, prova con uno diverso!");
+            }
         }
-        if (auth.equals("    Registrazione avvenuta con successo!  "))
+        else
         {
-            show("Registrazione effettuata con successo, accedi!");
-            finish();
-        }
-        else if (auth.equals("    Username in uso  "))
-        {
-            show("Username già in uso, prova con uno diverso!");
-        }
-        else if(auth.equals("    Richiesta POST vuota  "))
-        {
-            show("I form non possono rimanere vuoti.");
+            show("I campi devono contenere almeno 3 caratteri.");
         }
     }
-
-    /*
-    public void launchMainActivity(View view)
-    {
-        Intent i = new Intent(this, MainActivity.class);
-        startActivity(i);
-    }*/
 }
