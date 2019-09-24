@@ -34,7 +34,7 @@ public class ShNotes extends AppCompatActivity implements View.OnClickListener{
     private static final String KEY_MATERIA_ID = "materia_id";
     private static final String KEY_MATERIA_NAME = "materia_name";
     private static final String BASE_URL = "http://mobileproject.altervista.org/";
-    private ArrayList<HashMap<String, String>> movieList;
+    private ArrayList<HashMap<String, String>> noteList;
     private ListView materieListView;
     private ProgressDialog pDialog;
 
@@ -58,7 +58,7 @@ public class ShNotes extends AppCompatActivity implements View.OnClickListener{
         filtra.setOnClickListener(this);
 
         materieListView = (ListView) findViewById(R.id.materieList);
-        new FetchMoviesAsyncTask().execute();
+        new FetchNotesAsyncTask().execute();
 
     }
 
@@ -73,7 +73,7 @@ public class ShNotes extends AppCompatActivity implements View.OnClickListener{
     }
 
 
-    private class FetchMoviesAsyncTask extends AsyncTask<String, String, String> {
+    private class FetchNotesAsyncTask extends AsyncTask<String, String, String> {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -93,19 +93,19 @@ public class ShNotes extends AppCompatActivity implements View.OnClickListener{
                     BASE_URL + "fetch_all_materie.php", "GET", null);
             try {
                 int success = jsonObject.getInt(KEY_SUCCESS);
-                JSONArray movies;
+                JSONArray notes;
                 if (success == 1) {
-                    movieList = new ArrayList<>();
-                    movies = jsonObject.getJSONArray(KEY_DATA);
-                    //Iterate through the response and populate movies list
-                    for (int i = 0; i < movies.length(); i++) {
-                        JSONObject movie = movies.getJSONObject(i);
-                        Integer materiaId = movie.getInt(KEY_MATERIA_ID);
-                        String materiaName = movie.getString(KEY_MATERIA_NAME);
+                    noteList = new ArrayList<>();
+                    notes = jsonObject.getJSONArray(KEY_DATA);
+                    //Iterate through the response and populate notes list
+                    for (int i = 0; i < notes.length(); i++) {
+                        JSONObject note = notes.getJSONObject(i);
+                        Integer materiaId = note.getInt(KEY_MATERIA_ID);
+                        String materiaName = note.getString(KEY_MATERIA_NAME);
                         HashMap<String, String> map = new HashMap<String, String>();
                         map.put(KEY_MATERIA_ID, materiaId.toString());
                         map.put(KEY_MATERIA_NAME, materiaName);
-                        movieList.add(map);
+                        noteList.add(map);
                     }
                 }
             } catch (JSONException e) {
@@ -118,16 +118,16 @@ public class ShNotes extends AppCompatActivity implements View.OnClickListener{
             pDialog.dismiss();
             runOnUiThread(new Runnable() {
                 public void run() {
-                    populateMovieList();
+                    populateNotesList();
                 }
             });
         }
 
     }
 
-    private void populateMovieList() {
+    private void populateNotesList() {
         ListAdapter adapter = new SimpleAdapter(
-                ShNotes.this, movieList,
+                ShNotes.this, noteList,
                 R.layout.modellorigamaterie, new String[]{KEY_MATERIA_ID,
                 KEY_MATERIA_NAME},
                 new int[]{R.id.appuntocondivisoID, R.id.nomemateria});

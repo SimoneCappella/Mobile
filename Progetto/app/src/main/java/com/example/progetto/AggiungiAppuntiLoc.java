@@ -186,7 +186,7 @@ public class AggiungiAppuntiLoc extends AppCompatActivity implements View.OnClic
                         Toast.makeText(ctx,
                                 "Appunto added on remote DB", Toast.LENGTH_LONG).show();
                         Intent i = getIntent();
-                        //send result code 20 to notify about movie update
+                        //send result code 20 to notify about note update
                         setResult(20, i);
                         //Finish ths activity and go back to listing activity
                         finish();
