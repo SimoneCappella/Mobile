@@ -5,7 +5,6 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.widget.AdapterView;
@@ -17,6 +16,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+/**
+ * Activity che viene lanciata da un fragment relativo ad un giorno dall'orario, questa classe carica la lista delle materie da cui poterne scegliere una,
+ * Successivamente lancia il PopUp dal quale è possibile indicare aula e numero di ore da salvare per la materia scelta
+ */
 public class List extends AppCompatActivity implements View.OnClickListener{
 
     ListView listMaterie;
@@ -25,12 +28,14 @@ public class List extends AppCompatActivity implements View.OnClickListener{
     String value;
     String aula, materia, conta;
 
-    Dialog myDialog;
+    Dialog myDialog; //Popup
     EditText editAula, editMateria;
 
     ImageButton back, btnMeno, btnPiu;
     Button btnAggiungi;
     int i;
+
+    private AlphaAnimation buttonClick = new AlphaAnimation(2F, 0.5F);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,37 +46,37 @@ public class List extends AppCompatActivity implements View.OnClickListener{
         String giorno_ora = intent.getStringExtra("giorno_ora");
         i = 1;
 
+        //Dichiarazione e caricamento della lista delle materie e relativi elementi
         listMaterie = findViewById(R.id.listMaterie);
         textView = findViewById(R.id.textView);
         textTitolo = findViewById(R.id.textTitolo);
         textTitolo.setText(giorno_ora);
-
         back = findViewById(R.id.back);
         back.setOnClickListener(this);
         btnAggiungi = findViewById(R.id.btnAggiungi);
         btnAggiungi.setOnClickListener(this);
-
         listItem = getResources().getStringArray(R.array.Materie);
 
+        //viene istanziato il PopUp, come oggetto della classe Dialog.
         myDialog = new Dialog(this);
 
         final ArrayAdapter<String>  adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, android.R.id.text1, listItem);
 
         listMaterie.setAdapter(adapter);
-
+        //listner sulla lista delle materie
         listMaterie.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                value = adapter.getItem(position);
-                Toast.makeText(getApplicationContext(), value, Toast.LENGTH_SHORT).show();
+                value = adapter.getItem(position); //prende il valore della materia scelta grazie alla posizione nella lista
+                Toast.makeText(getApplicationContext(), value, Toast.LENGTH_SHORT).show(); //genera un toast con la materia scelta
 
+                //Lancia il PopUp, gestisce l'inserimento dell'aula, la conta delle ore e successivamente il salvataggio e l'impacchettamento per restituire i dati all'activity chiamante.
                 myDialog.setContentView(R.layout.pop_aula);
                 Button btnSalva;
                 myDialog.setContentView(R.layout.pop_aula);
                 editAula = myDialog.findViewById(R.id.editAula);
                 textContatore = myDialog.findViewById(R.id.textContatore);
-                //String a = Integer.toString(i);
                 textContatore.setText(Integer.toString(i));
                 btnMeno = myDialog.findViewById(R.id.btnMeno);
                 btnMeno.setOnClickListener(new View.OnClickListener() {
@@ -95,7 +100,7 @@ public class List extends AppCompatActivity implements View.OnClickListener{
                     public void onClick(View v) {
                         aula = editAula.getText().toString();
                         conta = textContatore.getText().toString();
-                        Toast.makeText(getApplicationContext(), "aula: " + aula, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "salvato", Toast.LENGTH_SHORT).show();
                         String[] valore = {value, aula, conta};
 
                         Intent intent = new Intent();
@@ -112,8 +117,10 @@ public class List extends AppCompatActivity implements View.OnClickListener{
         });
     }
 
-    private AlphaAnimation buttonClick = new AlphaAnimation(2F, 0.5F);
-
+    /**
+     * Gestisce la selezione del bottone back o la scelta per l'aggiunta di una nuova materia; in tal caso si lancia sempre un PopUp ma nel quale è chiesto di inserire anche la materia.
+     * @param v
+     */
     @Override
     public void onClick(View v) {
         switch(v.getId()){

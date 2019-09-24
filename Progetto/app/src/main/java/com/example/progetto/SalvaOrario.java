@@ -5,6 +5,9 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 
+/**
+ * Classe che gestisce il salvataggio e l'estrazione con le shared preferences di materia e aula salvate, con l'utilizzo della chiave che viene costruita e inviata dai relativi fragment.
+ */
 public class SalvaOrario extends AppCompatActivity {
 
     public static void setMateria(String key, String value,  Context context)

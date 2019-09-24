@@ -2,15 +2,9 @@ package com.example.progetto;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.database.Cursor;
-import android.graphics.Point;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
-import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
-import android.util.Log;
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,42 +12,48 @@ import android.view.animation.AlphaAnimation;
 import android.widget.ImageView;
 import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.Toast;
 
-
+/**
+ * Classe che gestisce visualizzazione, salvataggio e caricamento di materie aula e orari del lunedì.
+ */
 public class lun_fragment extends Fragment implements View.OnClickListener {
 
-    private DataManager dm;
+    private DataManager dm; //DataManager è la classe che contiene metodi del database
+    public static final int REQUEST_CODE = 0000; //request code utilizzato per chiamare un activity con passaggio di parametri
+    private SalvaOrario sa; //SalvaOrario è la classe che contiene i metodi per salvare materia e aula nella tabella dell'orario con le shared preference
+    private AlphaAnimation buttonClick = new AlphaAnimation(2F, 0.5F); //utilizzato per le transizioni
 
-    public static final int REQUEST_CODE = 0000;
-
-    SalvaOrario sa;
-
-    TextView txtMat1, txtMat2, txtMat3, txtMat4, txtMat5, txtMat6, txtMat7, txtMat8, txtMat9, txtMat10, txtMat11, txtMat0;
-    TextView txtOra1, txtOra2, txtOra3, txtOra4, txtOra5, txtOra6, txtOra7, txtOra8, txtOra9, txtOra10, txtOra11, txtOra0;
-    TextView txtAula1, txtAula2, txtAula3, txtAula4, txtAula5, txtAula6, txtAula7, txtAula8, txtAula9, txtAula10, txtAula11, txtAula0;
-    TextView txtDel0;
+    private TextView txtMat1, txtMat2, txtMat3, txtMat4, txtMat5, txtMat6, txtMat7, txtMat8, txtMat9, txtMat10, txtMat11, txtMat0;
+    private TextView txtOra1, txtOra2, txtOra3, txtOra4, txtOra5, txtOra6, txtOra7, txtOra8, txtOra9, txtOra10, txtOra11, txtOra0;
+    private TextView txtAula1, txtAula2, txtAula3, txtAula4, txtAula5, txtAula6, txtAula7, txtAula8, txtAula9, txtAula10, txtAula11, txtAula0;
+    private TextView txtDel0;
 
     String ora, materia, aula, i="lun_";
     int n, inc;
 
+    /**
+     * Alla creazione vengono utilizzati dei metodi per adattare la tabella dell'orario al display.
+     * Vengono poi identificate e popolate le textView con il contenuto del relativo salvataggio.
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
     {
         View v = inflater.inflate(R.layout.lun, container, false);
 
+        //Adattamento display
         MainActivity misure = new MainActivity();
         int height = misure.getHeight();
         int widht = misure.getWidth();
-        Log.i("larghezza", "la larghezza è:" + widht + " e l'altezza è: " + height);
 
         int widthMat = (widht*50)/100;
         int widthOra = (widht*15)/100;
         int widthAula = (widht*25)/100;
         int widthElimina = (widht*10)/100;
         height = (height*50)/100;
-        Log.i("larghezza", "l'altezza è:" + height);
         height = height/13;
-        Log.i("larghezza", "l'altezza divisa è:" + height);
 
         TableRow.LayoutParams materia = new TableRow.LayoutParams(widthMat, height);
         TableRow.LayoutParams ora = new TableRow.LayoutParams(widthOra, height);
@@ -70,6 +70,7 @@ public class lun_fragment extends Fragment implements View.OnClickListener {
         txtAula0.setLayoutParams(aula);
         txtDel0.setLayoutParams(elimina);
 
+        //definizione e caricamento delle textView
         txtMat1 = v.findViewById(R.id.materia1);
         txtMat1.setText(sa.getMateria("lun_1", getActivity()));
         txtMat1.setOnClickListener(this);
@@ -176,8 +177,10 @@ public class lun_fragment extends Fragment implements View.OnClickListener {
         return v;
     }
 
-    private AlphaAnimation buttonClick = new AlphaAnimation(2F, 0.5F);
-
+    /**
+     * Funzione con uno switch che dipende dall'elemento premuto e attiva le diverse funzioni, salva o cancella l'elemento di riferimento.
+     * @param v vista
+     */
     public void onClick (View v)
     {
         switch (v.getId())
@@ -340,12 +343,21 @@ public class lun_fragment extends Fragment implements View.OnClickListener {
     }
 
 
+    /**
+     * L'ancia l'activity List con passaggio di parametri. List contiene i passaggi per selezionare e salvare la materia.
+     */
     public void launchList(){
         Intent intent = new Intent (getActivity(), List.class);
         intent.putExtra("giorno_ora", "lunedì  " + ora);
         startActivityForResult(intent, REQUEST_CODE);
     }
 
+    /**
+     * Viene verificato il risultato dell'activity chiamata e dalla variabile data che contiene i valori di interesse ne ricavo un array da cui estraggo materia, aula e numero di ore.
+     * @param requestCode codice per il passaggio di parametri tra activity.
+     * @param resultCode codice per il passaggio di parametri tra activity.
+     * @param data risultato dell'activity List.
+     */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode, resultCode, data);
@@ -362,6 +374,12 @@ public class lun_fragment extends Fragment implements View.OnClickListener {
         }
     }
 
+    /**
+     * Salva la materia nel database delle materie, in modo da avere le materie inserite nell'orario nella lista delle materie per gli appunti in locale.
+     * @param key chiave inserita nel database.
+     * @param materia materia salvata.
+     * @param aula aula inserita.
+     */
     public void salvaOrario (String key, String materia, String aula) {
         if (dm.searchM(materia) != null) {
             dm.delete(materia);
@@ -370,6 +388,10 @@ public class lun_fragment extends Fragment implements View.OnClickListener {
         inserisciSalva();
     }
 
+    /**
+     * La stringa q sarà del tipo: "lun_1; lun_2; ... ; lun_11", questa viene usata come chiave per salvare nelle shared preferences la materia e assegnarla alla textView giusta.
+     * Il ciclo while serve per permettere l'inserimento di più ore di una stessa materia.
+     */
     public void inserisciSalva(){
         while (inc > 0){
             String q = i + n;
