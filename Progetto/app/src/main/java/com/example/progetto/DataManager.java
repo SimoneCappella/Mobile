@@ -62,23 +62,6 @@ public class DataManager extends SQLiteOpenHelper {
     }
 
     /**
-     * Estrazione dell'elemento della tabella con ricerca sul codice
-     * @param co
-     * @return
-     */
-    public Cursor searchByCode(String co){
-        String query = "SELECT " + TABLE_ROW_ID + ", " + TABLE_ROW_C + ", " + TABLE_ROW_M + ", " + TABLE_ROW_O + ", " + TABLE_ROW_A + " from " + TABLE_C_M_AND_O_AND_A + " WHERE " + TABLE_ROW_C + " = '" + co + "';";
-        Log.i("searchById() = ", query);
-        Cursor c = db.rawQuery(query, null);
-        return c;
-    }
-
-    /*public void deleteByCode(String co){
-        String query = "DELETE FROM " + TABLE_C_M_AND_O_AND_A + " WHERE " + TABLE_ROW_C + " = '" + co + "';";
-        db.execSQL(query);
-    }*/
-
-    /**
      * Ricerca dell'elemento della tabella sul nome della materia
      * @param m
      * @return
@@ -132,22 +115,5 @@ public class DataManager extends SQLiteOpenHelper {
 
         }
     }
-
-
-
-
-    /*public void cancellaLuogo(Context context, String nome) {
-
-        SQLiteDatabase db = this.getReadableDatabase();
-        try {
-            String[] args = new String[]{nome};
-            db.delete(DataManager.TABLE_ROW_M, DataManager.TABLE_ROW_ID + "=?", args);
-
-            db.close();
-        } catch (SQLiteException e) {
-            db.close();
-            e.printStackTrace();
-        }
-    }*/
 }
 

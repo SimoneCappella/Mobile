@@ -37,6 +37,7 @@ public class Notes_Page extends AppCompatActivity implements View.OnClickListene
     final Context context = this;
 
     public static final int REQUEST_CODE1 = 1111;
+    private AlphaAnimation buttonClick = new AlphaAnimation(1F, 0.7F);
 
 
     @Override
@@ -128,8 +129,6 @@ public class Notes_Page extends AppCompatActivity implements View.OnClickListene
             }
         });
     }
-
-    private AlphaAnimation buttonClick = new AlphaAnimation(1F, 0.7F);
 
     @Override
     public void onClick(View v) {

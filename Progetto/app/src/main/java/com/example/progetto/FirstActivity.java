@@ -39,13 +39,13 @@ public class FirstActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 
-    public void launchMainActivity(View view)
+    public void launchMainActivity(View v)
     {
         Intent i = new Intent(this, MainActivity.class);
         startActivity(i);
     }
 
-    public void launchReg(View view)
+    public void launchReg(View v)
     {
         Intent i = new Intent(this , Register.class);
         startActivity(i);

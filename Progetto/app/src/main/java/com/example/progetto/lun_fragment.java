@@ -1,10 +1,13 @@
 package com.example.progetto;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +15,7 @@ import android.view.animation.AlphaAnimation;
 import android.widget.ImageView;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * Classe che gestisce visualizzazione, salvataggio e caricamento di materie aula e orari del lunedì.
@@ -381,7 +385,10 @@ public class lun_fragment extends Fragment implements View.OnClickListener {
      * @param aula aula inserita.
      */
     public void salvaOrario (String key, String materia, String aula) {
-        if (dm.searchM(materia) != null) {
+        Cursor c;
+        c = dm.searchM(materia);
+        if (c.getCount() > 0) {
+            Log.i("test", materia + " esiste già");
             dm.delete(materia);
         }
         dm.insert(materia, ora, aula, key); //salva la materia nel db

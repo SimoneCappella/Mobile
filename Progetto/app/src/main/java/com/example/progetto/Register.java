@@ -4,8 +4,10 @@ import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 import java.util.concurrent.ExecutionException;
 
@@ -13,6 +15,8 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
 
     EditText username, password;
     String register_name, register_pass;
+    private AlphaAnimation buttonClick = new AlphaAnimation(1F, 0.7F);
+    ImageButton back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,16 +27,21 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
         registrami.setOnClickListener(this);
         username = findViewById(R.id.editUser);
         password = findViewById(R.id.editPsw);
+        back = findViewById(R.id.back);
+        back.setOnClickListener(this);
     }
 
     public void onClick (View v) {
         switch (v.getId()) {
             case R.id.back:
+                v.startAnimation(buttonClick);
                 finish();
+                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
                 break;
             case R.id.btnReg:
                 userRegister();
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                break;
         }
     }
 
