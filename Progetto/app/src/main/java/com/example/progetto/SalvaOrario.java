@@ -10,6 +10,12 @@ import android.support.v7.app.AppCompatActivity;
  */
 public class SalvaOrario extends AppCompatActivity {
 
+    /**
+     * Salva la materia con la chiave
+     * @param key
+     * @param value
+     * @param context
+     */
     public static void setMateria(String key, String value,  Context context)
     {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
@@ -18,12 +24,24 @@ public class SalvaOrario extends AppCompatActivity {
         editor.commit();
     }
 
+    /**
+     * Estrae la materia con la chiave
+     * @param key
+     * @param context
+     * @return
+     */
     public static String getMateria(String key, Context context)
     {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         return preferences.getString(key, null);
     }
 
+    /**
+     * Salva l'aula con la chiave
+     * @param key
+     * @param value
+     * @param context
+     */
     public static void setAula(String key, String value,  Context context)
     {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
@@ -32,6 +50,12 @@ public class SalvaOrario extends AppCompatActivity {
         editor.commit();
     }
 
+    /**
+     * Estrae l'aula con la chiave
+     * @param key
+     * @param context
+     * @return
+     */
     public static String getAula(String key, Context context)
     {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
