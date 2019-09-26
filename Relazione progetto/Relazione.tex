@@ -9,15 +9,28 @@
 \usepackage{amsmath}
 \usepackage{fancyhdr}
 \usepackage{xcolor}
+\usepackage{listings}
+\usepackage{pxfonts}
 \pagestyle{fancy}
 \lfoot{EasyVersity}
+
+\definecolor{grigio}{rgb}{0.85,0.85,0.85}
+\lstset{
+language = Java,
+basicstyle = \ttfamily \small,
+keywordstyle = \bfseries,
+numbers = left,
+backgroundcolor = \color{grigio},
+showstringspaces = false,
+tabsize = 2
+}
 
 \begin{document}
 
 
 \title{EasyVersity}
 \date{Settembre, 2019}
-\author{Tomassini Danilo \\ Simone Cappella \\ Luca Mannini \\ \\ Ingegneria Informatica e dell'Automazione}
+\author{Tomassini Danilo \\ Cappella Simone \\ Mannini Luca \\ \\ Ingegneria Informatica e dell'Automazione}
 \maketitle
 \vspace*{\fill}
 \begin{figure}[h!]
@@ -43,7 +56,13 @@ Permette di gestire:
 \end{itemize}
 
 \section{Funzionalità}
-All'avvio dell'applicazione va effettuato il login o la registrazione.
+Avviata l'applicazione ci si trova davani alla \textbf{First activity}; qui si può scegliere di effettuare il login o registrarsi. Una volta effettuato il login si può accedere al menù principale che prevede 4 scelte:
+\begin{itemize}
+\item \textbf{Orario.}
+\item \textbf{I miei appunti.}
+\item \textbf{Appunti condivisi.}
+\item \textbf{Impostazioni.}
+\end{itemize}
 \begin{figure}[!h]
 	\centering
 	{\includegraphics[width=.30\textwidth]{login}} \quad
@@ -51,14 +70,6 @@ All'avvio dell'applicazione va effettuato il login o la registrazione.
 	{\includegraphics[width=.30\textwidth]{menu}}
 	\caption{\small Schermata Login, Registrazione e Menu principale.}
 \end{figure}
-
-Una volta effettuato il login si può accedere al menù principale che prevede 4 scelte:
-\begin{itemize}
-\item \textbf{Orario.}
-\item \textbf{I miei appunti.}
-\item \textbf{Appunti condivisi.}
-\item \textbf{Impostazioni.}
-\end{itemize}
 
 \newpage
 \subsection{Orario}
@@ -121,14 +132,114 @@ Dalle impostazioni possiamo banalmente modificare \textbf{username}, \textbf{pas
 	{\includegraphics[width=.30\textwidth]{impostazioni_about_us}}
 	\caption{\small Azioni eseguibili nelle impostazioni.}
 \end{figure}
+\newpage
+\section{Implementazioni Android studio}
+\subsection{Login e Registrazione}
+Per avviare il login, ovviamente, è necessario riempire le \textbf{EditText} relative a username e password; i relativi valori verranno assegnati alle variabili \textbf{login\_name} e \textbf{login\_pass}.
+
+La connessione al database viene instaurata indicando \textbf{method}, stringa inizializzata in precedenza a \textbf{"login"}, dati relativi ad username e password e l'url contenente il percorso fino alla funzione di login contenuta nel server.
+
+Se la funzione del server da esito negativo non verrà effettuato il login e verrà stampato un \textbf{Toast}, per mezzo della funzione \textbf{show}. Altrimenti verrà stampato un messaggio di benvenuto e verrà lanciata la \textbf{MainActivity}.
+\begin{lstlisting}
+[...]
+\\gestione login\\
+public void userLogin(View view) {
+[...]
+try {
+	Sring url = "http://mobileproject.altervista.org/login.php";
+	auth = supportTask.execute(method, login_name, login_pass, url).get();
+	} catch (ExecutionException e)
+	{
+		e.printStackTrace();
+	}catch (InterruptedException a)
+	{
+		a.printStackTrace();
+	}
+	if(auth.equals("Login Success"))
+	{
+		launchMainActivity(view);
+		show("Benvenuto "+ login_name + "!");
+		finish();
+	}else
+	{
+		show("Dati errati. Riprova.");
+	}
+}
+[...]
+\end{lstlisting}
+
+La registrazione viene gestita in modo simile.
+
+In un \textbf{if} viene verificato in modo veloce se le condizioni su username e password sono verificate, in caso contrario viene lanciato un avviso.
+
+Il metodo con cui si instaura la connessione al server è lo stesso, cambiano solo gli argomenti, \textbf{url} e \textbf{method}.
+
+Una volta che la registrazione è andata a buon fine l'attività viene interrotta e si torna alla schermata di login.
+
+\begin{lstlisting}
+[...]
+\\gestione registrazione\\
+public void userRegister() {
+[...]
+if (register_name.length() >= 3 && register_pass.length() >= 3)
+{
+	try {
+		String url = "http://mobileproject.altervista.org/register.php";
+		auth= supportTask.execute(method, register_name, register_pass, url).get();
+	} catch (ExecutionException e) {
+		e.printStackTrace();
+	} catch (InterruptedException e) {
+		e.printStackTrace();
+	}
+	if (auth.equals("Registrazione avvenuta con successo!")) {
+		show("Registrazione effettuata con successo, accedi!");
+		finish();
+	} else if (auth.equals("Username in uso")) {
+		show("Username gia' in uso, prova con uno diverso!");
+	}
+}
+else
+{
+show(I campi devono contenere almeno 3 caratteri.);
+}
+[...]
+\end{lstlisting}
+
+\subsection{Orario}
+Avviata l'activity \textbf{orario} vengono catturate le dimensioni del display, calcolata la dimensione del \textbf{fragment} contenente la tabella dell'orario e fatto partire uno switch sul giorno corrente.
+
+\begin{lstlisting}
+[...]
+Calendar calendar = Calendar.getInstance();
+int day = calendar.get(Calendar.DAY_OF_WEEK);
+Fragment fragment = null;
+switch (day){
+	case Calendar.MONDAY:
+		fragment = new lun_fragment();
+		nav.setSelectedItemId(R.id.lun);
+		break;
+	case Calendar.TUESDAY:
+		fragment = new mar_fragment();
+		nav.setSelectedItemId(R.id.mar);
+		break;
+	case Calendar.WEDNESDAY:
+[...]
+loadFragment(fragment);
+\end{lstlisting}
 
 
 
 
+\subsection{I miei appunti}
+\subsection{Appunti condivisi}
+\subsection{Impostazioni}
 
-
-
-
+\section{Implementazioni Xamarin}
+\subsection{Login e Registrazione}
+\subsection{Orario}
+\subsection{I miei appunti}
+\subsection{Appunti condivisi}
+\subsection{Impostazioni}
 
 
 
