@@ -77,7 +77,7 @@ public class Notes_Page extends AppCompatActivity implements View.OnClickListene
                 String titolo = c.getString(3);
                 String data = c.getString(2);
                 String app = c.getString(4);
-                Toast.makeText(getApplicationContext(), code, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), titolo, Toast.LENGTH_SHORT).show();
 
                 launchVedi(materia, titolo, data, app);
             }

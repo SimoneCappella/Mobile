@@ -522,8 +522,268 @@ public static String getAula(String key, Context context) {
 
 \newpage
 \subsection{I miei appunti}
+Avviata l'activity \textbf{i miei appunti} viene mostrata la lista delle materie salvate nell'applicazione, queste sono il risultato delle materie aggiunte nell'orario o eventualmente aggiunte nella sezione in questione.
+
+All'avvio si definisce e istanzia un cursore che va ad estrarre tutti gli elementi dal database e con un $CursorAdapter$ va a popolare la lsita. Nuovamente viene utilizzato un $onItemClickListener$ che permette di catturare l'elemento dalla lista, viene, dunque, chiamata l'activity \textbf{Notes\_Page} con un intent passando il parametro $a$, stringa che contiene il nome della materia scelta.
+
+\begin{lstlisting}
+\\MyNotes\\
+[...]
+protected void onCreate(Bundle savedInstanceState) {
+[...]
+cursor = dm.selectAll();
+[...]
+adapter = new SimpleCursorAdapter(this, R.layout.list_mat, cursor, 
+	fromColumns, viewsList, 0);
+listMat.setAdapter(adapter);
+listMat.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+	@Override
+	public void onItemClick(AdapterView<?> parent, View view, 
+		int position, long id) {
+		Cursor c = adapter.getCursor();
+		String a = c.getString(2);
+		Intent i = new Intent(getApplication(), Notes_Page.class);
+		i.putExtra("mat", a);
+		startActivity(i);
+	}
+}
+[...]
+\end{lstlisting}
+
+\subsubsection{Aggiungi una materia}
+Possiamo aggiungere manualmente una nuova materia o, eventualmente, eliminarne una contenuta nel database attivando il relativo bottone. Viene lanciata con un intent esplicito l'activity \textbf{AggMaterie}; si utilizza un intent esplicito per permettere l'aggiornamento della lista una volta aggiunta o eliminata una materia dalla stessa. Nella funzione \textbf{onActivityResult}, infatti, appurata la validità del ritorno dall'activity si estrae il dato, $res$ contiene il nome della materia aggiunta, e definito un nuovo cursore $nc$ si applicano metodi quali \textbf{changeCursor} sull'adapter in modo da indicargli il nuovo cursore da utilizzare e la \textbf{notifyDataSetChanged}; in tal modo la lista verrà aggiornata.
+
+\begin{lstlisting}
+\\MyNotes\\
+[...]
+public static final int REQUEST_CODE2 = 2222;
+[...]
+private void launchAggMat() {
+	Intent intent = new Intent(this, AggMaterie.class);
+	intent.putExtra("app", "agg materie");
+	startActivityForResult(intent, REQUEST_CODE2);
+}
+@Override
+public void onActivityResult(int requestCode, int resultCode, Intent data){
+	super.onActivityResult(requestCode, resultCode, data);
+	if ((requestCode == REQUEST_CODE2) && (resultCode == Activity.RESULT_OK)) {
+		String res = data.getStringExtra("res");
+		Toast.makeText(getApplicationContext(), res, Toast.LENGTH_SHORT).show();
+	}
+	Cursor nc;
+	nc = dm.selectAll();
+	adapter.changeCursor(nc);
+	adapter.notifyDataSetChanged();
+}
+[...]
+\end{lstlisting}
+
+L'activity \textbf{AggMaterie} consiste di una $editText$ e due bottoni, uno per salvare la materia inserita nella edit e una per eliminarla.
+Nella funzione \textbf{onCreate} dell'activity AggMaterie viene "raccolto" l'intent.
+
+Le funzioni relative al salvataggio ed eliminazione sono implementate direttamente nella funzione \textbf{onClick}, con uno switch sull'elemento della vista cliccato.
+\begin{itemize}
+\item \textbf{Salva:} viene estratta la stringa e istanziato un cursore; tramite il cursore si va a cercare nel database un elemento il cui campo materia sia uguale alla materia inserita, nell'\textbf{if} viene dunque controllato tramite il metodo \textbf{getCount} sul cursore se tale elemento è stato trovato o meno, in caso positivo viene solo lanciato un avviso, altrimenti può essere salvata la nuova materia e terminata l'activity impostando il risultato dell'intent.
+\item \textbf{Elimina:} si estrae nuovamente la stringa dalla edit, si istanzia il cursore e nuovamente si procede alla ricerca di un elemento il cui campo materia corrisponda alla materia scelta, stavolta nel caso in cui venga trovata viene eliminata e terminata l'activity.
+\end{itemize}
+
+\begin{lstlisting}
+\\AggMaterie\\
+[...]
+protected void onCreate(Bundle savedInstanceState) {
+[...]
+	Intent intent = getIntent();
+}
+[...]
+@Override
+public void onClick(View v) {
+	switch (v.getId()){
+[...]
+		case R.id.btnInsert:
+			materia = editMateria.getText().toString();
+			Cursor c = dm.searchM(materia);
+			if(c.getCount() > 0){
+				[...]
+			}else{
+				dm.insert(materia, "ora", "aula", "code");
+				Intent res  = new Intent();
+				res = res.putExtra("res", materia);
+				setResult(Activity.RESULT_OK, res);	
+				finish();
+			}
+			break;
+		case R.id.btnDelete:
+			String materia = editMateria.getText().toString();
+			Cursor del = dm.searchM(materia);
+			if (del.getCount() > 0){
+				dm.delete(materia);
+				finish();
+			}
+			[...]
+			break;
+	}
+}
+[...]
+\end{lstlisting}
+
+\subsubsection{Vedi appunti}
+Scelta la materia dalla lista visualizzata all'avvio di \textbf{MyNotes} viene lanciata, come visto, l'activity \textbf{Notes\_Page}.
+
+All'avvio viene subito estratto il dato passato dall'activity chiamante, si tratta del nome della materia scelta, successivamente vengono definiti un \textbf{cursore} che contiene gli elementi del database la cui materia coincide con quella ricevuta in $a$ e un \textbf{adapter} che permette di riempire la lista con gli elementi del cursore, in particolare vengono messi nella lista titolo e data dell'appunto.
+
+\begin{lstlisting}
+\\Notes_Page\\
+[...]
+protected void onCreate(Bundle savedInstanceState) {
+	[...]
+	Intent r = getIntent();
+	a = r.getStringExtra("mat");
+	[...]
+	cursor = da.searchM(a);
+	adapter = new SimpleCursorAdapter(this, R.layout.list_app_loc, cursor,
+		fromColumns, viewsList, 0);
+	listNote.setAdapter(adapter);
+	[...]
+\end{lstlisting}
+
+In tal caso abbiamo due possibili eventi sulla lista, un click singolo o un click prolungato (longClick).
+\begin{itemize}
+\item \textbf{Click:} la funzione \textbf{onItemClick} gestisce il click singolo sull'elemento, grazie alla posizione viene istanziato un nuovo cursore all'elemento in questione e ne vengono estratti come stringhe $materia, titolo, data e l'appunto vero e proprio$, viene, dunque, stampato a schermo un \textbf{Toast} contenente il titolo dell'appunto scelto e viene lanciata la funzione \textbf{launchVedi}.
+\item \textbf{LongClick:} il long click permette di eliminare l'appunto. Viene nuovamente istanziato un cursore attraverso il quale vado ad estrarre $code$ e $titolo$ dell'appunto selezionato.
+
+Viene successivamente costruita una finestra di dialogo grazie alla classe AlertDialog. Nell'alert dialog devono essere settati i bottoni "positivo" e "negativo", rispettivamente grazie a \textbf{setPositiveButton} e \textbf{setNegativeButton}.
+
+Settato il positive button al suo interno viene utilizzata una funzione \textbf{onClick} che al click fa partire il metodo \textbf{delete} della classe \textbf{DataAppLoc}, database per gli appunti, che va a cancellare l'appunto andandolo a cercare con la variabile $code$. Successivamente viene aggiornata la lista come nelle activity precedenti e costruita la stringa con il percorso del file questo viene cancellato.
+
+Il set del negative button non implementa nessuna funzione, in tal caso la alert dialog viene chiusa.
+\end{itemize}
+
+\begin{lstlisting}
+\\Notes_Page\\
+[...]
+da = new DataAppLoc(this);
+[...]
+listNote.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+	@Override
+	public void onItemClick(AdapterView<?> parent, View view, int position,
+		long id) {
+		Cursor c = adapter.getCursor();
+		code = c.getString(0);
+		String materia = c.getString(1);
+		String titolo = c.getString(3);
+		String data = c.getString(2);
+		String app = c.getString(4);
+		Toast.makeText(getApplicationContext(), code, Toast.LENGTH_SHORT).show();
+		launchVedi(materia, titolo, data, app);
+	}
+	@Override
+	public boolean onItemLongClick(AdapterView<?> parent, final View view,
+		final int position, long id) {
+		Cursor c = adapter.getCursor();
+		code = c.getString(0);
+		final String titolo = c.getString(3);
+		[...]
+		LayoutInflater inflater = LayoutInflater.from(context);
+		View mess = inflater.inflate(R.layout.messaggio_elimina,null);
+		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+		alertDialogBuilder.setView(mess);
+		alertDialogBuilder.setPositiveButton("ELIMINA",
+			new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				da.delete (code);
+				Cursor nc;
+				nc = da.searchM(a);
+				adapter.changeCursor(nc);
+				adapter.notifyDataSetChanged();
+				Context context = getApplicationContext();
+				String folder = context.getFilesDir().getAbsolutePath()
+					+ File.separator + "Appunti/";
+				File file = new File(folder + titolo + ".txt");
+				boolean deleted = file.delete();
+			}
+		}
+		alertDialogBuilder.setNegativeButton("ANNULLA",
+			new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {}
+		}
+		[...]
+\end{lstlisting}
+
+Come già detto nel caso di un singolo click su un elemento della lista viene chiamata la funzione \textbf{launchVedi}, questa crea un intent e un bundle contenente nome della materia cui si riferisce, titolo dell'appunto, data e annotazioni, questo bundle viene inserito nell'intent con il quale sarà chiamata l'activity \textbf{VediAppunti}.
+
+\begin{lstlisting}
+\\Notes_Page\\
+[...]
+public void launchVedi(String materia, String titolo, String data, String app){
+	Intent i = new Intent(getApplication(), VediAppunti.class);
+	Bundle bundle = new Bundle();
+	bundle.putString("materia", materia);
+	bundle.putString("titolo", titolo);
+	bundle.putString("data", data);
+	bundle.putString("app", app);
+	i.putExtra("data", bundle);
+	startActivity(i);
+}
+\end{lstlisting}
+
+Nel caso in cui si voglia aggiungere un appunto va attivato il bottone \textbf{Aggiungi}, il cui evento è catturato nella funzione \textbf{onClick} della classe; questa banalmente chiama la funzione \textbf{launchAggiungi}.
+
+La funzione in questione si occupa semplicemente di utilizzare un intent esplicito che va a lanciare l'activity \textbf{AggiungiAppuntiLoc}
+
+\begin{lstlisting}
+\\Notes_Page\\
+[...]
+public void launchAggiungi(){
+	Intent intent = new Intent(this, AggiungiAppuntiLoc.class);
+	intent.putExtra("app", a);
+	startActivityForResult(intent, REQUEST_CODE1);
+}
+[...]
+\end{lstlisting}
+
+L'activity \textbf{AggiungiAppuntiLoc} si occupa di salvare gli appunti in locale ed eventualmente nella sezione per gli appunti condivisi.
+
+Per quanto riguarda il salvataggio in locale, nella funzione \textbf{onClick} della classe nel caso in cui venga attivato il bottone $salva$ vengono salvati i testi inseriti delle edit e i dati vengono salvati nel database relativo agli appunti, viene, quindi, restituito l'intent con la variabile $res$ con una semplice stringa $"Appunti salvati"$.
+
+\begin{lstlisting}
+\\AggiungiAppuntiLoc\\
+[...]
+public void onClick(View v) {
+[...]
+	case R.id.btnSalvaApp:
+		final String titolo = editTitolo.getText().toString();
+		String data = editData.getText().toString();
+		String appunti = editApp.getText().toString();
+		da.insert(a, data, titolo, appunti);
+		String res = "Appunti salvati";
+		Intent intent = new Intent();
+		intent = intent.putExtra("res", res);
+		setResult(Activity.RESULT_OK, intent);
+[...]
+\end{lstlisting}
+
+Terminata l'activity per salvare nuovi appunti si torna alla Notes\_Page, qui la funzione \textbf{onActivityResult} come al solito controlla il risultato dell'activity chiamata con il $REQUEST\_CODE$ e il $RESULT\_OK$, verificata la validità viene stampato il messaggio per la conferma del salvataggio e successivamente aggiornata la view della lista.
+
+\begin{lstlisting}
+public void onActivityResult(int requestCode, int resultCode, Intent data){
+	[...]
+	if ((requestCode == REQUEST_CODE1) && (resultCode == Activity.RESULT_OK)) {
+		String res = data.getStringExtra("res");
+		Toast.makeText(getApplicationContext(), res, Toast.LENGTH_SHORT).show();
+	}
+	Cursor nc;
+	nc = da.searchM(a);
+	adapter.changeCursor(nc);
+	adapter.notifyDataSetChanged();
+}
+[...]
+\end{lstlisting}
+\newpage
 \subsection{Appunti condivisi}
 \subsection{Impostazioni}
+\subsection{Database}
 
 \section{Implementazioni Xamarin}
 \subsection{Login e Registrazione}
@@ -531,6 +791,7 @@ public static String getAula(String key, Context context) {
 \subsection{I miei appunti}
 \subsection{Appunti condivisi}
 \subsection{Impostazioni}
+\subsection{Database}
 
 
 
