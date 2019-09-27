@@ -20,7 +20,7 @@ public class AggMaterie extends AppCompatActivity implements View.OnClickListene
     Button btnDelete;
 
     EditText editMateria;
-    EditText editDelete;
+    //EditText editDelete;
 
     String materia;
     private DataManager dm;
@@ -39,7 +39,7 @@ public class AggMaterie extends AppCompatActivity implements View.OnClickListene
         btnDelete = (Button) findViewById(R.id.btnDelete);
 
         editMateria = (EditText) findViewById(R.id.editMateria);
-        editDelete = (EditText) findViewById(R.id.editDelete);
+        //editDelete = (EditText) findViewById(R.id.editDelete);
 
         btnBack.setOnClickListener(this);
         btnDelete.setOnClickListener(this);
@@ -72,7 +72,7 @@ public class AggMaterie extends AppCompatActivity implements View.OnClickListene
                 break;
             case R.id.btnDelete:
                 v.startAnimation(buttonClick);
-                String materia = editDelete.getText().toString();
+                String materia = editMateria.getText().toString();
                 Cursor del = dm.searchM(materia);
                 if (del.getCount() > 0){
                     Toast.makeText(getApplicationContext(), materia + " eliminata con successo", Toast.LENGTH_SHORT).show();

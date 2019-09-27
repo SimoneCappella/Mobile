@@ -102,7 +102,7 @@ public class MyNotes extends AppCompatActivity implements View.OnClickListener{
         Cursor nc;
         nc = dm.selectAll();
         adapter.changeCursor(nc);           //Utilizzati per aggiornare la lista
-        adapter.notifyDataSetChanged();     //una volta inserito un nuovo appunto
+        adapter.notifyDataSetChanged();     //una volta inserito una nuova materia
     }
 
 }
