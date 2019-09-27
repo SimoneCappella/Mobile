@@ -67,7 +67,7 @@ public class Settings extends AppCompatActivity implements View.OnClickListener{
 
     public void launchEditPass(View v)
     {
-        Intent i = new Intent(this , editPass.class);
+        Intent i = new Intent(this , EditPass.class);
         startActivity(i);
         overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
     }
