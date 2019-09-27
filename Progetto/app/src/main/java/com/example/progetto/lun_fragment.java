@@ -1,7 +1,6 @@
 package com.example.progetto;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -15,7 +14,6 @@ import android.view.animation.AlphaAnimation;
 import android.widget.ImageView;
 import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 /**
  * Classe che gestisce visualizzazione, salvataggio e caricamento di materie aula e orari del lunedì.
