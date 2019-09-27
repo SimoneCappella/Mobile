@@ -22,7 +22,7 @@ public class EditUser extends AppCompatActivity implements View.OnClickListener 
         setContentView(R.layout.activity_edit_user);
         back = findViewById(R.id.back);
         txtNewusr = findViewById(R.id.txtNewPass);
-        btnEdit = findViewById(R.id.btnEditPass);
+        btnEdit = findViewById(R.id.btnEditUser);
         back.setOnClickListener(this);
         btnEdit.setOnClickListener(this);
     }
@@ -35,7 +35,7 @@ public class EditUser extends AppCompatActivity implements View.OnClickListener 
                 finish();
                 overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
                 break;
-            case R.id.btnEditPass:
+            case R.id.btnEditUser:
                 String method = "edit";
                 String newusr = txtNewusr.getText().toString();
                 String auth = "";
@@ -55,9 +55,6 @@ public class EditUser extends AppCompatActivity implements View.OnClickListener 
                     }
                     switch(auth) {
                         case "modificato":
-                            FirstActivity.login_name = newusr;
-                            MainActivity og = new MainActivity();
-                            og.setUsername(newusr);
                             Toast.makeText(this, "Username cambiato con successo!", Toast.LENGTH_SHORT).show();
                             Toast.makeText(this, "Per cambiare nome nella home riavviare l'applicazione.", Toast.LENGTH_SHORT).show();
                             break;

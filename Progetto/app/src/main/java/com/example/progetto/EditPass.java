@@ -10,7 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import java.util.concurrent.ExecutionException;
 
-public class editPass extends AppCompatActivity implements View.OnClickListener{
+public class EditPass extends AppCompatActivity implements View.OnClickListener{
 
     TextView txtOldPass;
     TextView txtNewPass;
@@ -44,7 +44,7 @@ public class editPass extends AppCompatActivity implements View.OnClickListener{
                 String oldpass = txtOldPass.getText().toString();
                 String newpass = txtNewPass.getText().toString();
                 String auth = "";
-                SupportTask supportTask = new SupportTask(editPass.this);
+                SupportTask supportTask = new SupportTask(EditPass.this);
                 if (oldpass.length() >= 3 && newpass.length() >= 3)
                 {
                     try{
