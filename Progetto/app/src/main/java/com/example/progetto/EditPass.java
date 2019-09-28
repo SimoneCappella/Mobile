@@ -23,7 +23,7 @@ public class EditPass extends AppCompatActivity implements View.OnClickListener{
         setContentView(R.layout.activity_edit_pass);
 
         txtOldPass = findViewById(R.id.txtOldPass);
-        txtNewPass = findViewById(R.id.txtNewPass);
+        txtNewPass = findViewById(R.id.txtNewUser);
         btnChangePass = findViewById(R.id.btnEditPass);
         back = findViewById(R.id.back);
         back.setOnClickListener(this);

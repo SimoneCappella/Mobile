@@ -132,8 +132,80 @@ Dalle impostazioni possiamo banalmente modificare \textbf{username}, \textbf{pas
 	{\includegraphics[width=.30\textwidth]{impostazioni_about_us}}
 	\caption{\small Azioni eseguibili nelle impostazioni.}
 \end{figure}
-\newpage
+\newpage 
 \section{Implementazioni Android studio}
+\subsection{Classe SupportTask}
+Riteniamo opportuno introdurre questa classe e le sue funzionalità ad inizio capitolo poichè essa verrà utilizzata da tutte le funzionalità che richiedono un accesso al database degli utenti. 
+
+Notiamo subito che la nostra classe estende la classe astratta \textbf{AsyncTask}. Innanzitutto definiamo il significato di task asincrona: una task asincrona è un metodo che non va a lavorare sul thread principale del programma, per cui quest'ultimo può proseguire senza attendere che il metodo chiamato terminati. Nel costruttore inizializziamo il contesto relativo alla classe chiamante. Dal momento che estendiamo una classe astratta dobbiamo sovrascrivere i metodi che ci interessano. Il metodo che andiamo a sovrascrivere noi è $doInBackground$ che rappresenta la vera e propria logica del metodo. Non passiamo un numero definito di variabili a tale metodo poichè essi dipenderanno da quale classe del nostro programma effettuerà la chiamata. Vengono utilizzati i tre puntini per indicare che ciò che esso riceverà come parametro sarà un array di stringhe, di nome $params$, di grandezza appunto indefinita. I valori in tale array verrano memorizzati secondo l'ordine in cui vengono inseriti nei parametri al momento della chiamata del metodo. Verrano quindi recuperati accedendo all'indice corrispondente alla posizione del valore nei parametri di chiamata. Il primo parametro che passiamo a questo metodo è sempre $method$, ovvero una stringa sulla quale andremo ad effettuare vari controlli per capire cosa l'utente ha richeisto. 
+\begin{lstlisting}
+\\SupportTask\\
+public class SupportTask extends AsyncTask <String, Void, String> {
+    Context ctx;
+
+    SupportTask(Context ctx) {
+        this.ctx = ctx;
+    }
+
+    protected void show(String message) {
+        Toast.makeText(ctx, message, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    //Ricevo i parametri in un array di dimensione variabile
+    protected String doInBackground(String... params) {
+        String line;
+        String method = params[0];
+[...]
+\end{lstlisting}
+Prenderemo in esame soltanto il caso in cui l'utente chieda di registrarsi, gli altri casi sono gestiti in maniera praticamente analoga se non per il numero di parametri che riceviamo e che inviamo al server. 
+
+Andiamo ad impostare la connessione, tramite l'oggetto \textbf{HttpURLConnection}, e il metodo con il quale invieremo i dati della form. Produciamo poi la stringa che comporrà il body del messaggio al server secondo le regole del metodo post, ovvero "nome\_variabile1"=valore1 \&  "nome\_variabile2"=valore2. Vengono inviati i dati e viene chiuso lo stream. Per leggere la risposta del server utilizziamo l'oggetto \textbf{InputStream} e il \textbf{BufferedReader}, salviamo tutto nella stringa $state$ e la ritorniamo alla classe chiamante andando ad invocare il metodo \textbf{trim()} che elimina eventuali spazi bianchi all'inizio della stringa.
+\begin{lstlisting}
+\\SupportTask\\
+if (method.equals("register")) {
+            String state = "";
+            String user_name = params[1];
+            String user_pass = params[2];
+            String reg_url = params[3];
+            try {
+                URL url = new URL(reg_url);
+                //mi connetto all'URL al quale effettuare la richiesta, 
+impostando anche il tipo di richiesta
+                HttpURLConnection httpURLConnection = (HttpURLConnection) 
+url.openConnection();
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.setDoOutput(true);
+                httpURLConnection.setDoInput(true);
+                OutputStream OS = httpURLConnection.getOutputStream();
+                BufferedWriter bufferedWriter = new 
+BufferedWriter(new OutputStreamWriter(OS, "UTF-8"));
+                //Creo la stringa che compone la richiesta
+                String data = URLEncoder.encode("user_name", "UTF-8") + "=" 
++ URLEncoder.encode(user_name, "UTF-8") + "&" +
+                        URLEncoder.encode("user_pass", "UTF-8") + "=" 
++ URLEncoder.encode(user_pass, "UTF-8");
+                bufferedWriter.write(data);
+                bufferedWriter.flush();
+                bufferedWriter.close();
+                OS.close();
+                InputStream IS = httpURLConnection.getInputStream();
+                BufferedReader bufferedReader = new 
+BufferedReader(new InputStreamReader(IS, "iso-8859-1"));
+                while((line = bufferedReader.readLine()) != null)
+                {
+                    state += line;
+                }
+                bufferedReader.close();
+                IS.close();
+                httpURLConnection.disconnect();
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } return state.trim();
+[...]
+\end{lstlisting}
 \subsection{Login e Registrazione}
 Per avviare il login, ovviamente, è necessario riempire le \textbf{EditText} relative a username e password; i relativi valori verranno assegnati alle variabili \textbf{login\_name} e \textbf{login\_pass}.
 
@@ -167,15 +239,29 @@ try {
 }
 [...]
 \end{lstlisting}
-
+Il codice PHP relativo alla funzione di login è mostrato di seguito.
+\begin{lstlisting}
+<?php
+ require 'init.php';
+ $user_name = $_POST["login_name"];  
+ $user_pass = $_POST["login_pass"];  
+ $sql_query = "SELECT * FROM Utenti WHERE username = '$user_name' AND 
+password = '$user_pass'";  
+ $result = mysqli_query($con,$sql_query);  
+ if(mysqli_num_rows($result)> 0)  
+ {    
+ echo "Login Success";  
+ }  
+ else  
+ {
+ echo "Login Failed";  
+ }  
+ ?>
+\end{lstlisting}
 La registrazione viene gestita in modo simile.
 
 In un \textbf{if} viene verificato in modo veloce se le condizioni su username e password sono verificate, in caso contrario viene lanciato un avviso.
-
-Il metodo con cui si instaura la connessione al server è lo stesso, cambiano solo gli argomenti, \textbf{url} e \textbf{method}.
-
-Una volta che la registrazione è andata a buon fine l'attività viene interrotta e si torna alla schermata di login.
-
+Il metodo con cui si instaura la connessione al server è lo stesso, cambiano solo gli argomenti, \textbf{url} e \textbf{method}.Una volta che la registrazione è andata a buon fine l'attività viene interrotta e si torna alla schermata di login.
 \begin{lstlisting}
 \\Register\\
 [...]
@@ -204,7 +290,31 @@ show(I campi devono contenere almeno 3 caratteri.);
 }
 [...]
 \end{lstlisting}
-
+Di seguito abbiamo inserito il codice PHP relativo alla funzione di registrazione.
+\begin{lstlisting}
+<?php
+ require "init.php";
+ 
+ $user_name = $_POST["user_name"];  
+ $user_pass = $_POST["user_pass"];
+ $ver = "SELECT * FROM Utenti WHERE username = '$user_name' ";
+ $result = mysqli_query($con,$ver);
+ $row = mysqli_fetch_array($result,MYSQLI_NUM);
+ if ($row[0] > 0)
+ 	{
+    echo "Username in uso";
+    }
+    else{
+ 			$sql_query = "INSERT INTO Utenti (username,password) 
+values('$user_name','$user_pass')";
+ 			if(mysqli_query($con,$sql_query))
+ 				{
+    				echo"Registrazione avvenuta con successo!";
+				}else
+    				echo"Errore";
+          }
+ ?>
+\end{lstlisting}
 \subsection{Orario}
 Avviata l'activity \textbf{orario} vengono catturate le dimensioni del display, calcolata la dimensione del \textbf{fragment} contenente la tabella dell'orario e fatto partire uno switch sul giorno corrente.
 
@@ -262,6 +372,29 @@ return loadFragment(fragment);
 Allo stesso modo la funzione \textbf{onNavigationItemSelected}, associa in base allitem della navbar cliccato un'istanza del fragment all'oggetto fragment e nuovamente viene lanciata la funzione \textbf{loadFragment}.
 
 La funzione \textbf{loadFragment} carica il fragment richiesto e gestisce lo scorrimento a destra o sinistra dipendentemente dalla posizione del fragment corrente rispetto a quello scelto.
+\begin{lstlisting}
+private boolean loadFragment(android.support.v4.app.Fragment fragment)
+    {
+        if(fragment!= null)
+            {
+            FragmentTransaction ft = 
+getSupportFragmentManager().beginTransaction();
+            if(curr < next)
+                {
+                    ft.setCustomAnimations(R.anim.slide_in,R.anim.slide_out);
+                }else
+                    {
+                        ft.setCustomAnimations(R.anim.slide_in_left,
+R.anim.slide_out_right);
+                    }
+            curr = next;
+            ft.replace(R.id.fragment_container, fragment);
+            ft.commit();
+            return true;
+        }
+        return false;
+    }
+\end{lstlisting}
 \subsubsection{Fragment}
 Prendiamo come riferimento il fragment relativo al \textbf{lunedì}, gli altri saranno implementati in modo analogo.
 
@@ -783,6 +916,140 @@ public void onActivityResult(int requestCode, int resultCode, Intent data){
 \newpage
 \subsection{Appunti condivisi}
 \subsection{Impostazioni}
+La sezione per le impostazioni è molto basilare. Le voci che vanno a comporre il suo menù sono tre: Modifica Username, Modifica Password e About Us. Il tutto viene gestito con una ListView. Quando viene effettuato un click su una delle tre voci viene lanciata l’activity corrispondente tramite la funzione \textbf{setOnItemClickListener} che associa all'oggetto $lv$, che è una \textbf{ListView}, un listener. Un listner è un gestore degli eventi, che cattura, in questo caso, il click su un item della nostra ListView. Come parametro è necessario passargli un oggetto \textbf{Listner} che andiamo a istanziare direttamente inline. Successivamente è necessario sovrascrivere il metodo \textbf{OnItemClick} fornitoci dall'interfaccia \textbf{AdapterView.OnItemClickListener} inserendo al suo interno la logica del nostro gestore eventi.
+
+Il metodo \textbf{OnItemClick} ci viene in aiuto estrapolando dal click dell'utente il numero sequenziale dell'elemento della ListView cliccato ed inserendolo nella variabile intera $position$, ad esempio: se l'utente cliccherà sulla voce \textbf{Modifica Username}, che è la prima dall'alto, il valore di $position$ sarà pari a $0$. Lo \textbf{switch} gestisce i diversi casi chiamando la funzione apposita per l'apertura dell'activity desiderata.
+\begin{lstlisting}
+\\Settings\\
+lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+	@Override
+  public void onItemClick(AdapterView<?> parent, View view, int position,
+  long id)
+	{
+        	switch(position)
+                {
+                	case 0:
+                        	launchEditUser(view);
+                       		break;
+                	case 1:
+                        	launchEditPass(view);
+                        	break;
+                        case 2:
+                        	launchAboutUs(view);
+                        	break;
+                }
+  }
+\end{lstlisting}
+\subsubsection{Modifica Username}
+Activity minimal per quando riguarda la modifica dello username. Essa presenta una \textbf{EditText} nel quale inserire il nuovo username desiderato e un \textbf{Button} per eseguire l’operazione di modifica. Al click sul bottone parte una procedura che innanzitutto verifica se lo username inserito rispetta le condizioni sulla lunghezza del campo e che fa poi partire il metodo \textbf{execute} della classe \textbf{SupportTask} per effettuare la modifica vera e propria sui nostri database. Il codice php è strutturato in modo che ci ritorni delle stringhe che andremo a prendere e inserire nella variabile $auth$. Sulla base del valore di $auth$ verrano mostrati avvisi all’utente che andranno ad indicare se l’operazione è andata a buon fine o meno. Nel blocco \textbf{catch} vengono gestiti i casi in cui vengano lanciate delle eccezioni dal codice presente nel blocco \textbf{try}.
+\begin{lstlisting}
+\\EditUser\\
+[...]
+String method = "edit";
+                String newusr = txtNewusr.getText().toString();
+                String auth = "";
+                SupportTask supportTask = new SupportTask(EditUser.this);
+                if (newusr.length() >= 3)
+                {
+                    try
+                    {
+                        String url = "http://mobileproject.altervista.org/
+editusername.php";
+                        auth = supportTask.execute(method, FirstActivity.
+login_name, newusr, url).get();
+			FirstActivity.login_name = newusr;
+                    }catch (ExecutionException e)
+                    {
+                        e.printStackTrace();
+                    }catch (InterruptedException a)
+                    {
+                        a.printStackTrace();
+                    }
+                    switch(auth) {
+                        case "modificato":
+                            Toast.makeText(this, "Username cambiato con 
+successo!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(this, "Per cambiare nome nella home 
+riavviare l'applicazione.", Toast.LENGTH_SHORT).show();
+                            break;
+                        case "in uso":
+                            Toast.makeText(this, "Username in uso!", Toast.
+LENGTH_SHORT).show();
+                            break;
+                        default:
+                            Toast.makeText(this, "Errore, la preghiamo di 
+riprovare in seguito.", Toast.LENGTH_SHORT).show();
+                            break;
+                    }
+                }else
+                {
+                    Toast.makeText(this, "L'username deve essere minimo di 3 
+caratteri.",Toast.LENGTH_SHORT).show();
+                }
+[...]
+\end{lstlisting}
+Il codice PHP è molto semplice, riceve tramite metodo POST due variabili, lo username attuale, e il nuovo username desiderato dall'utente. Effettua innanzitutto un controllo per verificare che le variabili ricevute non siano nulle, poi controlla che il nuovo username sia disponibile, in caso affermativo effettua la query di update al database stampando un risultato di modifica avvenuta.
+\begin{lstlisting}
+\\editusername.php\\
+<?php 
+require 'init.php';
+$oldusername = $_POST['oldusername'];
+$newusername = $_POST['newusername'];
+$querycheck = "SELECT * FROM Utenti WHERE username = '$newusername'";
+$querycheckold = "SELECT * FROM Utenti WHERE username = '$oldusername'";
+$queryupdate = "UPDATE Utenti SET username = '$newusername' WHERE username = '$oldusername' ";
+$result = mysqli_query($con, $querycheck);
+$resultold = mysqli_query($con, $querycheckold);
+$num = mysqli_num_rows($resultold);
+//echo $num;
+if($oldusername!= null && $newusername!= null)
+{
+	if(mysqli_num_rows($result) > 0)
+    {
+    	echo "in uso";
+    }else if ($num == 1)
+    	{	
+        	mysqli_query($con, $queryupdate);
+        	echo "modificato";
+        } else
+        	{
+            	echo 'username attuale errato'; 
+            }
+}else
+	{
+    	echo "campi errati";
+    }
+?>
+\end{lstlisting}
+\subsubsection{Modifica Password}
+Il funzionamento di tale sezione dell’applicazione è del tutto simile a quello per la modifica dello username. Anche qui, come in Modifica Username, è stato necessario recuperare l'username dell'utente attualmente loggato, per poter effettuare le query sul giusto record del database. Qui il nome utente viene recuperato direttamente dalla funzione \textbf{execute} accedendo alla variabile statica $login\_name$ che viene valorizzata non appena l'utente effettua il login. Una variabile statica è una variabile accessibile da ogni punto dell'applicazione per tanto potente quanto pericolosa. Riportiamo di seguito il codice PHP che si occupa della modifica della password.
+\begin{lstlisting}
+<?php
+require 'init.php';
+$username = $_POST['username'];
+$oldpass = $_POST['oldpass'];
+$newpass = $_POST['newpass'];
+$querycheck = "SELECT * FROM Utenti WHERE username = '$username' AND 
+password = '$oldpass'";
+$queryupdate = "UPDATE Utenti SET password = '$newpass' WHERE 
+username = '$username'";
+$resultcheck = mysqli_query($con, $querycheck);
+if ($oldpass!= null & $newpass != null)
+{
+	if(mysqli_num_rows($resultcheck) > 0)
+    {
+    	mysqli_query($con, $queryupdate);
+        echo "updated";
+    }else 
+    {
+    	echo 'pass errata';
+    }
+}else
+{
+	echo 'errore';
+}
+?>
+\end{lstlisting}
 \subsection{Database}
 
 \section{Implementazioni Xamarin}

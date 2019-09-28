@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -12,7 +13,7 @@ import android.widget.Toast;
 import java.util.concurrent.ExecutionException;
 
 public class EditUser extends AppCompatActivity implements View.OnClickListener {
-    TextView txtNewusr;
+    EditText txtNewusr;
     Button btnEdit;
     ImageButton back;
 
@@ -21,7 +22,7 @@ public class EditUser extends AppCompatActivity implements View.OnClickListener 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_user);
         back = findViewById(R.id.back);
-        txtNewusr = findViewById(R.id.txtNewPass);
+        txtNewusr = findViewById(R.id.txtNewUser);
         btnEdit = findViewById(R.id.btnEditUser);
         back.setOnClickListener(this);
         btnEdit.setOnClickListener(this);
@@ -46,6 +47,7 @@ public class EditUser extends AppCompatActivity implements View.OnClickListener 
                     {
                         String url = "http://mobileproject.altervista.org/editusername.php";
                         auth = supportTask.execute(method, FirstActivity.login_name, newusr, url).get();
+                        FirstActivity.login_name = newusr;
                     }catch (ExecutionException e)
                     {
                         e.printStackTrace();
