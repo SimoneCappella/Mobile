@@ -1051,11 +1051,321 @@ if ($oldpass!= null & $newpass != null)
 ?>
 \end{lstlisting}
 \subsection{Database}
+All'interno dell'applicazione vengono utilizzati due database locali, \textbf{DataAppLoc} e \textbf{DataManager}.
 
+DataManager viene utilizzata per salvare le materie; in particolare l'orario utilizza questo database per salvare le materie inserite nell'orario stesso, senza ripetizioni, e la sezione miei appunti, per popolare la lista delle materie o eventualmente per aggiungere una materia in modo da selezionarla e accedere agli appunti relativi alla materia stessa.
+
+DataAppLoc viene utilizzata per salvare gli appunti; questo database viene utilizzato dalla sezione miei appunti, qui, scelta la materia si va a salvare un appunto indicando titolo e data, questo viene, dunque, salvato nel database in questione.
+
+Entrambi estendono la classe \textbf{SQLiteOpenHelper}, questa permette di utilizzare funzioni sqlite implementando le funzioni \textbf{SQLiteOpenHelper}, \textbf{onCreate}, \textbf{onUpdate}.
+
+\subsubsection{DataAppLoc}
+La classe DataManager definisce alcune variabili \textbf{static final} 
+\begin{itemize}
+\item \textbf{TABLE\_ROW\_ID:} che contiene l'ID univoco dell'elemento in tabella.
+\item \textbf{TABLE\_ROW\_M:} stringa che contiene il nome della materia di cui si sta salvando un appunto.
+\item \textbf{TABLE\_ROW\_D:} stringa che contiene la data.
+\item \textbf{TABLE\_ROW\_T:} stringa che contiene il titolo.
+\item \textbf{TABLE\_ROW\_A:} stringa che contiene il testo dell'appunto vero e proprio.
+\item \textbf{DB\_NAME:} nome del database, utilizzato per fare riferimento agli elementi della superclasse.
+\item \textbf{DB\_VERSION:} versione del database, inizializzata a 1, variabile utilizzata, fondamentalmente per fare riferimento agli elementi della superclasse.
+\item \textbf{TABLE\_M\_D\_A:} vero e proprio nome del database utilizzato per costruire le stringhe con le funzioni sql.
+\end{itemize}
+
+\begin{lstlisting}
+\\DataAppLoc\\
+[...]
+public class DataAppLoc extends SQLiteOpenHelper {
+	public static final String TABLE_ROW_ID = "_id";
+	public static final String TABLE_ROW_M = "m";
+	public static final String TABLE_ROW_D = "d";
+	public static final String TABLE_ROW_T = "t";
+	public static final String TABLE_ROW_A = "a";
+	private static final String DB_NAME = "m_d_t_a_db";
+	private static final int DB_VERSION = 1;
+	private static final String TABLE_M_D_A = "m_and_d_and_a";
+[...]
+@Override
+public void onCreate(SQLiteDatabase db) {}
+@Override
+public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {}
+[...]
+\end{lstlisting}
+
+La funzione \textbf{DataAppLoc} è il costruttore della classe e la sottoclasse \textbf{CustomSQLiteOpenHelper} è un helper, una classe astratta, utilizzata per gestire, creare e versionare il database; per essere utilizzata questa sottoclasse ha bisogno dell'implementazione dei metodi \textbf{onCreate(SQLiteDatabase)} e \textbf{onUpgrade(SQLiteDatabase)}, la onCreate, si occupa, appunto, di creare, nel caso non esista già, il database; la stringa $query$ viene utilizzata per generare la stringa con i relativi comandi SQL. Allo stesso modo sono necessarie per la classe DataAppLoc le versioni di onCreate e onUpgrade nell'estratto di codice precedente.
+
+\begin{lstlisting}
+\\DataAppLoc\\
+[...]
+private SQLiteDatabase db;
+[...]
+public DataAppLoc(Context context){
+	super(context, DB_NAME, null, DB_VERSION);
+	CustomSQLiteOpenHelper helper = new CustomSQLiteOpenHelper (context);
+	db = helper.getWritableDatabase();
+}
+[...]
+private class CustomSQLiteOpenHelper extends SQLiteOpenHelper{
+	public CustomSQLiteOpenHelper(Context context){
+	super(context, DB_NAME, null, DB_VERSION);
+}
+
+@Override
+public void onCreate(SQLiteDatabase db){
+	String query = "create table " + TABLE_M_D_A + " (" + 
+		TABLE_ROW_ID + " integer primary key autoincrement not null, " + 
+		TABLE_ROW_M + " text not null, " + 
+		TABLE_ROW_D + " text not null, " + 
+		TABLE_ROW_T + " text not null, " + 
+		TABLE_ROW_A + " text not null);";
+            db.execSQL(query);
+}
+
+@Override
+public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion){}
+[...]
+\end{lstlisting}
+
+Per quanto riguarda le funzioni di inserimento ricerca e cancellazione la logica è sempre la stessa, si tratta di costruire una stringa in modo da avere al suo interno una funzione SQL da utilizzare nel metodo \textbf{execSQL}.
+\begin{itemize}
+\item \textbf{insert:} inserisce un nuovo elemento nel database andando a riempire ogni tabella con i parametri passatigli nella chiamata.
+\item \textbf{delete:} va ad eliminare l'elemento dal database il cui id corrisponde al parametro $i$ passato al metodo nella chiamata dello stesso.
+\item \textbf{searchM:} cerca nel database l'elemento la cui tabella della materia corrisponde alla stringa $m$, nome della materia passata come parametro, questo metodo ritorna il cursore che "punta" all'elemento trovato.
+\item \textbf{searchTitlo:} cerca l'elemento il cui titolo corrisponde alla stringa passata come argomento, anch'esso ritorna il cursore.
+\end{itemize}
+
+\begin{lstlisting}
+\\DataAppLoc\\
+[...]
+public void insert(String m, String d, String t, String a){
+	String query = "INSERT INTO " + TABLE_M_D_A + " (" + 
+		TABLE_ROW_M + ", " + TABLE_ROW_D + ", " + 
+		TABLE_ROW_T + ", " + TABLE_ROW_A + ") " + "VALUES 
+		(" + "'" + m + "'" + ", " + "'" + d + "'" + ", " + "'" + t + "'" + ", " +
+		 "'" + a + "'" + ");";
+	db.execSQL(query);
+}
+public void delete(String i){
+	String query = "DELETE FROM " + TABLE_M_D_A +
+		" WHERE " + TABLE_ROW_ID + " = '" + i + "';";
+	db.execSQL(query);
+}
+public Cursor searchM(String m){
+	String query = "SELECT " + TABLE_ROW_ID + ", " +
+		TABLE_ROW_M + ", " + TABLE_ROW_D + ", " +
+		TABLE_ROW_T + ", " + TABLE_ROW_A + " from " +
+		TABLE_M_D_A + " WHERE " + TABLE_ROW_M + " = '" + m + "';";
+	Cursor c = db.rawQuery(query, null);
+	return c;
+}
+public Cursor searchTitolo(String t){
+	String query = "SELECT " + TABLE_ROW_ID + ", " +
+		TABLE_ROW_M + ", " + TABLE_ROW_D + ", " +
+		TABLE_ROW_T + ", " + TABLE_ROW_A + " from " +
+		TABLE_M_D_A + " WHERE " + TABLE_ROW_T + " = '" + t + "';";
+	Cursor c = db.rawQuery(query, null);
+	return c;
+}
+\end{lstlisting}
+
+\subsubsection{DataManager}
+\textbf{DataManager} ha la stessa struttura di \textbf{DataAppLoc}.
+Le tabelle di questo database sono:
+\begin{itemize}
+\item \textbf{TABLE\_ROW\_ID:} contiene l'ID univoco dell'elemento in tabella.
+\item \textbf{TABLE\_ROW\_C:} contiene un codice, in precedenza utilizzato per assegnare il salvataggio ad una casella della tabella orario.
+\item \textbf{TABLE\_ROW\_M:} nome della materia.
+\item \textbf{TABLE\_ROW\_O:} orario di inizio della lezione.
+\item \textbf{TABLE\_ROW\_A:} aula in cui si tiene la lezione.
+\item \textbf{DB\_NAME:} nome del database, utilizzato per fare riferimento agli elementi della superclasse.
+\item \textbf{DB\_VERSION:} versione del database, inizializzata a 1, variabile utilizzata, fondamentalmente per fare riferimento agli elementi della superclasse.
+\item \textbf{TABLE\_C\_M\_AND\_O\_AND\_A:} vero e proprio nome del database utilizzato per costruire le stringhe con le funzioni sql.
+\end{itemize}
+
+\begin{lstlisting}
+\\DataManager\\
+[...]
+public static final String TABLE_ROW_ID = "_id";
+public static final String TABLE_ROW_C = "c";
+public static final String TABLE_ROW_M = "m";
+public static final String TABLE_ROW_O = "o";
+public static final String TABLE_ROW_A = "a";
+private static final String DB_NAME = "c_m_o_a_db";
+private static final int DB_VERSION = 1;
+private static final String TABLE_C_M_AND_O_AND_A = "c_m_and_o_and_a";
+[...]
+\end{lstlisting}
+
+Come detto la struttura di questo database è molto simile a quella di \textbf{DataAppLoc}, possiamo ritrovare, infatti, le funzioni di costruzione del database.
+
+\begin{lstlisting}
+\\DataManager\\
+[...]
+public DataManager (Context context){...}
+[...]
+public void onCreate(SQLiteDatabase db) {}
+[...]
+public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {}
+[...]
+private class CustomSQLiteOpenHelper extends SQLiteOpenHelper{
+	public CustomSQLiteOpenHelper(Context context){
+	super(context, DB_NAME, null, DB_VERSION);
+}
+[...]
+public void onCreate(SQLiteDatabase db){
+	String newTableQueryString = "create table " + TABLE_C_M_AND_O_AND_A + " (" +
+		TABLE_ROW_ID + " integer primary key autoincrement not null, " +
+		TABLE_ROW_C + " text not null, " + TABLE_ROW_M + " text not null, " +
+		TABLE_ROW_O + " text not null, " + TABLE_ROW_A + " text not null);";
+            db.execSQL(newTableQueryString);
+}
+[...]
+public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion){}
+[...]
+\end{lstlisting}
+
+Oltre a queste abbiamo le funzioni che andremo ad utilizzare nelle varie activity:
+\begin{itemize}
+\item \textbf{insert:} permette di andare a salvare l'emento nel database, preparando la solita stringa da utilizzare nella funzione SQL.
+\item \textbf{delete:} permette di cancellare l'elemento facendo una \textbf{WHERE} sul nome della materia.
+\item \textbf{selectAll:} seleziona tutti gli elementi del database e ritorna il cursore con tutti i dati.
+\item \textbf{searchM:} ricerca la tabella del database il cui elemento "materia" corrisponda alla stringa $m$; anche questo torna un cursore che "punta" alla tabella trovata.
+\end{itemize}
+\begin{lstlisting}
+\\DataManager
+[...]
+public void insert(String m, String o, String a, String c){
+	String query = "INSERT INTO " + TABLE_C_M_AND_O_AND_A + " (" +
+		TABLE_ROW_C + ", " + TABLE_ROW_M + ", " + TABLE_ROW_O + ", " +
+		TABLE_ROW_A + ") " + "VALUES (" + "'" + c + "'" + ", " + "'" + m + "'" +
+		", " + "'" + o + "'" + ", " + "'" + a + "'" + ");";
+	Log.i("insert() = ", query);
+	db.execSQL(query);
+}
+[...]
+public void delete(String m){...}
+[...]
+public Cursor selectAll(){...}
+[...]
+public Cursor searchM(String m){...}
+[...]
+\end{lstlisting}
 \section{Implementazioni Xamarin}
 \subsection{Login e Registrazione}
 \subsection{Orario}
 \subsection{I miei appunti}
+Dal \textbf{MainMenu}, scelta la voce miei appunti, viene avviata la classe \textbf{PreNotes}; qui viene visualizzata la lista delle materie inserite nel database tramite l'orario con la possibilità di aggiungerne di nuove.
+
+La funzione \textbf{OnAppearing} permette di visualizzare elementi una volta inizializzata la classe, in questo caso viene caricata una \textbf{listView} contenente la lista delle materie presenti nel database \textbf{SubjectDatabase} tramite il metodo \textbf{GetSubjAsync} della classe SubjectDatabase; questo mi permette, appunto, di estrarre dal database tutte le materie salvate.
+
+La funzione \textbf{OnListViewItemSelected} mi permette di attivare azioni catturando l'elemento selezionato dalla lista. In particolare alla pressione di un elemento viene chiamata la classe \textbf{Notes} passandogli come oggetto quello scelto.
+
+Questa activity presenta anche la possibilità di aggiungere nuove materie al database, infatti è presente nella navbar un bottone per aggiungere materie, questo scatena lal funzione \textbf{OnAggMateriaClicked} che lancia appunto l'activity per aggiungere una materia, \textbf{AddSubj}.
+\begin{lstlisting}
+\\PreNotes\\
+[...]
+protected override async void OnAppearing() {
+	base.OnAppearing();
+	listView.ItemsSource = await App.SubjectsDatabase.GetSubjAsync();
+}
+[...]
+async void OnListViewItemSelected(object sender, 
+	SelectedItemChangedEventArgs e) {
+	if(e.SelectedItem != null) {
+		await Navigation.PushAsync(new Notes { BindingContext = e.SelectedItem 
+			as Subjects });
+	}
+}
+[...]
+async void OnAggMateriaClicked(object sender, EventArgs e) {
+	await Navigation.PushAsync(new AddSubj { BindingContext = new Subjects() });
+}
+[...]
+\end{lstlisting}
+
+Se si scegli di aggiungere una nuova materia ci si trova davanti ad una edit text, ed un bottone per salvare. All'interno della classe si utilizza una funzione per catturare l'evento sul bottone salva; all'interno di questa viene utilizzata una variabile stringa, $materia$, e le viene assegnata il valore estratto dalla "editText" nella quale andrebbe inserito il nome della materia da aggiungere. Successivamente viene istanziato un oggetto della classe Subject, $control$; grazie alla funzione \textbf{ControlSubjAsync} della classe SubjectsDatabase, viene banalmente controllato se l'elemento esisteva già nel database o meno; in caso positivo, primo $if$ non viene salvata, nel caso in cui la materia non sia già nel database, questa viene salvata, lanciando la sunzione \textbf{SaveSubjAsync} della solita classe SubjectsDatabase. Terminata questa routine con una \textbf{PopAsync} si torna all'activity precedente.
+
+\begin{lstlisting}
+\\AddSubj\\
+[...]
+async void OnSaveButtonClicked(object sender, EventArgs e) {
+[...]
+	string materia = subj.Subject.ToString();
+	Subjects control = new Subjects();
+	control = await App.SubjectsDatabase.ControlSubjAsync(materia);
+	if (control != null) {...}
+	else {
+		await App.SubjectsDatabase.SaveSubjAsync(subj);
+	}
+	await Navigation.PopAsync();
+}
+[...]
+\end{lstlisting}
+
+Tornati alla lista delle materie, operiamo una scelta, a questo punto, come già detto, verrà lanciata l'activity \textbf{Notes}.
+
+Nella classe Notes viene visualizzata, nuovamente grazie alla funzione \textbf{OnAppearing}, la lista degli appunti relativi alla materia, in particolare viene estratto dall'oggetto in \textbf{BindingContext} la stringa contenente la materia e messo nella variabile $mat$, sunque, può partire la ricerca nel database degli appunti \textbf{NoteDatabase} utilizzado come chiave il nome della materia; questo ci permette di visualizzare una lista con gli appunti relativi alla materia scelta.
+
+L'activity include la possibilità di aggiungere un appunto, tramite il bottone nella navbar, infatti, viene scatenata la funzione \textbf{OnNoteAddedClicked}, questa prende nuovamente il nome della materia in questione e lancia l'activity \textbf{NotePage} passandole come parametro il nome della materia.
+
+Scelto l'appunto da aprire la funzione \textbf{OnListViewItemSelected} permette di catturare i dati relativi all'oggetto scelto e lancia nuovamente l'activity NotePage, passando, stavolta, come contesto l'oggetto scelto.
+
+\begin{lstlisting}
+\\Notes\\
+[...]
+protected override async void OnAppearing() {
+	[...]
+	var temp = (Subjects)BindingContext;
+	string mat = temp.Subject.ToString();
+	listView.ItemsSource = await App.NoteDatabase.GetNoteBySubj(mat);
+}
+[...]
+async void OnNoteAddedClicked(object sender, EventArgs e) {
+	var temp = (Subjects)BindingContext;
+	string mat = temp.Subject.ToString();
+	await Navigation.PushAsync(new NotePage(mat));
+}
+[...]
+async void OnListViewItemSelected(object sender, 
+	SelectedItemChangedEventArgs e) {
+	if(e.SelectedItem != null){
+		await Navigation.PushAsync(new NotePage { BindingContext =
+			e.SelectedItem as Note });
+	}
+}
+[...]
+\end{lstlisting}
+
+La classe \textbf{NotePage} ci permette di visualizzare salvare o eliminare un appunto.
+
+All'apertura vengono inizializzate diverse editText che contengono dati relativi a titolo data e l'appunto stesso. Nel caso in cui venga attivato il bottone per il salvataggio viene creato un oggetto $note$ e catturate le stringhe nelle edit, queste vengono, poi, assegnate ai campi dell'oggetto $note$, fatto ciò viene salvato l'oggetto con la funzione \textbf{SaveNoteAsync} e chiusa l'activity.
+
+Se, invece, si sceglie di eliminare un appunto viene attivata la funzione \textbf{OnDeleteButtonClicked}, questa, utilizza il metodo \textbf{DeleteNoteAsync} passando come argomento l'intero oggetto $note$, in tal modo verrà cancellato tutto ciò che è relativo all'appunto in questione.
+
+\begin{lstlisting}
+\\NotePage\\
+[...]
+async void OnSaveButtonClicked(object sender, EventArgs e) {
+	Note note = new Note();
+	string title = this.EdtTitle.Text;
+	string date = this.EdtDate.Text;
+	string notes = this.EdtNotes.Text;
+	note.Subject = mat;
+	note.Title = title;
+	note.Date = date;
+	note.Notes = notes;
+	await App.NoteDatabase.SaveNoteAsync(note);
+	await Navigation.PopAsync();
+	[...]
+}
+[...]
+async void OnDeleteButtonClicked(object sender, EventArgs e) {
+	var note = (Note)BindingContext;
+	await App.NoteDatabase.DeleteNoteAsync(note);
+	await Navigation.PopAsync();
+}
+[...]
+\end{lstlisting}
 \subsection{Appunti condivisi}
 \subsection{Impostazioni}
 \subsection{Database}
