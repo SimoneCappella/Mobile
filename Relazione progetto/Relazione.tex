@@ -395,7 +395,7 @@ R.anim.slide_out_right);
         return false;
     }
 \end{lstlisting}
-\subsubsection{Fragment}
+\subsubsection{Gestione orario}
 Prendiamo come riferimento il fragment relativo al \textbf{lunedì}, gli altri saranno implementati in modo analogo.
 
 All'interno del fragment vengono nuovamente catturate le dimensioni del display e impostate le dimensioni delle varie caselle della tabella, rispettivamente:
@@ -1369,18 +1369,78 @@ async void OnDeleteButtonClicked(object sender, EventArgs e) {
 \subsection{Appunti condivisi}
 \subsection{Impostazioni}
 \subsection{Database}
+Ciò che è inerente al funzionamento dei database è contenuto nelle cartelle \textbf{Data} e \textbf{Models}. Prendiamo come riferimento le classi \textbf{Note}, \textbf{Subjects}, \textbf{SubjectsDatabase} e \textbf{NotesDatabase}, contenute rispettivamente nelle cartelle Models e Data.
+La creazione di questi database avviene al lancio dell'applicazione, infatti nella classe \textbf{App} possiamo notare la deefinizione di funzioni statiche per la creazione dei database. Viene riportato il codice relativo al database utile ad ospitare le materie, ma allo stesso modo vengono implementati gli altri.
 
+\begin{lstlisting}
+\\App\\
+[...]
+public static SubjectsDatabase SubjectsDatabase {d
+	get {
+	if (databaseSubjects == null) {
+		databaseSubjects = new SubjectsDatabase(Path.Combine
+			(Environment.GetFolderPath(Environment.SpecialFolder.
+			LocalApplicationData), "subjects.db3"));
+		}
+	return databaseSubjects;
+	}
+}
+[...]
+\end{lstlisting}
 
+Le prime due riguardano fondamentalmente la struttura delle tabelle del database. Al loro interno sono, infatti, definite stringhe quali materia, titolo, data, e appunto, queste definiscono, grazie all'importazione del pacchetto \textbf{SQLite}, funzioni \textbf{get} e \textbf{set}.
 
+\begin{lstlisting}
+\\Note\\
+[...]
+public class Note {
+	[PrimaryKey, AutoIncrement]
+	public int ID { get; set; }
+	public string Subject { get; set; }
+	public string Title { get; set; }
+	public string Date { get; set; }
+	public string Notes { get; set; }
+}
+[...]
+\end{lstlisting}
 
+\begin{lstlisting}
+\\Subjects\\
+[...]
+public class Subjects {
+	[PrimaryKey, AutoIncrement]
+	public int ID { get; set; }
+	public string Subject { get; set; }
+}
+[...]
+\end{lstlisting}
 
+Per quanto riguarda le altre due classi, al loro interno abbiamo funzioni per utilizzare e manipolare dati nel database.
 
+In particolare per quanto riguarda il database relativo alle materie abbiamo:
+\begin{itemize}
+\item \textbf{GetSubjAsync:} questo viene utilizzato per estrarre tutte le materie dal database.
+\item \textbf{SaveSubjAsync:} prende in argomento unoggetto subj costruito riempiendo i suoi campi definiti nella classe Subjects.
+\item \textbf{DeleteSubjAsync:} utilizzata per eliminare un oggetto dal database, anche questo metodo prende come parametro l'oggetto che si desidera cancellare.
+\item \textbf{ControlSubjAsync:} funzione utilizzata per controllare se la materia che si desidera salvare è già presente nel database, infatti prende come argomento una stringa contenente appunto il nome della materia.
+\end{itemize}
 
+Tutti questi metodo sono di tipo \textbf{Task$<...>$}, questo mi permette di utilizzare come ritorno della funzione tabelle o comunque elementi del database.
 
+\begin{lstlisting}
+\\SubjectsDatabase\\
+[...]
+public Task<List<Subjects>> GetSubjAsync() {...}
+[...]
+public Task<int> SaveSubjAsync(Subjects subject) {...}
+[...]
+public Task<int> DeleteSubjAsync(Subjects subject) {...}
+[...]
+public Task<Subjects> ControlSubjAsync(string subject) {...}
+[...]
+\end{lstlisting}
 
-
-
-
+In modo del tutto analogo è composta la classe \textbf{NotesDatabase}.
 
 
 
