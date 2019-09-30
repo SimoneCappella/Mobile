@@ -122,22 +122,29 @@ public class ShNotes extends AppCompatActivity implements View.OnClickListener{
                 }
             });
         }
-
     }
 
     private void populateNotesList() {
         ListAdapter adapter = new SimpleAdapter(
                 ShNotes.this, noteList,
-                R.layout.modellorigamaterie, new String[]{KEY_MATERIA_ID,
-                KEY_MATERIA_NAME},
-                new int[]{R.id.appuntocondivisoID, R.id.nomemateria});
-        // updating listview
-        materieListView.setAdapter(adapter);
-        materieListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                R.layout.modellorigamaterie,
+                new String[]{KEY_MATERIA_ID,
+                        KEY_MATERIA_NAME},
+                new int[]{R.id.appuntocondivisoID,
+                        R.id.nomemateria});
+                // updating listview
+                materieListView
+                        .setAdapter(adapter);
+                materieListView
+                        .setOnItemClickListener(
+                                new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+            public void onItemClick(
+                    AdapterView<?> adapterView,
+                    View view, int i, long l) {
+
                 //Check for network connectivity
-                if (CheckNetworkStatus.isNetworkAvailable(getApplicationContext())) {
+                if(CheckNetworkStatus.isNetworkAvailable(getApplicationContext())) {
 
                     String nomeMateria = ((TextView) view.findViewById(R.id.nomemateria))
                             .getText().toString();
@@ -152,15 +159,10 @@ public class ShNotes extends AppCompatActivity implements View.OnClickListener{
                             Toast.LENGTH_LONG).show();
 
                 }
-
-
             }
         });
 
     }
-
-
-
 
     private class ButtonHandler implements View.OnClickListener
     {
@@ -171,11 +173,6 @@ public class ShNotes extends AppCompatActivity implements View.OnClickListener{
             finish();
         }
     }
-
-
-
-
-
 
 
     private AlphaAnimation buttonClick = new AlphaAnimation(1F, 0.7F);

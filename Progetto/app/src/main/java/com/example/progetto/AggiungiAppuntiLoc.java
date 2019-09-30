@@ -85,7 +85,7 @@ public class AggiungiAppuntiLoc extends AppCompatActivity implements View.OnClic
                 intent = intent.putExtra("res", res);
                 setResult(Activity.RESULT_OK, intent);
 
-                // Salvo l'appunto nella mamoeria interna del cellulare come file di testo
+                // Salvo l'appunto nella memoria interna del cellulare come file di testo
                 Context context = getApplicationContext();
                 final String folder = context.getFilesDir().getAbsolutePath() + File.separator + "Appunti/";
                 File subFolder = new File(folder);
@@ -140,12 +140,10 @@ public class AggiungiAppuntiLoc extends AppCompatActivity implements View.OnClic
             new AddAppuntoremotoAsyncTask().execute();
         } else {
             Toast.makeText(this,
-                    "One or more fields left empty!",
+                    "Uno o più campi lasciati vuoti!",
                     Toast.LENGTH_LONG).show();
 
         }
-
-
     }
 
     private class AddAppuntoremotoAsyncTask extends AsyncTask<String, String, String> {

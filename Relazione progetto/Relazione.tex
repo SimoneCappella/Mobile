@@ -913,8 +913,267 @@ public void onActivityResult(int requestCode, int resultCode, Intent data){
 }
 [...]
 \end{lstlisting}
+In questa Activity è presente un checkbox molto importante, tramite il quale è possibile condividere l'appunto presente ne "I miei Appunti" e fare l'upload dell'appunto sul sul server con il quale l'applicazione comunica, in modo tale da rendere possibile la condivisione con altri dispositivi.
+$if(checkedCondividi.isChecked())$ è il controllo che verifica se la checkbox è spuntata, se lo è, al click dell'utente sul pulsante "Salva", fa l'upload del file chiamando $uploadFile()$ e $aggiornaAppuntiRemoto()$.
+
+\begin{lstlisting}
+public void onClick(View v) {
+	[...]
+	if(checkCondividi.isChecked()){
+	//ora faccio UPLOAD file sul server
+	new Thread(new Runnable() {
+	@Override
+	public void run() {
+	uploadFile( folder + NomeFile);
+	//aggiorno il database del server
+	aggiornaAppuntiRemoto();
+   	 	}
+    		}).start();
+   	[...]
+
+	private void aggiornaAppuntiRemoto() {
+	[...]
+	appuntoTitolo = editTitolo.getText().toString();
+	appuntoData = editData.getText().toString();
+	appuntoLink= "http://mobileproject.altervista.org/Appunti/" 
+	+ appuntoTitolo + ".txt";
+	appuntomateria = nomemateria.getText().toString();
+	appuntocontenuto = editApp.getText().toString();
+
+	new AddAppuntoremotoAsyncTask().execute();
+        } 
+}
+	protected String doInBackground(String... params) {
+		HttpJsonParser httpJsonParser = new HttpJsonParser();
+		Map<String, String> httpParams = new HashMap<>();
+		//Populating request parameters
+
+		httpParams.put("appunto_link", appuntoLink);
+		httpParams.put("appunto_titolo", appuntoTitolo);
+		httpParams.put("appunto_data", appuntoData);
+		httpParams.put("appunto_materia", appuntomateria);
+		httpParams.put("appunto_contenuto", appuntocontenuto);
+
+		JSONObject jsonObject = httpJsonParser.makeHttpRequest(
+		BASE_URL + "add_appunti.php", "POST", httpParams);
+		try {
+			success = jsonObject.getInt("success");
+		} catch (Exception e) {
+		e.printStackTrace();
+            }
+            return null; }
+
+public int uploadFile(final String selectedFilePath){
+[...]
+}
+
+\end{lstlisting}
+
 \newpage
 \subsection{Appunti condivisi}
+Tramite gli appunti condivisi si possono scaricare e visualizzare tutti gli appunti presenti sul server caricati dagli utenti. La classe utilizza degli attributi di tipo \textbf{final} necessari per poter interloquire con il server. In particolare avremo:\\
+\begin{itemize}
+\item \textbf{KEY\_DATA}
+\item \textbf{KEY\_MATERIA\_ID}
+\item \textbf{KEY\_MATERIA\_NAME}
+\\Sono degli identificatori per gli appunti e le materie.\\
+\item  \textbf{KEY\_SUCCESS}
+\\È un attributo utilizzato per verificare se la lettura di un appunto online è andata a buon fine.
+\item \textbf{BASE\_URL}
+\\infine l'URL a cui l'applicazione si connette.
+\end{itemize}
+ All'apertura degli appunti condivisi, dopo aver caricato le materie tramite $FetchNotesAsyncTask().execute()$, appare una listview contenente le materie precedentemente salvate. $back.setOnClickListener(this)$ e $filtra.setOnClickListener(this)$ creano un listener tramite il quale poi si potrà rispettivamente, con  un click nella freccia \textbf{$back$} o con il click di un elemento nella $listview$, tornare indietro o aprire un'ulteriore activity nella quale sono presenti gli appunti filtrati per materia.
+\begin{lstlisting}
+\\ShNotes\\
+[...]
+private static final String KEY_SUCCESS = "success";
+    private static final String KEY_DATA = "data";
+    private static final String KEY_MATERIA_ID = "materia_id";
+    private static final String KEY_MATERIA_NAME = "materia_name";
+    private static final String BASE_URL = "mobileproject.altervista.org/";
+    private ArrayList<HashMap<String, String>> noteList;
+    private ListView materieListView;
+    private ProgressDialog pDialog;
+
+    ImageButton back;
+    ImageButton filtra;
+
+    final Context ctx=this;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_condivisi_listing);
+        ShNotes.ButtonHandler bh = new ShNotes.ButtonHandler();
+        findViewById(R.id.back).setOnClickListener(bh);
+
+
+        back = (ImageButton) findViewById(R.id.back);
+        back.setOnClickListener(this);
+        filtra = (ImageButton) findViewById(R.id.filtra);
+        filtra.setOnClickListener(this);
+
+        materieListView = (ListView) findViewById(R.id.materieList);
+        new FetchNotesAsyncTask().execute();
+
+    }
+[...]
+\end{lstlisting}
+\newpage
+Di seguito si riporta il codice PHP che permette di fare il fetch delle materie.
+\begin{lstlisting}
+\\fetch_all_materie.php\\
+<?php  
+ require 'init.php';
+ 
+ //Query to select materia id and materia name
+$query = "SELECT ID, nomemateria FROM Materie";
+$result = array();
+$materiaArray = array();
+$response = array();
+//Prepare the query
+if($stmt = $con->prepare($query)){
+	$stmt->execute();
+	//Bind the fetched data to $materiaId and $materiaName
+	$stmt->bind_result($materiaId,$materiaName);
+	//Fetch 1 row at a time					
+	while($stmt->fetch()){
+		$materiaArray["materia_id"] = $materiaId;
+		$materiaArray["materia_name"] = $materiaName;
+		$result[]=$materiaArray;
+		
+	}
+	$stmt->close();
+	$response["success"] = 1;
+	$response["data"] = $result;
+	
+
+}else{
+	//Some error while fetching data
+	$response["success"] = 0;
+	$response["message"] = mysqli_error($con);
+		
+	
+}
+//Display JSON response
+echo json_encode($response);
+
+ ?>  
+\end{lstlisting}
+\newpage La funzione \textbf{doInBackGround} permette di eseguire un task in background, e in questo caso ci è utile per poter effettuare la richiesta al server per ottenere le materie. Viene utilizzato un oggetto di tipo $HttpJsonParser$ che ci è utile in quanto è possibile fare il parsing della risposta del server dopo averla resa un JSONObject. La richiesta HTTP viene fatta tramite la funzione \\$HttpJsonParser.makeHttpRequest(BASE\_URL + "fetch\_all\_materie.php", "GET", null)$.	
+Il primo valore del JSONObject ritornato ha chiave $success$ e se è uguale ad \textbf{1} significa che la risposta del server è avvenuta con successo, dopodiché con la chiave $data$ si avrà un array che ritornerà altri oggetti con 2 chiavi: $materia\_id$ e  $materia\_name$.
+Si crea quindi un \textbf{HashMap} che contiene le stesse 2 chiavi, contenente le materie e il loro id.
+
+\begin{lstlisting}
+[...]
+protected String doInBackground(String... params) {
+
+            HttpJsonParser httpJsonParser = new HttpJsonParser();
+            JSONObject jsonObject = httpJsonParser.makeHttpRequest(
+                    BASE_URL + "fetch_all_materie.php", "GET", null);
+            try {
+                int success = jsonObject.getInt(KEY_SUCCESS);
+                JSONArray notes;
+                if (success == 1) {
+                    noteList = new ArrayList<>();
+                    notes = jsonObject.getJSONArray(KEY_DATA);
+                    //Iterate through the response and populate notes list
+                    for (int i = 0; i < notes.length(); i++) {
+                        JSONObject note = notes.getJSONObject(i);
+                        Integer materiaId = note.getInt(KEY_MATERIA_ID);
+                        String materiaName = note.getString(KEY_MATERIA_NAME);
+                        HashMap<String, String> map;
+                        map = new HashMap<String, String>();
+                        map.put(KEY_MATERIA_ID, materiaId.toString());
+                        map.put(KEY_MATERIA_NAME, materiaName);
+                        noteList.add(map);
+                    }
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+[...]
+\end{lstlisting}
+La funzione \textbf{onPostExecute} permette di lanciare la funzione $populateNotesList$ dopo che $doInBackground$ ha terminato la sua esecuzione.
+In \textbf{populateNotesList()} viene creato un adapter che verrà utilizzato per poter visualizzare la lista di materie. Successivamente \textbf{onItemClick} si attiva quando viene effettuato un click su un oggetto della listview (ovvero quando si sceglie una materia), a questo punto si fa un check dello stato della rete con $CheckNetworkStatus.isNetworkAvailable(getApplicationContext())$ e si assegna alla view una materia tramite il proprio identificativo. Si crea quindi un \textbf{intent} atto ad aprire l'activity $AppuntiListingActivity$ e passandole $KEY\_MATERIA\_NAME$ e il $nomeMateria$. Infine tramite \textbf{StartActivityForResult} si permette il passaggio dei risultati di un'activity ad un'altra. L'argomento intero (22) è un "codice richiesta" che identifica la tua richiesta della funzione stessa. Tutto ciò avviene chiamando, per l'appunto, $AppuntiListingActivity$ che, in breve, gestisce le materie e gli appunti salvandoli in dei file dopo aver fatto una richiesta a $/get\_appunto\_details.php$, indirizzo che ritorna le informazioni riguardanti un appunto.
+\\Se non si è collegati alla rete viene invece visualizzato un Toast che avverte l'utente. Al click sull'immagine della freccia parte la funzione \textbf{onClick} che riporta alla Activity principale.
+
+\begin{lstlisting}
+[...]
+ protected void onPostExecute(String result) {
+            pDialog.dismiss();
+            runOnUiThread(new Runnable() {
+                public void run() {
+                    populateNotesList();
+                }
+            });
+        }
+    }
+    private void populateNotesList() {
+        ListAdapter adapter = new SimpleAdapter(
+                ShNotes.this, noteList,
+                R.layout.modellorigamaterie,
+                new String[]{KEY_MATERIA_ID,
+                        KEY_MATERIA_NAME},
+                new int[]{R.id.appuntocondivisoID,
+                        R.id.nomemateria});
+        // updating listview
+               materieListView
+                        .setAdapter(adapter);
+                materieListView
+                        .setOnItemClickListener(
+                                new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(
+                    AdapterView<?> adapterView,
+                    View view, int i, long l) {
+
+                //Check for network connectivity
+                if(CheckNetworkStatus.isNetworkAvailable(getApplicationContext())) {
+
+
+                  String nomeMateria 
+                            = ((TextView)view.findViewById(R.id.nomemateria))
+                            .getText().toString();
+                   Intent intent = 
+                            new Intent(getApplicationContext(),
+                            AppuntiListingActivity.class);
+                    intent.putExtra(KEY_MATERIA_NAME, nomeMateria);
+                    startActivityForResult(intent, 22);
+
+                } else {
+                    Toast.makeText(ShNotes.this,
+                            "Unable to connect to internet",
+                            Toast.LENGTH_LONG).show();
+
+                }
+            }
+        });
+    }
+
+    private AlphaAnimation buttonClick = new AlphaAnimation(1F, 0.7F);
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.back:
+                v.startAnimation(buttonClick);
+                finish();
+                overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+                break;
+            case R.id.filtra:
+
+                finish();
+                break;
+        }
+    }
+
+}
+[...]
+\end{lstlisting}
+
 \subsection{Impostazioni}
 La sezione per le impostazioni è molto basilare. Le voci che vanno a comporre il suo menù sono tre: Modifica Username, Modifica Password e About Us. Il tutto viene gestito con una ListView. Quando viene effettuato un click su una delle tre voci viene lanciata l’activity corrispondente tramite la funzione \textbf{setOnItemClickListener} che associa all'oggetto $lv$, che è una \textbf{ListView}, un listener. Un listner è un gestore degli eventi, che cattura, in questo caso, il click su un item della nostra ListView. Come parametro è necessario passargli un oggetto \textbf{Listner} che andiamo a istanziare direttamente inline. Successivamente è necessario sovrascrivere il metodo \textbf{OnItemClick} fornitoci dall'interfaccia \textbf{AdapterView.OnItemClickListener} inserendo al suo interno la logica del nostro gestore eventi.
 
