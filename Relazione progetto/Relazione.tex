@@ -30,7 +30,7 @@ tabsize = 2
 
 \title{EasyVersity}
 \date{Settembre, 2019}
-\author{Tomassini Danilo \\ Cappella Simone \\ Mannini Luca \\ \\ Ingegneria Informatica e dell'Automazione}
+\author{Cappella Simone \\ Mannini Luca \\ Tomassini Danilo \\ \\ Ingegneria Informatica e dell'Automazione}
 \maketitle
 \vspace*{\fill}
 \begin{figure}[h!]
@@ -44,7 +44,7 @@ tabsize = 2
 \tableofcontents{}
 
 \newpage
-\section{Obbiettivi}
+\section{Obiettivi}
 EasyVersity rappresenta uno strumento di supporto per lo studente.
 
 Permette di gestire:
@@ -1251,7 +1251,84 @@ public Cursor searchM(String m){...}
 [...]
 \end{lstlisting}
 \section{Implementazioni Xamarin}
+\subsection{Service}
+La cartella $Service$ è quella che raccoglie tutte quelle classi che vanno ad implementare metodi asincroni che verranno richiamati dall'interno dell'applicazione da quelle attività che prevedono una chiamata ai nostri database. Vediamone una in particolare, \textbf{edituserservice}, tutte le altre classi hanno un'implementazione analoga.
+
+La nostra classe prevede un'istanza della classe \textbf{HttpClient} che utilizzeremo per gestire una connessione di tipo HTTP sia in entrata che in uscita. L'unico altro elemento presente è il $Task$ asincrono $changeUsr$. I parametri presi in ingresso sono lo username attuale dell'utente, quello desiderato e l'URL verso il quale effetuare la richiesta di cambio del nome. La prima cosa che facciamo è creare la nostra form, inserendo i dati che vogliamo inviare. Come possiamo notare generiamo delle coppie chiave-valore e stando attenti che il nome della chiave sia lo stesso che andiamo a recuperare nel codice PHP nel vettore \$\_POST.
+
+Tramite il metodo \textbf{PostAsync} effettuiamo la richiesta al server e ne salviamo la risposta in una variabile generica $response$. Questa variabile la andiamo a leggere come stringa e a castarla in una stringa vera e propria tramite \textbf{ToString}. Eliminiamo da tale stringa anche eventuali spazi bianchi. Ultima riga di codice degna di nota di questa classe è la modifica della variabile statica relativa allo username dell'utente loggato: essa, se la modifica è andata a buon fine, verrà aggiornata con il nuovo valore in modo tale da permettere una nuova ed immediata modifica dello username se l'utente lo desidera. 
+\begin{lstlisting}
+\\edituserservice\\
+ class edituserservice
+    {
+        private static HttpClient _client = new HttpClient();
+        public static async Task changeUsr(string oldusername,
+ string newusername, string URL)
+        {
+            //creo contenuto della form
+            HttpContent formcontent = new FormUrlEncodedContent(new[]
+            {
+                new KeyValuePair<string, string>("oldusername",oldusername),
+                new KeyValuePair<string, string>("newusername",newusername)
+            });
+            //invio richiesta e salvo risposta
+            var response = await _client.PostAsync(URL, formcontent);
+            var result = response.Content.ReadAsStringAsync().Result.
+ToString().Replace(" ", String.Empty);
+            if (result.Equals("modificato"))
+            {
+                DependencyService.Get<Message>().Shorttime("Username 
+modificato!");
+                LoginPage.loggedusr = newusername;
+            }
+            else if (result.Equals("inuso"))
+            {
+                DependencyService.Get<Message>().Shorttime("Username 
+occupato!");
+            }
+            else
+            {
+                DependencyService.Get<Message>().Shorttime("Campo vuoto!");
+            }
+        }
+    }
+\end{lstlisting}
 \subsection{Login e Registrazione}
+Le prima schermata dell'applicazione è, ovviamente, relativa al login. Nel caso che l'utente non sia ancora registrato da essa è possibile accedere alla pagina per creare un nuovo account. Queste due pagine hanno un funzionamento molto simile: al click del bottone viene avviata una procedura che salva i dati inseriti nelle \textbf{Entry} in delle variabili e se essi soddisfano le condizioni di lunghezza minima vengono passati al $service$ opportuno che si occupa di gestire la richiesta. 
+Per chiarezza riportiamo il codice relativo alla procedura che si attiva quando si verifica l'evento di click sul bottone. Anche in questo caso ricordiamo che il codice è analogo per quanto riguarda la pagina di registrazione.
+
+Stampiamo a display un Toast che dirà all'utente che la richiesta sta venendo processata. Tramite l'if più esterno vengono verificate le condizioni di lunghezza. Al suo interno chiamiamo il metodo $setPost$ del servizio $Login$ e andiamo successivamente ad effettuare un controllo sulla variabile booleana $loginflag$ che sarà messa a true dal service nel caso l'autenticazione vada a buon fine. In caso affermativo, viene lanciata la pagina relativa al menù principale.
+\begin{lstlisting}
+\\LoginPage\\
+[...]
+ async void LoginButton_Clicked(object sender, EventArgs e)
+        {
+            loggedusr = usernameEntry.Text;
+            var message = "Autenticazione in corso...";
+            DependencyService.Get<Message>().Longtime(message);
+            string URL = "http://mobileproject.altervista.org/login.php";
+            if (loggedusr.Length >= 3 && (passwordEntry.Text).Length >= 3 )
+            {
+                await Login.setPost(usernameEntry.Text, passwordEntry.Text, 
+URL);
+                //controllo se il login va andato a buon fine
+                if (loginflag)
+                {
+                    await Navigation.PushAsync(new MainMenu());
+                }
+                else
+                {
+                    var message1 = "Dati errati!";
+                    DependencyService.Get<Message>().Longtime(message1);
+                }
+            }else
+            {
+                DependencyService.Get<Message>().Longtime("I campi devono 
+contenere almeno 3 caratterii.");
+            }
+        }
+[...]
+\end{lstlisting}
 \subsection{Orario}
 \subsection{I miei appunti}
 Dal \textbf{MainMenu}, scelta la voce miei appunti, viene avviata la classe \textbf{PreNotes}; qui viene visualizzata la lista delle materie inserite nel database tramite l'orario con la possibilità di aggiungerne di nuove.
@@ -1367,7 +1444,189 @@ async void OnDeleteButtonClicked(object sender, EventArgs e) {
 [...]
 \end{lstlisting}
 \subsection{Appunti condivisi}
+La sezione per gli appunti condivisi presenta una ListView, composta da tutte le materie gestibili dall'applicazione. Ovviamente il numero di materie può essere incrementato effettuando aggiornamenti del database; abbiamo mantenuto il numero di materie disponibili relativamente basso essendo questa un'app dimostrativa e non da distribuire nel PlayStore. Il metodo che ci permette di recuperare le materie ed inserirle nella ListView è \textbf{loadSubj}: questo metodo utilizza il service \textbf{CountSubj} e tramite la sua funzione \textbf{setGet} va a recuperare dal database l'elenco delle diverse materie e le inserisce in una List di oggetti di tipo \textbf{ListItemSubjects}. Verrà impostata come sorgente di dati della ListView proprio questa lista appena creata e verrà fatto un binding tra il nome della materia e il nome dell'elemento della lista. 
+\begin{lstlisting}
+ public class ListItemSubjects
+    {
+        public string Name { get; set;}
+
+    }
+\end{lstlisting}
+\newpage
+\begin{lstlisting}
+\\ShNotes\\
+[...]
+//per caricare le materie
+        async void loadSubj()
+        {
+            string URL = "http://mobileproject.altervista.org/getsubj.php";
+            lv.ItemsSource = await CountSubj.setGet(URL);
+            lv.ItemTemplate = new DataTemplate(typeof(TextCell));
+            lv.ItemTemplate.SetBinding(TextCell.TextProperty, "Name");
+        }
+[...]
+\end{lstlisting}
+\begin{lstlisting}
+ class CountSubj
+    {
+        //Conta il numero di materie  presenti negli appunti condivisi
+        private static HttpClient \_client = new HttpClient();
+        public static async Task<List<ListItemSubjects>> setGet(string URL)
+        {
+            var response = await \_client.GetAsync(URL);
+            var result = response.Content.ReadAsStringAsync().Result.
+ToString().Replace("   ",String.Empty);
+            string[] words = result.Split('\r');
+            List<ListItemSubjects> list = new List<ListItemSubjects>();
+            for (int i = 0; i < words.Length - 1; i++)
+            {
+                list.Add(new ListItemSubjects { Name = words[i] });
+            }
+            return list;
+        }
+    }
+\end{lstlisting}
+Andiamo ad impostare la procedura che deve scatenarsi al click su un elemento della ListView. Recuperiamo, tramite una serie di passaggi, il nome della materia cliccata e chiamiamo il metodo \textbf{listviewhandler} passando quest'ultimo come parametro. \textbf{listviewhandler} si occuperà di creare la pagina per la visualizzazione degli appunti relativi alla materia cliccata passando come parametro il nome della materia per la quale vogliamo gli appunti.
+\begin{lstlisting}
+\\ShNotes\\
+[...]
+ lv.ItemSelected += (sender, e) =>
+            {
+                if (((ListView)sender).SelectedItem != null)
+                {
+             ListItemSubjects selected = (ListItemSubjects)e.SelectedItem;
+                    object nome = selected.Name;
+                    ((ListView)sender).SelectedItem = null; 
+		listviewhandler(sender, e, nome.ToString());
+                }
+            };
+[...]
+ async void listviewhandler(object sender, EventArgs e, string nome)
+        {
+            await Navigation.PushAsync(new ShNotesPage(nome));
+        }
+\end{lstlisting}
+Il parametro con il nome della materia passato al costruttore servirà alla funzione \textbf{loadShNotes} per caricare gli appunti. Il funzionamento è simile a quello illustrato nel capitolo precedente per la funzione \textbf{loadSubj}. Quando un appunto viene cliccato parte una procedura che si ricava il link al file che contiene l'appunto e salvato nella variabile $txt$ ed anche il titolo dell'appunto salvandolo in una variabile $title$.
+
+Passiamo la palla a \textbf{selectednotehandler} che avvierà la pagina \textbf{ViewNotePage}.
+\newpage
+\begin{lstlisting}
+\\ShNotesPage\\
+[...]
+ public ShNotesPage(string materia)
+        {
+            this.Title = materia;
+            loadShNotes(materia);
+            lv.ItemSelected += (sender, e) =>
+            {
+                if (((ListView)sender).SelectedItem != null)
+                {
+                    //mi ricavo l'appunto cliccato
+                    Appunto selected = (Appunto)e.SelectedItem;
+                    object txt = selected.Note;
+                    object title = selected.Title;
+                    ((ListView)sender).SelectedItem = null; 
+		selectednotehandler(sender, e, txt.ToString(), title.ToString());
+                }
+            };
+            this.Content = lv;
+        }
+[...]
+async void selectednotehandler(Object sender, EventArgs e, 
+string txt, string title)
+        {
+            await Navigation.PushAsync(new ViewNotePage(txt, title));
+        }
+\end{lstlisting}
+Istanziamo un oggetto \textbf{WebClient} che ci permette di effettuare operazioni di invio e ricezione dati tramite un URL. La funzione $DownloadData$ accetta come parametro il link al file \textbf{txt} che contiene i dati ed effettua il download, salvandolo come uno stream grezzo di byte. Successivamente andiamo a tradurre questi byte in una stringa. Questa stringa verrà mostrata nella pagina. 
+\begin{lstlisting}
+\\ViewNotePage\\
+[...]
+public ViewNotePage(string link, string title)
+        {
+            this.Title = title;
+
+            WebClient wc = new WebClient();
+            //si connette al link e ne prende il file come uno stream di bit
+            try
+            {
+                byte[] raw = wc.DownloadData(link);
+                //traduce i byte in stringa  
+                string text = Encoding.UTF8.GetString(raw);
+                txt = new Label
+                {
+                    Text = text
+                };
+                this.Padding = new Thickness(10);
+                this.Content = txt;
+            }
+            catch (WebException e)
+            {
+                DependencyService.Get<Message>().Shorttime("L'appunto
+	 e' stato rimosso.");
+            }     
+        }
+\end{lstlisting}
 \subsection{Impostazioni}
+Le impostazioni si compongono, come per la versione Android, di tre opzioni: Modifica Username, Modifica Password e About Us. Una di queste scelte viene effettuata cliccando la voce corrispondente nella ListView. Allo stesso modo dei precendenti casi viene recuperato il nome dell'elemento cliccato e passato alla funzione \textbf{listviewhandler} che si occuperà, tramite uno switch, di lanciare la pagina corretta.
+\begin{lstlisting}
+async void listviewhandler(object sender, EventArgs e, string nome)
+            {
+                switch(nome)
+                    {
+                        case "Modifica Username":
+                            await Navigation.PushAsync(new EditUserPage());
+                            break;
+                        case "Modifica Password":
+                            await Navigation.PushAsync(new EditPassPage());
+                            break;
+                        case "About Us":
+                            await Navigation.PushAsync(new AboutUsPage());
+                            break;
+                        default: DependencyService.Get<Message>().Longtime(nome);
+                            break;
+                }
+            }
+\end{lstlisting}
+\subsubsection{Modifica Username}
+L'implementazione di tale funzione è basilare tanto quanto la vista ad essa associata. Una \textbf{Entry} ed un bottone. Il click sul bottone scatena la chiamata al metodo \textbf{changeusrFunction} che a sua volta invoca il service \textbf{edituserservice} che si occupa di inviare la richiesta al server e di eseguire il codice PHP relativo alla modifica del nome utente.
+\begin{lstlisting}
+\\EditUserPage\\
+[...]
+async void changeusrfunction(object sender, EventArgs e)
+            {
+                string URL = 
+"http://mobileproject.altervista.org/editusername.php";
+                if ((newusrn.Text).Length >= 3)
+                {
+                    await edituserservice.changeUsr(LoginPage.loggedusr, 
+newusrn.Text, URL);
+                } else
+                {
+                    DependencyService.Get<Message>().Shorttime
+("La lunghezza minima e' di 3 caratteri!");
+                }
+            }
+\end{lstlisting} 
+\subsubsection{Modifica Password}
+Strutturata allo stesso modo del Modifica Username è la modifica della password. Unica differenza è la presenza di una \textbf{Entry} in più per far inserire all'utente la password corrente e verificarne quindi l'identità. 
+\begin{lstlisting}
+async void changepswfunction(object sender, EventArgs e)
+            {
+                string URL = 
+"http://mobileproject.altervista.org/editpass.php";
+                if ((newpass.Text).Length >= 3)
+                {
+                    await editpassservice.changePass(LoginPage.loggedusr, 
+oldpass.Text, newpass.Text, URL);
+                }
+                else
+                {
+                    DependencyService.Get<Message>().Shorttime("La lunghezza 
+minima e' di 3 caratteri!");
+                }
+            }
+\end{lstlisting}
 \subsection{Database}
 Ciò che è inerente al funzionamento dei database è contenuto nelle cartelle \textbf{Data} e \textbf{Models}. Prendiamo come riferimento le classi \textbf{Note}, \textbf{Subjects}, \textbf{SubjectsDatabase} e \textbf{NotesDatabase}, contenute rispettivamente nelle cartelle Models e Data.
 La creazione di questi database avviene al lancio dell'applicazione, infatti nella classe \textbf{App} possiamo notare la deefinizione di funzioni statiche per la creazione dei database. Viene riportato il codice relativo al database utile ad ospitare le materie, ma allo stesso modo vengono implementati gli altri.
