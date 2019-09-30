@@ -5,11 +5,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.example.progetto.helper.HttpJsonParser;
@@ -46,6 +49,8 @@ public class AggiungiAppuntiLoc extends AppCompatActivity implements View.OnClic
     Button btnSalva;
     CheckBox checkCondividi;
     String a;
+    String[] listItem;
+
 
     private static final String BASE_URL = "http://mobileproject.altervista.org/";
 
@@ -53,6 +58,8 @@ public class AggiungiAppuntiLoc extends AppCompatActivity implements View.OnClic
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_aggiungi__appunti__loc);
+        //ConstraintLayout layout1 = new ConstraintLayout(this);
+        //LinearLayout layout = new LinearLayout(this);
 
         Intent r = getIntent();
         a = r.getStringExtra("app");
@@ -69,6 +76,20 @@ public class AggiungiAppuntiLoc extends AppCompatActivity implements View.OnClic
 
         nomemateria.setText(a);
 
+        listItem = getResources().getStringArray(R.array.Materie);
+        int i=0, j=0;               //variabili utilizzate per controllare se la materia può essere condivisa o meno
+        int lun = listItem.length;
+
+        while (i<lun){          //viene controllato se c'è una corrispondenza tra la materia e la lista di materie predefinite
+            if (a.equals(listItem[i])){
+                j++;
+            }
+            i++;
+        }
+        if (j==0){
+            checkCondividi.setVisibility(View.INVISIBLE);
+
+        }
     }
 
     @Override
@@ -182,7 +203,7 @@ public class AggiungiAppuntiLoc extends AppCompatActivity implements View.OnClic
                     if (success == 1) {
                         //Display success message
                         Toast.makeText(ctx,
-                                "Appunto added on remote DB", Toast.LENGTH_LONG).show();
+                                "Appunto caricato con successo", Toast.LENGTH_LONG).show();
                         Intent i = getIntent();
                         //send result code 20 to notify about note update
                         setResult(20, i);
@@ -191,7 +212,7 @@ public class AggiungiAppuntiLoc extends AppCompatActivity implements View.OnClic
 
                     } else {
                         Toast.makeText(ctx,
-                                "Some error occurred while adding appunto",
+                                "Si è verificato un errore",
                                 Toast.LENGTH_LONG).show();
 
                     }

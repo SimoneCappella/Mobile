@@ -70,6 +70,7 @@ public class AppuntiListingActivity extends AppCompatActivity implements View.On
     private String appuntoData;
     private String appuntoContenuto;
 
+    private DataManager dm;
     ImageButton back;
 
     DataAppLoc da;
@@ -90,6 +91,7 @@ public class AppuntiListingActivity extends AppCompatActivity implements View.On
         back.setOnClickListener(this);
 
         da = new DataAppLoc(this);
+        dm = new DataManager(this);
 
     }
 
@@ -454,7 +456,8 @@ public class AppuntiListingActivity extends AppCompatActivity implements View.On
                 output.close();
                 input.close();
 
-                return "Downloaded at: " + folder + fileName;
+                dm.insert(materiaName, null, null, null);
+                return "Scaricato in: " + folder + fileName;
 
 
 
