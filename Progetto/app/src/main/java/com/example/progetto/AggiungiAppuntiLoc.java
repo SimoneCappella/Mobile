@@ -205,7 +205,7 @@ public class AggiungiAppuntiLoc extends AppCompatActivity implements View.OnClic
                     if (success == 1) {
                         //Display success message
                         Toast.makeText(ctx,
-                                "Appunto added on remote DB", Toast.LENGTH_LONG).show();
+                                "Appunto caricato con successo", Toast.LENGTH_LONG).show();
                         Intent i = getIntent();
                         //send result code 20 to notify about note update
                         setResult(20, i);
@@ -214,7 +214,7 @@ public class AggiungiAppuntiLoc extends AppCompatActivity implements View.OnClic
 
                     } else {
                         Toast.makeText(ctx,
-                                "Some error occurred while adding appunto",
+                                "Si è verificato un errore",
                                 Toast.LENGTH_LONG).show();
 
                     }
