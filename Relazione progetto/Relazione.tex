@@ -50,13 +50,13 @@ EasyVersity rappresenta uno strumento di supporto per lo studente.
 Permette di gestire:
 \begin{itemize}
 \item \textbf{Orario:} salva l'orario delle lezioni nella tua applicazione per consultarlo quando vuoi.
-\item \textbf{Archivio appunti locale:} da la possibilità di salvare appunti raggruppandoli per materia, indicando titolo e data si può contestualizzare al meglio l'appunto in questione.
+\item \textbf{Archivio appunti locale:} da la possibilità di salvare appunti raggruppandoli per materia; indicando titolo e data si può contestualizzare al meglio l'appunto in questione.
 \item \textbf{Condivisione appunti:} rende possibile la condivisione ed il download degli appunti.
-\item \textbf{Impostazioni:} da qui si possono cambiare informazioni come username e password, eprendere visione di info "about us".
+\item \textbf{Impostazioni:} da qui si possono cambiare informazioni come username e password, vi sono anche alcune info, "about us".
 \end{itemize}
 
 \section{Funzionalità}
-Avviata l'applicazione ci si trova davani alla \textbf{First activity}; qui si può scegliere di effettuare il login o registrarsi. Una volta effettuato il login si può accedere al menù principale che prevede 4 scelte:
+Avviata l'applicazione ci si trova davani alla \textbf{First activity}. Qui si può scegliere di effettuare il login o registrarsi. Una volta effettuato il login si può accedere al menù principale che prevede 4 scelte:
 \begin{itemize}
 \item \textbf{Orario.}
 \item \textbf{I miei appunti.}
@@ -73,8 +73,8 @@ Avviata l'applicazione ci si trova davani alla \textbf{First activity}; qui si p
 
 \newpage
 \subsection{Orario}
-Aperto l'orario ci si trova di fronte alla tabella relativa al giorno corrente; con la bottom navbar si può scegliere il giorno su cui andare ad agire.
-Premendo nel campo \textbf{materia}, relativo all'ora di interesse si può inserire la materia in tabella, si accede, infatti, ad una lista predefinita di materie (questa può essere estesa scegliendo di inserirne una manualmente con il bottone "altro"). Scelta la materia viene visualizzata una finestra di dialogo che permette di inserire l'aula in cui si svolgerà la lezione e la durata della stessa.
+Aperto l'orario ci si trova di fronte alla tabella relativa al giorno corrente. Con la bottom navbar si può scegliere il giorno su cui andare ad agire.
+Premendo nel campo \textbf{materia}, relativo all'ora di interesse si può inserire la materia in tabella, si accede, infatti, ad una lista predefinita di materie (questa può essere estesa scegliendo di inserirne una manualmente con il bottone $ALTRO$). Scelta la materia viene visualizzata una finestra di dialogo che permette di inserire l'aula in cui si svolgerà la lezione e la durata della stessa.
 \begin{figure}[!h]
 	\centering
 	{\includegraphics[width=.30\textwidth]{orario}} \quad
@@ -83,7 +83,7 @@ Premendo nel campo \textbf{materia}, relativo all'ora di interesse si può inser
 	\caption{\small Orario.}
 \end{figure}
 
-Salvata la materia nell'orario questa viene salvata nel database e inserita in una lista nella sezione \textbf{i miei appunti}.
+Salvata la materia, questa, viene salvata nel database e inserita in una lista nella sezione \textbf{i miei appunti}.
 
 \subsection{I miei appunti}
 In questa sezione abbiamo accesso alla lista di tutte le materie salvate nel database. Abbiamo la possibilità di aggiungerne altre a piacimento o eliminarle inserendo il nome esatto della materia.
@@ -99,7 +99,7 @@ In questa sezione abbiamo accesso alla lista di tutte le materie salvate nel dat
 Scelta la materia accediamo ad una seconda lista contenente tutti gli appunti relativi ad essa; ogni elemento della lsita contiene titolo e data relativi ad ogni appunto.
 Da questa lista possiamo accedere e visualizzare l'annotazione vera e propria.
 
-Gli appunti possono essere aggiunti con il bottone \textbf{"aggiungi"}, qui inseriremo titolo data e annotazione che vogliamo salvare; da questa schermata, inserendo la spunta nel campo \textbf{"Condividi"}, possono essere condivisi direttamente gli appunti con gli altri utenti.
+Gli appunti possono essere aggiunti con il bottone $AGGIUNGI$, qui inseriremo titolo, data e annotazione che vogliamo salvare. Da questa schermata, inserendo la spunta nel campo $Condividi$, possono essere condivisi gli appunti con gli altri utenti.
 
 Per eliminare un appunto basta tenere premuto l'elemento da eliminare, verrà attivata una finestra di dialogo da cui è possibile confermare la cancellazione.
 
@@ -137,7 +137,7 @@ Dalle impostazioni possiamo banalmente modificare \textbf{username}, \textbf{pas
 \subsection{Classe SupportTask}
 Riteniamo opportuno introdurre questa classe e le sue funzionalità ad inizio capitolo poichè essa verrà utilizzata da tutte le funzionalità che richiedono un accesso al database degli utenti. 
 
-Notiamo subito che la nostra classe estende la classe astratta \textbf{AsyncTask}. Innanzitutto definiamo il significato di task asincrona: una task asincrona è un metodo che non va a lavorare sul thread principale del programma, per cui quest'ultimo può proseguire senza attendere che il metodo chiamato terminati. Nel costruttore inizializziamo il contesto relativo alla classe chiamante. Dal momento che estendiamo una classe astratta dobbiamo sovrascrivere i metodi che ci interessano. Il metodo che andiamo a sovrascrivere noi è $doInBackground$ che rappresenta la vera e propria logica del metodo. Non passiamo un numero definito di variabili a tale metodo poichè essi dipenderanno da quale classe del nostro programma effettuerà la chiamata. Vengono utilizzati i tre puntini per indicare che ciò che esso riceverà come parametro sarà un array di stringhe, di nome $params$, di grandezza appunto indefinita. I valori in tale array verrano memorizzati secondo l'ordine in cui vengono inseriti nei parametri al momento della chiamata del metodo. Verrano quindi recuperati accedendo all'indice corrispondente alla posizione del valore nei parametri di chiamata. Il primo parametro che passiamo a questo metodo è sempre $method$, ovvero una stringa sulla quale andremo ad effettuare vari controlli per capire cosa l'utente ha richeisto. 
+Notiamo subito che la nostra classe estende la classe astratta \textbf{AsyncTask}. Innanzitutto definiamo il significato di task asincrona: una task asincrona è un metodo che non va a lavorare sul thread principale del programma, per cui quest'ultimo può proseguire senza attendere che il metodo chiamato termini. Nel costruttore inizializziamo il contesto relativo alla classe chiamante. Dal momento che estendiamo una classe astratta dobbiamo sovrascrivere i metodi che ci interessano. Il metodo che andiamo a sovrascrivere è \textbf{doInBackground} che rappresenta la vera e propria logica del metodo. Non passiamo un numero definito di variabili a tale metodo poichè essi dipenderanno da quale classe del nostro programma effettuerà la chiamata. Vengono utilizzati i tre puntini per indicare che ciò che esso riceverà come parametro sarà un array di stringhe, di nome $params$, di grandezza indefinita. I valori in tale array verrano memorizzati secondo l'ordine di inserimento nei parametri al momento della chiamata del metodo. Verrano, quindi, recuperati accedendo all'indice corrispondente alla posizione del valore nei parametri di chiamata. Il primo parametro è sempre $method$, una stringa sulla quale andremo ad effettuare vari controlli per capire cosa l'utente ha richeisto. 
 \begin{lstlisting}
 \\SupportTask\\
 public class SupportTask extends AsyncTask <String, Void, String> {
@@ -158,52 +158,52 @@ public class SupportTask extends AsyncTask <String, Void, String> {
         String method = params[0];
 [...]
 \end{lstlisting}
-Prenderemo in esame soltanto il caso in cui l'utente chieda di registrarsi, gli altri casi sono gestiti in maniera praticamente analoga se non per il numero di parametri che riceviamo e che inviamo al server. 
+Prenderemo in esame soltanto il caso in cui l'utente chieda di registrarsi; gli altri casi sono gestiti in maniera praticamente analoga se non per il numero di parametri che riceviamo e che inviamo al server. 
 
 Andiamo ad impostare la connessione, tramite l'oggetto \textbf{HttpURLConnection}, e il metodo con il quale invieremo i dati della form. Produciamo poi la stringa che comporrà il body del messaggio al server secondo le regole del metodo post, ovvero "nome\_variabile1"=valore1 \&  "nome\_variabile2"=valore2. Vengono inviati i dati e viene chiuso lo stream. Per leggere la risposta del server utilizziamo l'oggetto \textbf{InputStream} e il \textbf{BufferedReader}, salviamo tutto nella stringa $state$ e la ritorniamo alla classe chiamante andando ad invocare il metodo \textbf{trim()} che elimina eventuali spazi bianchi all'inizio della stringa.
 \begin{lstlisting}
 \\SupportTask\\
-if (method.equals("register")) {
-            String state = "";
-            String user_name = params[1];
-            String user_pass = params[2];
-            String reg_url = params[3];
-            try {
-                URL url = new URL(reg_url);
-                //mi connetto all'URL al quale effettuare la richiesta, 
-impostando anche il tipo di richiesta
-                HttpURLConnection httpURLConnection = (HttpURLConnection) 
-url.openConnection();
-                httpURLConnection.setRequestMethod("POST");
-                httpURLConnection.setDoOutput(true);
-                httpURLConnection.setDoInput(true);
-                OutputStream OS = httpURLConnection.getOutputStream();
-                BufferedWriter bufferedWriter = new 
-BufferedWriter(new OutputStreamWriter(OS, "UTF-8"));
-                //Creo la stringa che compone la richiesta
-                String data = URLEncoder.encode("user_name", "UTF-8") + "=" 
-+ URLEncoder.encode(user_name, "UTF-8") + "&" +
-                        URLEncoder.encode("user_pass", "UTF-8") + "=" 
-+ URLEncoder.encode(user_pass, "UTF-8");
-                bufferedWriter.write(data);
-                bufferedWriter.flush();
-                bufferedWriter.close();
-                OS.close();
-                InputStream IS = httpURLConnection.getInputStream();
-                BufferedReader bufferedReader = new 
-BufferedReader(new InputStreamReader(IS, "iso-8859-1"));
-                while((line = bufferedReader.readLine()) != null)
-                {
-                    state += line;
-                }
-                bufferedReader.close();
-                IS.close();
-                httpURLConnection.disconnect();
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } return state.trim();
+if (method.equals("register")) {i
+	String state = "";
+	String user_name = params[1];
+	String user_pass = params[2];
+	String reg_url = params[3];
+	try {
+		URL url = new URL(reg_url);
+		//mi connetto all'URL al quale effettuare la richiesta, 
+			impostando anche il tipo di richiesta
+		HttpURLConnection httpURLConnection = (HttpURLConnection) 
+			url.openConnection();
+		httpURLConnection.setRequestMethod("POST");
+		httpURLConnection.setDoOutput(true);
+		httpURLConnection.setDoInput(true);
+		OutputStream OS = httpURLConnection.getOutputStream();
+		BufferedWriter bufferedWriter = new 
+			BufferedWriter(new OutputStreamWriter(OS, "UTF-8"));
+		//Creo la stringa che compone la richiesta
+		String data = URLEncoder.encode("user_name", "UTF-8") + "=" 
+			+ URLEncoder.encode(user_name, "UTF-8") + "&" +
+			URLEncoder.encode("user_pass", "UTF-8") + "=" 
+			+ URLEncoder.encode(user_pass, "UTF-8");
+		bufferedWriter.write(data);
+		bufferedWriter.flush();
+		bufferedWriter.close();
+		OS.close();
+		InputStream IS = httpURLConnection.getInputStream();
+		BufferedReader bufferedReader = new 
+			BufferedReader(new InputStreamReader(IS, "iso-8859-1"));
+		while((line = bufferedReader.readLine()) != null)
+		{
+			state += line;
+		}
+		bufferedReader.close();
+		IS.close();
+		httpURLConnection.disconnect();
+	} catch (MalformedURLException e) {
+		e.printStackTrace();
+	} catch (IOException e) {
+		e.printStackTrace();
+	} return state.trim();
 [...]
 \end{lstlisting}
 \subsection{Login e Registrazione}
@@ -242,26 +242,23 @@ try {
 Il codice PHP relativo alla funzione di login è mostrato di seguito.
 \begin{lstlisting}
 <?php
- require 'init.php';
- $user_name = $_POST["login_name"];  
- $user_pass = $_POST["login_pass"];  
- $sql_query = "SELECT * FROM Utenti WHERE username = '$user_name' AND 
-password = '$user_pass'";  
- $result = mysqli_query($con,$sql_query);  
- if(mysqli_num_rows($result)> 0)  
- {    
- echo "Login Success";  
- }  
- else  
- {
- echo "Login Failed";  
- }  
- ?>
+	require 'init.php';
+	$user_name = $_POST["login_name"];  
+	$user_pass = $_POST["login_pass"];  
+	$sql_query = "SELECT * FROM Utenti WHERE username = '$user_name' AND 
+	password = '$user_pass'";  
+	$result = mysqli_query($con,$sql_query);  
+	if(mysqli_num_rows($result)> 0) {    
+		echo "Login Success";  
+	} else {
+		echo "Login Failed";  
+	}  
+?>
 \end{lstlisting}
 La registrazione viene gestita in modo simile.
 
-In un \textbf{if} viene verificato in modo veloce se le condizioni su username e password sono verificate, in caso contrario viene lanciato un avviso.
-Il metodo con cui si instaura la connessione al server è lo stesso, cambiano solo gli argomenti, \textbf{url} e \textbf{method}.Una volta che la registrazione è andata a buon fine l'attività viene interrotta e si torna alla schermata di login.
+In un \textbf{if} viene verificato in modo veloce se username e password sono validi, in caso contrario viene lanciato un avviso.
+Il metodo con cui si instaura la connessione al server è lo stesso, cambiano solo gli argomenti, nello specifico \textbf{url} e \textbf{method}. Una volta che la registrazione è andata a buon fine l'attività viene interrotta e si torna alla schermata di login.
 \begin{lstlisting}
 \\Register\\
 [...]
@@ -284,39 +281,35 @@ if (register_name.length() >= 3 && register_pass.length() >= 3)
 		show("Username gia' in uso, prova con uno diverso!");
 	}
 }
-else
-{
-show(I campi devono contenere almeno 3 caratteri.);
+else {
+	show(I campi devono contenere almeno 3 caratteri.);
 }
 [...]
 \end{lstlisting}
-Di seguito abbiamo inserito il codice PHP relativo alla funzione di registrazione.
+Di seguito il codice PHP relativo alla funzione di registrazione.
 \begin{lstlisting}
 <?php
- require "init.php";
- 
- $user_name = $_POST["user_name"];  
- $user_pass = $_POST["user_pass"];
- $ver = "SELECT * FROM Utenti WHERE username = '$user_name' ";
- $result = mysqli_query($con,$ver);
- $row = mysqli_fetch_array($result,MYSQLI_NUM);
- if ($row[0] > 0)
- 	{
-    echo "Username in uso";
-    }
-    else{
- 			$sql_query = "INSERT INTO Utenti (username,password) 
-values('$user_name','$user_pass')";
- 			if(mysqli_query($con,$sql_query))
- 				{
-    				echo"Registrazione avvenuta con successo!";
-				}else
-    				echo"Errore";
-          }
- ?>
+	require "init.php";
+	$user_name = $_POST["user_name"];  
+	$user_pass = $_POST["user_pass"];
+	$ver = "SELECT * FROM Utenti WHERE username = '$user_name' ";
+	$result = mysqli_query($con,$ver);
+	$row = mysqli_fetch_array($result,MYSQLI_NUM);
+	if ($row[0] > 0) {
+		echo "Username in uso";
+	} else {
+		$sql_query = "INSERT INTO Utenti (username,password) 
+			values('$user_name','$user_pass')";
+		if(mysqli_query($con,$sql_query)) {
+			echo"Registrazione avvenuta con successo!";
+		}else {
+			echo"Errore";
+		}
+	}
+?>
 \end{lstlisting}
 \subsection{Orario}
-Avviata l'activity \textbf{orario} vengono catturate le dimensioni del display, calcolata la dimensione del \textbf{fragment} contenente la tabella dell'orario e fatto partire uno switch sul giorno corrente.
+Avviata l'activity \textbf{orario} vengono catturate le dimensioni del display, calcolata la dimensione del \textbf{fragment} contenente la tabella dell'orario e fatto partire uno switch sul giorno corrente. Questo switch permette di caricare il fragment relativo al giorno corrente (es. se oggi è lunedì viene caricato il fragment relativo a lunedì); viene, infatti, inizializzato l'oggetto fragment e viene selezionato l'elemento sulla navbar.
 
 \begin{lstlisting}
 \\Clock\\
@@ -342,7 +335,7 @@ loadFragment(fragment);
 [...]
 \end{lstlisting}
 
-Questo switch permette di caricare il fragment relativo al giorno corrente (es. se oggi è lunedì viene caricato il fragment relativo a lunedì); viene, infatti, inizializzato l'oggetto fragment e viene selezionato l'elemento sulla navbar.
+Allo stesso modo la funzione \textbf{onNavigationItemSelected}, associa in base allitem della navbar cliccato un'istanza del fragment all'oggetto fragment e nuovamente viene lanciata la funzione \textbf{loadFragment}.
 
 \begin{lstlisting}
 \\Clock\\
@@ -363,40 +356,34 @@ switch(item.getItemId())
 		next = 2;
 		fragment = new mer_fragment();
 		break;
-[...]
+	[...]
 }
 return loadFragment(fragment);
 [...]
 \end{lstlisting}
 
-Allo stesso modo la funzione \textbf{onNavigationItemSelected}, associa in base allitem della navbar cliccato un'istanza del fragment all'oggetto fragment e nuovamente viene lanciata la funzione \textbf{loadFragment}.
-
-La funzione \textbf{loadFragment} carica il fragment richiesto e gestisce lo scorrimento a destra o sinistra dipendentemente dalla posizione del fragment corrente rispetto a quello scelto.
+La funzione \textbf{loadFragment} carica il fragment richiesto e gestisce lo scorrimento a destra o sinistra dipendentemente dalla posizione del fragment scelto rispetto a quello corrente.
 \begin{lstlisting}
-private boolean loadFragment(android.support.v4.app.Fragment fragment)
-    {
-        if(fragment!= null)
-            {
-            FragmentTransaction ft = 
-getSupportFragmentManager().beginTransaction();
-            if(curr < next)
-                {
-                    ft.setCustomAnimations(R.anim.slide_in,R.anim.slide_out);
-                }else
-                    {
-                        ft.setCustomAnimations(R.anim.slide_in_left,
-R.anim.slide_out_right);
-                    }
-            curr = next;
-            ft.replace(R.id.fragment_container, fragment);
-            ft.commit();
-            return true;
-        }
-        return false;
-    }
+private boolean loadFragment(android.support.v4.app.Fragment fragment) {
+	if(fragment!= null) {
+		FragmentTransaction ft = 
+			getSupportFragmentManager().beginTransaction();
+		if(curr < next) {
+			ft.setCustomAnimations(R.anim.slide_in,R.anim.slide_out);
+		}else {
+			ft.setCustomAnimations(R.anim.slide_in_left,
+			R.anim.slide_out_right);
+		}
+		curr = next;
+		ft.replace(R.id.fragment_container, fragment);
+		ft.commit();
+		return true;
+	}
+return false;
+}
 \end{lstlisting}
 \subsubsection{Gestione orario}
-Prendiamo come riferimento il fragment relativo al \textbf{lunedì}, gli altri saranno implementati in modo analogo.
+Prendiamo come riferimento il fragment relativo a \textbf{lunedì}; gli altri saranno implementati in modo analogo.
 
 All'interno del fragment vengono nuovamente catturate le dimensioni del display e impostate le dimensioni delle varie caselle della tabella, rispettivamente:
 \begin{itemize}
@@ -406,38 +393,40 @@ All'interno del fragment vengono nuovamente catturate le dimensioni del display 
 \item \textbf{X:} edit per cancellare la riga.
 \end{itemize}
 
-La tabella viene inizializzata nella funzione \textbf{onCreate}, qui, ogni elemento della tabella viene assegnato ad una variabile e successivamente "riempito" con il testo salvato, andadolo a recuperare con l'oggetto \textbf{sa}, della classe \textbf{SalvaOrario}, passando la chiave $\{lun\_1, lun\_2,..., lun\_11\}$ per quanto riguarda la tabella di lunedì, per la tabella di martedì le chiavi saranno costruite come $\{mar\_1,...,mar\_11\}$; la stessa logica vale per gli altri giorni; in tal modo possiamo recuperare in modo distinto le 11 materie salvate con la relativa aula per i diversi giorni.
+La tabella viene inizializzata nella funzione \textbf{onCreate}, qui, ogni elemento viene assegnato ad una variabile e successivamente "riempito" con il testo salvato, andadolo a recuperare con l'oggetto $sa$, della classe \textbf{SalvaOrario}, passando la chiave $\{lun\_1, lun\_2,..., lun\_11\}$ per quanto riguarda la tabella di lunedì, per la tabella di martedì le chiavi saranno costruite come $\{mar\_1,...,mar\_11\}$ (la stessa logica vale per gli altri giorni); in tal modo possiamo recuperare in modo distinto le $11$ materie salvate con la relativa aula per i diversi giorni.
 
 \begin{lstlisting}
 \\lun_fragment\\
 [...]
 public View onCreateView(LayoutInflater inflater, 
-@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-[...]
-SalvaOrario sa = new SalvaOrario();
-[...]
-txtMat1 = v.findViewById(R.id.materia1);
-txtMat1.setText(sa.getMateria("lun_1", getActivity()));
-txtMat1.setOnClickListener(this);
-txtAula1 = v.findViewById(R.id.aula1);
-txtAula1.setText(sa.getAula("lun_1", getActivity()));
-txtOra1 = v.findViewById(R.id.ora1);
-
-txtMat2 = v.findViewById(R.id.materia2);
-txtMat2.setText(sa.getMateria("lun_2", getActivity()));
-txtMat2.setOnClickListener(this);
-txtAula2 = v.findViewById(R.id.aula2);
-txtAula2.setText(sa.getAula("lun_2", getActivity()));
-txtOra2 = v.findViewById(R.id.ora2);
+	@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+	[...]
+	SalvaOrario sa = new SalvaOrario();
+	[...]
+	txtMat1 = v.findViewById(R.id.materia1);
+	txtMat1.setText(sa.getMateria("lun_1", getActivity()));
+	txtMat1.setOnClickListener(this);
+	txtAula1 = v.findViewById(R.id.aula1);
+	txtAula1.setText(sa.getAula("lun_1", getActivity()));
+	txtOra1 = v.findViewById(R.id.ora1);
+	
+	txtMat2 = v.findViewById(R.id.materia2);
+	txtMat2.setText(sa.getMateria("lun_2", getActivity()));
+	txtMat2.setOnClickListener(this);
+	txtAula2 = v.findViewById(R.id.aula2);
+	txtAula2.setText(sa.getAula("lun_2", getActivity()));
+	txtOra2 = v.findViewById(R.id.ora2);
+	[...]
+}
 [...]
 \end{lstlisting}
 
-Nella funzione \textbf{onClick} viene gestita la scelta di inserire una materia nell'orario o eliminarne una dallo stesso. C'è, infatti, uno switch che gestisce il "click" nelle diverse sezioni della tabella. Abbiamo due diversi tipi di azione:
+Nella funzione \textbf{onClick} viene gestita la scelta di inserire una materia nell'orario o eliminarne una dallo stesso. C'è, infatti, uno switch che gestisce il "click" nelle diverse sezioni della tabella. Abbiamo, sunque, due casi:
 \begin{itemize}
 \item \textbf{Aggiungere una materia:} per aggiungere una materia si seleziona un campo materia relativo all'ora in cui vogliamo inserirlo, questo attiverà l'elemento corrispondente nello switch che imposterà la variabile $n$, utilizzata successivamente per costruire la chiave e salvare nella classe SalvaOrario, la variabile $ora$, presa direttamente dalla view e chiama la funzione \textbf{launchList()}.
-\item \textbf{Elimina una materia:} se viene selezionata la "X" sulla destra della tabella viene semplicemente "pulita" la riga corrispondente, infatti, nello switch, captato l'$edit$ corrispondente, viene impostata di nuovo la variabile $n$ per essere usata come chiave e le voci $materia$ e $aula$ vengono messe a $null$, viene lanciata, poi, la funzione \textbf{inserisciSalva()}; (la variabile $inc$ serve successivamente per inserire in un colpo solo più ore della stessa materia).
+\item \textbf{Elimina una materia:} se viene selezionata la "X" sulla destra della tabella viene "pulita" la riga corrispondente, infatti, nello switch, captato l'$edit$ corrispondente, viene impostata di nuovo la variabile $n$ per essere usata come chiave e le voci $materia$ e $aula$ vengono messe a $null$, viene lanciata, poi, la funzione \textbf{inserisciSalva()}; (la variabile $inc$ serve successivamente per inserire in un colpo solo più ore della stessa materia).
 \end{itemize}
-\newpage
+
 \begin{lstlisting}
 \\lun_fragment\\
 [...]
@@ -490,16 +479,16 @@ public void launchList() {
 }
 \end{lstlisting}
 
-L'activity \textbf{List} genera la lsita predefinita delle materie da cui si può scegliere quella da inserire nella casella dell'orario scelta.
+L'activity \textbf{List}, argomento dell'intent, genera la lsita predefinita delle materie da cui si può scegliere quella da inserire nella casella dell'orario scelta.
 
-Qui i dati vengono recuperati proprio grazie alla chiave $giorno\_ora$, successivamente vengono istaziati $myDialog$ e $adapter$.
+Qui i dati vengono recuperati proprio grazie alla chiave $giorno\_ora$, successivamente vengono istaziati $myDialog$ e $adapter$; quest'ultima variabile di tipo $ArrayAdapter$, classe che permette di visualizzare un array di elementi, dove, ad ogni elemento della lista è associata una \textbf{TextView}, in questa viene visualizzato il \textbf{toString()} dell'elemento, questa, dunque, ci permette di visualizzare una \textbf{ListView}.
 
 La funzione \textbf{setOnItemClickListener} chiamata per mezzo dell'oggetto $listMaterie$ e la successiva \textbf{OnItemClick} permettono di captare quale materia della lista viene scelta grazie alla sua posizione nella lista stessa.
 
-Scelta la materia viene aperta la finestra di dialogo, all'interno di questa vengono definiti diversi elementi come una editText per l'aula e due bottoni, $- +$, questi permettono di incrementare e decrementare le ore di lezione relative alla materia.
+Scelta la materia viene aperta la finestra di dialogo, all'interno di questa vengono definiti diversi elementi come una editText per l'aula e due bottoni $(-,+)$, questi permettono di incrementare e decrementare le ore di lezione.
 
-Una volta inserita l'aula e il numero di ore si provede al salvataggio. Un listener sul bottone $btnSalva$ fa si che quando venga restituito il risultato all'activity chiamante con la variabile $intent$, questa contiene la materia scelta, l'aula e la conta delle ore, l'attivity termina con finish().
-Una cosa analoga avviene nel momento in cui si decide tramite l'apposito bottone di inserire una nuova materia non contenuta nella lista predefinita.
+Una volta inserita l'aula e il numero di ore si provvede al salvataggio. Un listener sul bottone $btnSalva$ fa si che quando viene restituito il risultato all'activity chiamante con la variabile $intent$, questa gontenga la materia scelta, l'aula e la conta delle ore. L'attivity termina con \textbf{finish()}.
+Una cosa analoga avviene nel momento in cui si decide, tramite l'apposito bottone, di inserire una nuova materia non contenuta nella lista predefinita.
 
 \begin{lstlisting}
 \\List\\
@@ -509,7 +498,7 @@ String giorno_ora = intent.getStringExtra("giorno_ora");
 [...]
 myDialog = new Dialog(this);
 final ArrayAdapter<String>  adapter = new ArrayAdapter<>(this,
-android.R.layout.simple_list_item_1, android.R.id.text1, listItem);
+	android.R.layout.simple_list_item_1, android.R.id.text1, listItem);
 listMaterie.setAdapter(adapter);
 [...]
 listMaterie.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -551,7 +540,7 @@ btnSalva.setOnClickListener(new View.OnClickListener() {
 
 La funzione \textbf{onActivityResult} si occupa di reperire dall'activity Lsit i risultati ottenuti dalla scelta. L'array di stringhe $res$ contiene ora nella posizione 0 la materia, nella posizione 1 l'aula e nella posizione 2 il numero di ore, che va "parsato" in un intero in quanto arrivava come una Stringa.
 
-Viene considerato il caso in cui non si completa la scelta, in tal caso nell'activity Lista viene impostato il nome della materia a $back$ e non viene eseguita nessun'altra azione, la routine si interrompe. Nel caso in cui la scelta è stata completata i dati raccolti andranno salvati, sono passati, dunque, alla funzione \textbf{salvaOrario}.
+Nel caso in cui non venga completata la scelta, nell'activity Lista viene impostato il nome della materia a $back$ e non viene eseguita nessun'altra azione, la routine si interrompe. Nel caso in cui la scelta è stata completata i dati raccolti andranno salvati, sono passati, dunque, alla funzione \textbf{salvaOrario}.
 
 \begin{lstlisting}
 \\lun_fragment\\
@@ -655,7 +644,7 @@ public static String getAula(String key, Context context) {
 
 \newpage
 \subsection{I miei appunti}
-Avviata l'activity \textbf{i miei appunti} viene mostrata la lista delle materie salvate nell'applicazione, queste sono il risultato delle materie aggiunte nell'orario o eventualmente aggiunte nella sezione in questione.
+Avviata l'activity \textbf{i miei appunti} viene mostrata la lista delle materie salvate, queste sono il risultato delle materie aggiunte tramite orario, sezione \textbf{AppuntiCondivisi} o eventualmente aggiunte nella sezione in questione.
 
 All'avvio si definisce e istanzia un cursore che va ad estrarre tutti gli elementi dal database e con un $CursorAdapter$ va a popolare la lsita. Nuovamente viene utilizzato un $onItemClickListener$ che permette di catturare l'elemento dalla lista, viene, dunque, chiamata l'activity \textbf{Notes\_Page} con un intent passando il parametro $a$, stringa che contiene il nome della materia scelta.
 
@@ -913,7 +902,7 @@ public void onActivityResult(int requestCode, int resultCode, Intent data){
 }
 [...]
 \end{lstlisting}
-In questa Activity è presente un checkbox molto importante, tramite il quale è possibile condividere l'appunto presente ne "I miei Appunti" e fare l'upload dell'appunto sul sul server con il quale l'applicazione comunica, in modo tale da rendere possibile la condivisione con altri dispositivi.
+In questa Activity è presente un checkbox, questa permette di condividere l'appunto presente ne "I miei Appunti" e fare l'upload dell'appunto sul server con il quale l'applicazione comunica, in modo tale da rendere possibile la condivisione con altri dispositivi.
 $if(checkedCondividi.isChecked())$ è il controllo che verifica se la checkbox è spuntata, se lo è, al click dell'utente sul pulsante "Salva", fa l'upload del file chiamando $uploadFile()$ e $aggiornaAppuntiRemoto()$.
 
 \begin{lstlisting}
@@ -971,7 +960,7 @@ public int uploadFile(final String selectedFilePath){
 
 \newpage
 \subsection{Appunti condivisi}
-Tramite gli appunti condivisi si possono scaricare e visualizzare tutti gli appunti presenti sul server caricati dagli utenti. La classe utilizza degli attributi di tipo \textbf{final} necessari per poter interloquire con il server. In particolare avremo:\\
+Tramite gli appunti condivisi si possono scaricare e visualizzare tutti gli appunti caricati dagli utenti sul server. La classe utilizza degli attributi di tipo \textbf{final} necessari per poter interloquire con il server. In particolare avremo:\\
 \begin{itemize}
 \item \textbf{KEY\_DATA}
 \item \textbf{KEY\_MATERIA\_ID}
@@ -1024,43 +1013,31 @@ Di seguito si riporta il codice PHP che permette di fare il fetch delle materie.
 \begin{lstlisting}
 \\fetch_all_materie.php\\
 <?php  
- require 'init.php';
- 
- //Query to select materia id and materia name
-$query = "SELECT ID, nomemateria FROM Materie";
-$result = array();
-$materiaArray = array();
-$response = array();
-//Prepare the query
-if($stmt = $con->prepare($query)){
-	$stmt->execute();
-	//Bind the fetched data to $materiaId and $materiaName
-	$stmt->bind_result($materiaId,$materiaName);
-	//Fetch 1 row at a time					
-	while($stmt->fetch()){
-		$materiaArray["materia_id"] = $materiaId;
-		$materiaArray["materia_name"] = $materiaName;
-		$result[]=$materiaArray;
-		
+	require 'init.php';
+	$query = "SELECT ID, nomemateria FROM Materie";
+	$result = array();
+	$materiaArray = array();
+	$response = array();
+	if($stmt = $con->prepare($query)){
+		$stmt->execute();
+		$stmt->bind_result($materiaId,$materiaName);				
+		while($stmt->fetch()){
+			$materiaArray["materia_id"] = $materiaId;
+			$materiaArray["materia_name"] = $materiaName;
+			$result[]=$materiaArray;	
+		}
+		$stmt->close();
+		$response["success"] = 1;
+		$response["data"] = $result;
+	}else{
+		$response["success"] = 0;
+		$response["message"] = mysqli_error($con);	
 	}
-	$stmt->close();
-	$response["success"] = 1;
-	$response["data"] = $result;
-	
-
-}else{
-	//Some error while fetching data
-	$response["success"] = 0;
-	$response["message"] = mysqli_error($con);
-		
-	
-}
-//Display JSON response
-echo json_encode($response);
-
- ?>  
+	echo json_encode($response);
+?>  
 \end{lstlisting}
-\newpage La funzione \textbf{doInBackGround} permette di eseguire un task in background, e in questo caso ci è utile per poter effettuare la richiesta al server per ottenere le materie. Viene utilizzato un oggetto di tipo $HttpJsonParser$ che ci è utile in quanto è possibile fare il parsing della risposta del server dopo averla resa un JSONObject. La richiesta HTTP viene fatta tramite la funzione \\$HttpJsonParser.makeHttpRequest(BASE\_URL + "fetch\_all\_materie.php", "GET", null)$.	
+
+La funzione \textbf{doInBackGround} permette di eseguire un task in background, e in questo caso ci è utile per poter effettuare la richiesta al server per ottenere le materie. Viene utilizzato un oggetto di tipo $HttpJsonParser$ che ci è utile in quanto è possibile fare il parsing della risposta del server dopo averla resa un JSONObject. La richiesta HTTP viene fatta tramite la funzione \\$HttpJsonParser.makeHttpRequest(BASE\_URL + "fetch\_all\_materie.php", "GET", null)$.	
 Il primo valore del JSONObject ritornato ha chiave $success$ e se è uguale ad \textbf{1} significa che la risposta del server è avvenuta con successo, dopodiché con la chiave $data$ si avrà un array che ritornerà altri oggetti con 2 chiavi: $materia\_id$ e  $materia\_name$.
 Si crea quindi un \textbf{HashMap} che contiene le stesse 2 chiavi, contenente le materie e il loro id.
 
@@ -1131,7 +1108,8 @@ In \textbf{populateNotesList()} viene creato un adapter che verrà utilizzato pe
                     View view, int i, long l) {
 
                 //Check for network connectivity
-                if(CheckNetworkStatus.isNetworkAvailable(getApplicationContext())) {
+                if(CheckNetworkStatus.isNetworkAvailable
+			(getApplicationContext())) {
 
 
                   String nomeMateria 
@@ -1256,7 +1234,8 @@ $oldusername = $_POST['oldusername'];
 $newusername = $_POST['newusername'];
 $querycheck = "SELECT * FROM Utenti WHERE username = '$newusername'";
 $querycheckold = "SELECT * FROM Utenti WHERE username = '$oldusername'";
-$queryupdate = "UPDATE Utenti SET username = '$newusername' WHERE username = '$oldusername' ";
+$queryupdate = "UPDATE Utenti SET username = '$newusername' 
+	WHERE username = '$oldusername' ";
 $result = mysqli_query($con, $querycheck);
 $resultold = mysqli_query($con, $querycheckold);
 $num = mysqli_num_rows($resultold);
@@ -1637,7 +1616,8 @@ Nel layout di AggiungiOrario ci sono i pulsanti \textbf{Salva} e \textbf{Annulla
 \begin{lstlisting}
 \\AggiungiOrario.Xaml\\
 <ContentPage.Content>
-            <StackLayout Orientation="Vertical" HeightRequest="200" WidthRequest="300" BackgroundColor="White">
+            <StackLayout Orientation="Vertical" HeightRequest="200" 
+			WidthRequest="300" BackgroundColor="White">
 
             <Label x:Name="MateriaScelta"
                     Margin="20,20,20,10" 
@@ -1817,7 +1797,7 @@ Nella sezione "I miei appunti" è possibile mettere in condivisione un determina
 $OnSaveButtonClicked()$ serve a inizializzare le variabili che descrivono l'appunto (title, date, notes, ...) e poi, se la checkbox è spuntata e quindi \textbf{condividi == true}, si può creare una richiesta al server tramite la funzione $uploadAppunto()$ che effettua una richiesta POST utilizzando dei parametri che sono necessari per poter creare il file in remoto.
 \begin{lstlisting}
 [...]
-async void OnSaveButtonClicked(object sender, EventArgs e) //eventi scatenati alla pressione del bottone salva
+async void OnSaveButtonClicked(object sender, EventArgs e)
         {
             Note note = new Note();
             string title = this.EdtTitle.Text;
@@ -1828,12 +1808,12 @@ async void OnSaveButtonClicked(object sender, EventArgs e) //eventi scatenati al
             note.Date = date;
             note.Notes = notes;
 
-            await App.NoteDatabase.SaveNoteAsync(note); //salva l'appunto passando l'oggetto note i cui campi sono stati costruiti in precedenza
+            await App.NoteDatabase.SaveNoteAsync(note);
             await Navigation.PopAsync();
 
             if(condividi==true)
             {
-                await uploadAppunto(note, "http://mobileproject.altervista.org");
+            await uploadAppunto(note, "http://mobileproject.altervista.org");
                    
             }
         }
@@ -1844,8 +1824,8 @@ async void OnSaveButtonClicked(object sender, EventArgs e) //eventi scatenati al
         HttpClient _client = new HttpClient();
         HttpContent formcontent = new FormUrlEncodedContent(new[]
             {
-                new KeyValuePair<string, string>("appunto_contenuto", note.Notes),
-                new KeyValuePair<string,string>("appunto_titolo", note.Title),
+            new KeyValuePair<string, string>("appunto_contenuto", note.Notes),
+            new KeyValuePair<string,string>("appunto_titolo", note.Title),
             });
             var response = await _client.PostAsync(url1, formcontent);
 	    [...]
@@ -1858,7 +1838,9 @@ require 'init.php';
 $response = array();
 
 //Check for mandatory parameters
-if(isset($_POST['appunto_contenuto'])&&isset($_POST['appunto_link'])&&isset($_POST['appunto_titolo'])&&isset($_POST['appunto_data'])&&isset($_POST['appunto_materia'])){
+if(isset($_POST['appunto_contenuto'])&&isset($_POST['appunto_link'])&&isset
+	($_POST['appunto_titolo'])&&isset($_POST['appunto_data'])&&isset
+	($_POST['appunto_materia'])){
 
 $appuntoContenuto = $_POST['appunto_contenuto'];
 $appuntoLink = $_POST['appunto_link'];
@@ -1868,11 +1850,13 @@ $appuntoMateria = $_POST['appunto_materia'];
 
 
 	//Query to insert a appunto
-	$query = "INSERT INTO Appunti( contenuto, link, titolo, data, materia) VALUES (?,?,?,?,?)";
+	$query = "INSERT INTO Appunti( contenuto, link, titolo, data, materia) 
+		VALUES (?,?,?,?,?)";
 	//Prepare the query
 	if($stmt = $con->prepare($query)){
 		//Bind parameters
-		$stmt->bind_param("sssss",$appuntoContenuto,$appuntoLink,$appuntoTitolo,$appuntoData,$appuntoMateria);
+		$stmt->bind_param("sssss",$appuntoContenuto,$appuntoLink,$appuntoTitolo,
+			$appuntoData,$appuntoMateria);
 		//Exceting MySQL statement
 		$stmt->execute();
 		//Check if data got inserted
@@ -2038,7 +2022,7 @@ async void listviewhandler(object sender, EventArgs e, string nome)
                         case "About Us":
                             await Navigation.PushAsync(new AboutUsPage());
                             break;
-                        default: DependencyService.Get<Message>().Longtime(nome);
+                       default:DependencyService.Get<Message>().Longtime(nome);
                             break;
                 }
             }
@@ -2089,10 +2073,10 @@ La creazione di questi database avviene al lancio dell'applicazione, infatti nel
 \begin{lstlisting}
 \\App\\
 [...]
-public static SubjectsDatabase SubjectsDatabase {d
+public static SubjectsDatabase SubjectsDatabase {
 	get {
-	if (databaseSubjects == null) {
-		databaseSubjects = new SubjectsDatabase(Path.Combine
+		if (databaseSubjects == null) {
+			databaseSubjects = new SubjectsDatabase(Path.Combine
 			(Environment.GetFolderPath(Environment.SpecialFolder.
 			LocalApplicationData), "subjects.db3"));
 		}
