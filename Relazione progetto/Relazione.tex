@@ -1589,6 +1589,92 @@ contenere almeno 3 caratterii.");
 [...]
 \end{lstlisting}
 \subsection{Orario}
+Dal menù principale si può creare un calendario delle lezioni facendo click sull'icona apposita che porta ad una Page tramite la quale è possibile indicare l'inizio e la durata delle lezioni.
+\textbf{Calendario.xaml.xs} definisce il menu (quello a scomparsa laterale) con giorni della settimana e definisce l'evento generato quando viene toccato un elemento della lista (un giorno).
+Quando si esegue il click di un elemento della lista viene passato il nome del giorno (lunedì, martedì, ...) a \textbf{Giorno.xaml} che viene aperto.
+\begin{lstlisting}
+\\Calendario.xaml.cs\\
+public Calendario ()
+		{
+			InitializeComponent ();
+			string[] myPageNames = 
+			{ "Lunedi'", "Martedi'", "Mercoledi'", "Giovedi'", "Venerdi'" };
+			menu.ItemsSource = myPageNames;
+            		menu.ItemTapped += (sender, e) =>
+			{	ContentPage gotoPage;
+               			gotoPage = new Giorno(e.Item.ToString());
+                		Detail = new NavigationPage(gotoPage);
+				((ListView)sender).SelectedItem = null; 
+				this.IsPresented = false;
+			};
+			Detail = new NavigationPage(new Giorno("Lunedi'"));
+		}
+\end{lstlisting}
+ \textbf{Giorno.xaml} mostra la tabella degli orari delle lezioni (il nome del giorno è scritto in alto). Quando si apre (OnAppearing), viene letto il database locale (orario.db3) degli orari salvati tramite $LeggiDBOrario()$ e visualizzato nelle relative caselle. 
+\\
+In \textbf{Giorno.xaml.cs} sono definite le varie caselle del calendario. Nelle caselle della seconda colonna, dove viene visualizzato il nome della materia, c'è $Clicked="Giorno830"$ che serve per richiamare $private$ $void$ $Giorno830(object$ $sender,$ $EventArgs$ $e)$ quando viene cliccata la casella. Se la casella viene cliccata, viene eseguito $ListaMaterie(giorno,"8:30")$ che visualizza l'elenco delle materie in una listView.
+Cliccando una materia $(listamaterie.ItemTapped+=(sender, e))$ viene lanciata $AggiungiOrario(e.Item.ToString(), giorno, orario))$ che permette di inserire l'aula e il numero di ore di lezione per la materia e l'orario scelto in precedenza.
+\begin{lstlisting}
+\\Giorno.xaml.cs\\
+public Giorno(string giornoScelto)
+		{
+            InitializeComponent ();
+            giorno = giornoScelto;
+            titolo.Text = giornoScelto;
+		}
+        protected override async void OnAppearing()
+        {
+            base.OnAppearing();
+            LeggiDBOrario();
+        }
+
+        private void LeggiDBOrario()
+        {
+	[...]
+	}
+\end{lstlisting}
+Nel layout di AggiungiOrario ci sono i pulsanti \textbf{Salva} e \textbf{Annulla}.
+\begin{lstlisting}
+\\AggiungiOrario.Xaml\\
+<ContentPage.Content>
+            <StackLayout Orientation="Vertical" HeightRequest="200" WidthRequest="300" BackgroundColor="White">
+
+            <Label x:Name="MateriaScelta"
+                    Margin="20,20,20,10" 
+                   Text="{Binding Subject}"></Label>
+            <Label x:Name="OrarioScelto"
+                    Margin="20,20,20,10" 
+                    Text="ORARIO"></Label>
+                <Editor x:Name="EdtAula"
+                        Placeholder="aula"
+                        Text="{Binding Title}"
+                        Margin="20,0,20,10"
+                        HeightRequest="70" />
+            <Editor x:Name="EdtOre"
+                        Placeholder="ore lezione"
+                        x:DataType="x:Int16"
+                        Keyboard="Numeric"
+                        Margin="20,0,20,10"
+                        HeightRequest="70" />
+            <Button 
+                    Margin="20,0,20,0" 
+                    Text="Salva"
+                    Clicked="OnSalvaClicked" >
+                </Button>
+                <Button 
+                    Margin="20,0,20,0" 
+                    Text="Annulla"
+                    Clicked="OnAnnullaClicked" >                    
+                </Button>
+
+            <ListView x:Name="listamaterie" />
+        </StackLayout>
+    </ContentPage.Content>
+\end{lstlisting}
+Se premo "Salva" si attiva  $OnSalvaClicked$, entro in $async$ $void$ $OnSalvaClicked(object sender, EventArgs args)$ aggiorno il DBorario e salva la materia.
+$Annulla$ si esplica da solo. 
+\\
+Tornando a Giorno.xaml.cs, sono presenti anche delle caselle popolate con una X, che se cliccate permettono di cancellare quell'orario.
 \subsection{I miei appunti}
 Dal \textbf{MainMenu}, scelta la voce miei appunti, viene avviata la classe \textbf{PreNotes}; qui viene visualizzata la lista delle materie inserite nel database tramite l'orario con la possibilità di aggiungerne di nuove.
 
@@ -1702,6 +1788,119 @@ async void OnDeleteButtonClicked(object sender, EventArgs e) {
 }
 [...]
 \end{lstlisting}
+\subsubsection{Condividi appunti}
+Nella sezione "I miei appunti" è possibile mettere in condivisione un determinato appunto, subito dopo che è stato creato. Quando si sta per salvare il file, infatti, è disponbile un checkbox che permette fare l'upload del file sul server e poterlo mettere quindi in condivisione. In particolare bisogna analizzare il codice di \textbf{NotePage.xaml} e \textbf{NotePage.xaml.cs}. Il primo contiente il codice del checkbox, il secondo invece permette l'attivazione della funzione $OnSaveButtonClicked()$.
+\begin{lstlisting}
+\\NotePage.xaml\\
+[...]
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0" />
+                <ColumnDefinition Width="30" />
+            </Grid.ColumnDefinitions>
+            <CheckBox   
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    Color="Blue"
+                    CheckedChanged="OnCondividiChanged"
+                    VerticalOptions="Center" 
+                    HorizontalOptions="Start"/>
+            
+        <Label  Text="Condividi appunto"
+                VerticalOptions="Center" 
+                Grid.Row="0"
+                Grid.Column="2"/>
+      
+        </Grid>
+[...]
+\end{lstlisting}
+$OnSaveButtonClicked()$ serve a inizializzare le variabili che descrivono l'appunto (title, date, notes, ...) e poi, se la checkbox è spuntata e quindi \textbf{condividi == true}, si può creare una richiesta al server tramite la funzione $uploadAppunto()$ che effettua una richiesta POST utilizzando dei parametri che sono necessari per poter creare il file in remoto.
+\begin{lstlisting}
+[...]
+async void OnSaveButtonClicked(object sender, EventArgs e) //eventi scatenati alla pressione del bottone salva
+        {
+            Note note = new Note();
+            string title = this.EdtTitle.Text;
+            string date = this.EdtDate.Text;
+            string notes = this.EdtNotes.Text;
+            note.Subject = mat;
+            note.Title = title;
+            note.Date = date;
+            note.Notes = notes;
+
+            await App.NoteDatabase.SaveNoteAsync(note); //salva l'appunto passando l'oggetto note i cui campi sono stati costruiti in precedenza
+            await Navigation.PopAsync();
+
+            if(condividi==true)
+            {
+                await uploadAppunto(note, "http://mobileproject.altervista.org");
+                   
+            }
+        }
+        private static async Task uploadAppunto(Note note,  string URL)
+        {
+            string url1 = URL + "/create_appunto_Xamarin.php";
+            //Faccio la richiesta POST per creare il file nel server
+        HttpClient _client = new HttpClient();
+        HttpContent formcontent = new FormUrlEncodedContent(new[]
+            {
+                new KeyValuePair<string, string>("appunto_contenuto", note.Notes),
+                new KeyValuePair<string,string>("appunto_titolo", note.Title),
+            });
+            var response = await _client.PostAsync(url1, formcontent);
+	    [...]
+\end{lstlisting}
+La riposta del server sarà in formato JSON. Il codice PHP per la creazione del file sul server è il seguente:
+\begin{lstlisting}
+<?php
+require 'init.php';
+
+$response = array();
+
+//Check for mandatory parameters
+if(isset($_POST['appunto_contenuto'])&&isset($_POST['appunto_link'])&&isset($_POST['appunto_titolo'])&&isset($_POST['appunto_data'])&&isset($_POST['appunto_materia'])){
+
+$appuntoContenuto = $_POST['appunto_contenuto'];
+$appuntoLink = $_POST['appunto_link'];
+$appuntoTitolo = $_POST['appunto_titolo'];
+$appuntoData = $_POST['appunto_data'];
+$appuntoMateria = $_POST['appunto_materia'];
+
+
+	//Query to insert a appunto
+	$query = "INSERT INTO Appunti( contenuto, link, titolo, data, materia) VALUES (?,?,?,?,?)";
+	//Prepare the query
+	if($stmt = $con->prepare($query)){
+		//Bind parameters
+		$stmt->bind_param("sssss",$appuntoContenuto,$appuntoLink,$appuntoTitolo,$appuntoData,$appuntoMateria);
+		//Exceting MySQL statement
+		$stmt->execute();
+		//Check if data got inserted
+		if($stmt->affected_rows == 1){
+			$response["success"] = 1;			
+			$response["message"] = "Appunto Successfully Added";			
+			
+		}else{
+			//Some error while inserting
+			$response["success"] = 0;
+			$response["message"] = "Error while adding appunto";
+		}					
+	}else{
+		//Some error while inserting
+		$response["success"] = 0;
+		$response["message"] = mysqli_error($con);
+	}
+
+}else{
+	//Mandatory parameters are missing
+	$response["success"] = 0;
+	$response["message"] = "missing mandatory parameters";
+}
+//Displaying JSON response
+echo json_encode($response);
+?>
+\end{lstlisting}
+\newpage
 \subsection{Appunti condivisi}
 La sezione per gli appunti condivisi presenta una ListView, composta da tutte le materie gestibili dall'applicazione. Ovviamente il numero di materie può essere incrementato effettuando aggiornamenti del database; abbiamo mantenuto il numero di materie disponibili relativamente basso essendo questa un'app dimostrativa e non da distribuire nel PlayStore. Il metodo che ci permette di recuperare le materie ed inserirle nella ListView è \textbf{loadSubj}: questo metodo utilizza il service \textbf{CountSubj} e tramite la sua funzione \textbf{setGet} va a recuperare dal database l'elenco delle diverse materie e le inserisce in una List di oggetti di tipo \textbf{ListItemSubjects}. Verrà impostata come sorgente di dati della ListView proprio questa lista appena creata e verrà fatto un binding tra il nome della materia e il nome dell'elemento della lista. 
 \begin{lstlisting}
@@ -1711,7 +1910,6 @@ La sezione per gli appunti condivisi presenta una ListView, composta da tutte le
 
     }
 \end{lstlisting}
-\newpage
 \begin{lstlisting}
 \\ShNotes\\
 [...]
@@ -1768,7 +1966,6 @@ Andiamo ad impostare la procedura che deve scatenarsi al click su un elemento de
 Il parametro con il nome della materia passato al costruttore servirà alla funzione \textbf{loadShNotes} per caricare gli appunti. Il funzionamento è simile a quello illustrato nel capitolo precedente per la funzione \textbf{loadSubj}. Quando un appunto viene cliccato parte una procedura che si ricava il link al file che contiene l'appunto e salvato nella variabile $txt$ ed anche il titolo dell'appunto salvandolo in una variabile $title$.
 
 Passiamo la palla a \textbf{selectednotehandler} che avvierà la pagina \textbf{ViewNotePage}.
-\newpage
 \begin{lstlisting}
 \\ShNotesPage\\
 [...]
@@ -1813,8 +2010,7 @@ public ViewNotePage(string link, string title)
                 //traduce i byte in stringa  
                 string text = Encoding.UTF8.GetString(raw);
                 txt = new Label
-                {
-                    Text = text
+                {	Text = text
                 };
                 this.Padding = new Thickness(10);
                 this.Content = txt;
