@@ -81,6 +81,13 @@ public class DataAppLoc extends SQLiteOpenHelper {
         return c;
     }
 
+    public Cursor searchTitoloMateria(String t, String m){
+        String query = "SELECT " + TABLE_ROW_ID + ", " + TABLE_ROW_M + ", " + TABLE_ROW_D + ", " + TABLE_ROW_T + ", " + TABLE_ROW_A + " from " + TABLE_M_D_A + " WHERE (" + TABLE_ROW_T + " = '" + t + "') " + " AND (" + TABLE_ROW_M + " = '" + m + "');";
+        Log.i("searchTitolo() = ", query);
+        Cursor c = db.rawQuery(query, null);
+        return c;
+    }
+
     @Override
     public void onCreate(SQLiteDatabase db) {
 

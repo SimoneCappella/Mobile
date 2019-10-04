@@ -73,7 +73,7 @@ public class AppuntiListingActivity extends AppCompatActivity implements View.On
     private DataManager dm;
     ImageButton back;
 
-    DataAppLoc da;
+    private DataAppLoc da;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,7 +92,6 @@ public class AppuntiListingActivity extends AppCompatActivity implements View.On
 
         da = new DataAppLoc(this);
         dm = new DataManager(this);
-
     }
 
 
@@ -276,19 +275,18 @@ public class AppuntiListingActivity extends AppCompatActivity implements View.On
             pDialog.dismiss();
 
             Cursor nc;
-            nc = da.searchTitolo(titoloAppunto);
-            int num = nc.getCount();
-            if(nc.getCount()<=0){
+            nc = da.searchTitoloMateria(titoloAppunto, materiaName);
+            if(nc.getCount()>0){
+                //Se c'è già un appunto colo nome 'titoloAppunto' non lo aggiungo
+                Toast.makeText(getApplicationContext(), titoloAppunto + " già presente nel database locale per " + materiaName, Toast.LENGTH_SHORT).show();
+            }else{
                 //Se l'appunto non è presente nel database locale, lo aggiungo
-                da.insert(appuntoMateria, appuntoData, titoloAppunto, appuntoContenuto);
+                da.insert(materiaName, appuntoData, titoloAppunto, appuntoContenuto);
                 //set Result per passare il risultato alla prima activity cosi riesco a riavviarla dalla on result
                 String res = "Appunti salvati";
                 Intent intent = new Intent();
                 intent = intent.putExtra("res", res);
                 setResult(Activity.RESULT_OK, intent);
-            }else{
-                //Se c'è già un appunto colo nome 'titoloAppunto' non lo aggiungo
-                Toast.makeText(getApplicationContext(), "Appunto " + titoloAppunto + " già presente nel database locale", Toast.LENGTH_SHORT).show();
             }
         }
 
@@ -456,6 +454,12 @@ public class AppuntiListingActivity extends AppCompatActivity implements View.On
                 output.close();
                 input.close();
 
+                Cursor c;
+                c = dm.searchM(materiaName);
+                if (c.getCount() > 0) {
+                    Log.i("test", materiaName + " esiste già");
+                    dm.delete(materiaName);
+                }
                 dm.insert(materiaName, null, null, null);
                 return "Scaricato in: " + folder + fileName;
 
@@ -484,8 +488,14 @@ public class AppuntiListingActivity extends AppCompatActivity implements View.On
             this.progressDialog.dismiss();
 
             // Display File path after downloading
-            Toast.makeText(getApplicationContext(),
-                    message, Toast.LENGTH_LONG).show();
+            Cursor nc;
+            nc = da.searchTitoloMateria(titoloAppunto, materiaName);
+            if (nc.getCount()>0){
+
+            } else{
+                Toast.makeText(getApplicationContext(),
+                        message, Toast.LENGTH_LONG).show();
+            }
         }
     }
 
